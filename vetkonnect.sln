@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vetkonnect.Server", "vetkonnect.Server\vetkonnect.Server.csproj", "{9BB2703F-A768-496D-86B6-0C0F182D19D3}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "vetkonnect.client", "vetkonnect.client\vetkonnect.client.esproj", "{59DEA793-B824-44D0-9F34-29F00858472E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BB2703F-A768-496D-86B6-0C0F182D19D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BB2703F-A768-496D-86B6-0C0F182D19D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BB2703F-A768-496D-86B6-0C0F182D19D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BB2703F-A768-496D-86B6-0C0F182D19D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59DEA793-B824-44D0-9F34-29F00858472E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59DEA793-B824-44D0-9F34-29F00858472E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59DEA793-B824-44D0-9F34-29F00858472E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{59DEA793-B824-44D0-9F34-29F00858472E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59DEA793-B824-44D0-9F34-29F00858472E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59DEA793-B824-44D0-9F34-29F00858472E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9AFF621-DE6B-409F-9922-CAFBDE1F6E49}
+	EndGlobalSection
+EndGlobal

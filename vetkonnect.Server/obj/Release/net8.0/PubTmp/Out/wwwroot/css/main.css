@@ -1,0 +1,1371 @@
+/* Fonts */
+:root {
+    --default-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --heading-font: "Montserrat", sans-serif;
+    --nav-font: "Poppins", sans-serif;
+    /* Global Colors - Simplified for a modern, cohesive look */
+    --background-color: #f9f9f9; /* Light gray background for soft contrast */
+    --default-color: #333333; /* Dark grey for text, ensuring readability */
+    --heading-color: #222222; /* Darker grey for headings */
+    --accent-color: #ffcc00; /* Amber for buttons, links, and key highlights */
+    --surface-color: #ffffff; /* White for boxed elements to ensure contrast */
+    --contrast-color: #ffffff; /* White text color for contrast against dark or accent backgrounds */
+    /* Nav Menu Colors */
+    --nav-color: #333333; /* Dark grey for navmenu links */
+    --nav-hover-color: blue; /* Amber for nav hover for a vibrant feel */
+    --nav-mobile-background-color: #ffffff; /* White for mobile navigation */
+    --nav-dropdown-background-color: #ffffff; /* white background for dropdowns */
+    --nav-dropdown-color: #333333; /* Dark grey for dropdown links */
+    --nav-dropdown-hover-color: #ffffff; /* white for dropdown hover links */
+    /* Smooth scroll */
+    scroll-behavior: smooth;
+}
+
+/* Color Presets - Custom Background Classes */
+.light-background {
+    --background-color: #ffffff;
+    --surface-color: #f9f9f9;
+}
+
+.dark-background {
+    --background-color: #222222; /* Dark grey for dark backgrounds */
+    --default-color: #f9f9f9;
+    --heading-color: #ffffff;
+    --surface-color: #333333;
+    --contrast-color: #ffffff;
+}
+
+
+/*--------------------------------------------------------------
+# General Styling & Shared Classes
+--------------------------------------------------------------*/
+body {
+    color: var(--default-color);
+    background-color: var(--background-color);
+    font-family: var(--default-font);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--accent-color); /* Blue for links */
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+    a:hover {
+        color: color-mix(in srgb, var(--accent-color), transparent 25%);
+    }
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color);
+    font-family: var(--heading-font);
+}
+
+/*--------------------------------------------------------------
+# Global Header
+--------------------------------------------------------------*/
+.header {
+    color: var(--default-color); /* Dark grey for the header text */
+    background-color: var(--background-color); /* Light grey for the header background */
+    padding: 20px 0;
+    transition: all 0.3s ease-in-out;
+    z-index: 997;
+    border-bottom: 1px solid #ddd; /* Subtle border for separation */
+}
+
+    .header .logo {
+        line-height: 1;
+    }
+
+        .header .logo img {
+            max-height: 40px; /* Slightly larger for better visibility */
+            margin-right: 8px;
+        }
+
+        .header .logo h1 {
+            font-size: 22px;
+            margin: 0;
+            font-weight: 600;
+            color: var(--heading-color); /* Dark grey for the logo text */
+        }
+
+        .header .logo span {
+            color: var(--accent-color); /* Blue accent for logo's highlighted part */
+            font-size: 22px;
+            font-weight: 600;
+            padding-left: 3px;
+        }
+
+    .header .btn-getstarted,
+    .header .btn-getstarted:focus {
+        color: var(--contrast-color); /* White text for button */
+        background-color: var(--accent-color); /* Blue button background */
+        font-size: 14px;
+        padding: 10px 30px;
+        margin: 0;
+        border-radius: 4px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+        .header .btn-getstarted:hover,
+        .header .btn-getstarted:focus:hover {
+            background: color-mix(in srgb, var(--accent-color), transparent 15%); /* Lighter blue on hover */
+        }
+
+.navmenu a {
+    color: var(--nav-color);
+    font-family: var(--nav-font);
+    font-weight: 500;
+    font-size: 16px;
+    padding: 0 15px;
+    transition: color 0.3s ease-in-out;
+}
+
+    .navmenu a:hover {
+        color: var(--nav-hover-color); /* Hover color for navigation */
+    }
+
+/* Dropdown Styling */
+.navmenu .dropdown-menu {
+    background-color: var(--nav-dropdown-background-color);
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+    .navmenu .dropdown-menu a {
+        color: var(--nav-dropdown-color);
+        padding: 10px 20px;
+    }
+
+        .navmenu .dropdown-menu a:hover {
+            background-color: var(--nav-hover-color); /* Blue background on hover */
+            color: var(--contrast-color); /* White text on hover */
+        }
+
+/* Sticky Header Shadow */
+.scrolled .header {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for scrolled state */
+}
+
+@media (max-width: 1200px) {
+    .header .logo {
+        order: 1;
+    }
+
+    .header .btn-getstarted {
+        order: 2;
+        margin: 0 15px 0 0;
+        padding: 6px 20px;
+    }
+
+    .header .navmenu {
+        order: 3;
+    }
+}
+
+/*--------------------------------------------------------------
+# Index Page Header
+--------------------------------------------------------------*/
+/* Transparent Header for the Index Page */
+.index-page .header {
+    --background-color: rgba(255, 255, 255, 0); /* Transparent background for a clean look */
+    --heading-color: #ffffff; /* White text for better contrast against the background */
+    --nav-color: #000000; /* amber navigation links */
+    --nav-hover-color: blue; /* Full white on hover for navigation links */
+}
+
+/* Header Style on Scroll for the Index Page */
+.index-page.scrolled .header {
+    --background-color: #ffffff; /* Solid white background on scroll */
+    --heading-color: #000000; /* Switch to black for better readability */
+    --nav-color: #000000; /* Black navigation links after scrolling */
+    --nav-hover-color: blue; /* Blue hover effect for better visibility */
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu - Desktop & Mobile
+--------------------------------------------------------------*/
+/* Desktop Navigation Menu */
+@media (min-width: 1200px) {
+    .navmenu {
+        padding: 0;
+    }
+
+        .navmenu ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            list-style: none;
+            align-items: center; /* Align items centrally */
+        }
+
+        .navmenu li {
+            position: relative; /* Needed for dropdown positioning */
+        }
+
+        /* Navigation Link Styles */
+        .navmenu a,
+        .navmenu a:focus {
+            color: var(--nav-color); /* Default navigation link color */
+            padding: 18px 15px; /* Padding for better clickable area */
+            font-size: 16px;
+            font-family: var(--nav-font); /* Use custom font for nav items */
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            white-space: nowrap; /* Prevent text wrapping */
+            transition: 0.3s; /* Smooth transition effect */
+        }
+
+            .navmenu a i,
+            .navmenu a:focus i {
+                font-size: 12px; /* Icon size */
+                margin-left: 5px;
+                transition: 0.3s; /* Smooth icon transition */
+            }
+
+        /* Last navigation item without padding on the right */
+        .navmenu li:last-child a {
+            padding-right: 0;
+        }
+
+        /* Hover and Active States for Navigation Links */
+        .navmenu li:hover > a,
+        .navmenu .active,
+        .navmenu .active:focus {
+            color: var(--nav-hover-color); /* Hover color */
+        }
+
+        /* Dropdown Menu Styles */
+        .navmenu .dropdown ul {
+            margin: 0;
+            padding: 10px 0;
+            background: var(--nav-dropdown-background-color); /* Background for dropdown */
+            position: absolute;
+            visibility: hidden;
+            left: 14px;
+            top: 130%;
+            opacity: 0;
+            transition: 0.3s; /* Smooth dropdown transition */
+            border-radius: 4px;
+            z-index: 99;
+            box-shadow: 0px 0px 30px white; /* Soft shadow for dropdowns */
+        }
+
+            /* Ensure minimum width for dropdown items */
+            .navmenu .dropdown ul li {
+                min-width: 200px;
+            }
+
+            /* Dropdown Link Styles */
+            .navmenu .dropdown ul a {
+                padding: 10px 20px;
+                font-size: 15px;
+                color: var(--nav-dropdown-color); /* Default dropdown color */
+                font-weight: 400;
+                display: block;
+                transition: 0.3s; /* Smooth transition for dropdown links */
+            }
+
+                /* Hover State for Dropdown Links */
+                .navmenu .dropdown ul a:hover {
+                    color: var(--nav-dropdown-hover-color); /* Hover color for dropdown links */
+                }
+
+        /* Display dropdown on hover */
+        .navmenu li:hover > ul {
+            visibility: visible;
+            opacity: 1; /* Make visible */
+        }
+}
+
+/* Mobile Navigation Menu */
+@media (max-width: 1200px) {
+    .navmenu {
+        position: fixed; /* Fixed position for mobile menu */
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%; /* Full height */
+        background: var(--nav-mobile-background-color); /* White background for mobile */
+        padding-top: 20px; /* Spacing at the top */
+        z-index: 1000;
+        transform: translateX(100%); /* Hidden by default */
+        transition: transform 0.3s ease; /* Smooth slide-in effect */
+    }
+
+        .navmenu.open {
+            transform: translateX(0); /* Show menu */
+        }
+
+        /* Mobile Navigation Link Styles */
+        .navmenu ul {
+            display: block;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navmenu li {
+            border-bottom: 1px solid #ddd; /* Divider between menu items */
+        }
+
+        .navmenu a {
+            color: var(--nav-dropdown-color); /* Default color for mobile nav links */
+            padding: 15px; /* Spacing for mobile */
+            font-size: 18px; /* Larger font size */
+        }
+
+            /* Hover State for Mobile Links */
+            .navmenu a:hover {
+                background-color: var(--nav-hover-color); /* Hover effect for mobile */
+                color: var(--contrast-color); /* White text on hover */
+            }
+}
+
+.footer {
+    background: linear-gradient(135deg, #6c757d 0%, #343a40 100%);
+    color: #fff;
+    padding: 40px 0;
+}
+
+    .footer h4 {
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #FFD700; /* Gold color for headings */
+    }
+
+    .footer p {
+        margin-bottom: 10px;
+    }
+
+    .footer .social-links {
+        justify-content: space-between;
+    }
+
+    .footer .social-icon {
+        margin-right: 15px;
+        font-size: 24px;
+        transition: transform 0.3s;
+    }
+
+        .footer .social-icon:hover {
+            transform: scale(1.2);
+        }
+
+    .footer a {
+        color: #ffffff; /* White color for links */
+        transition: color 0.3s;
+    }
+
+        .footer a:hover {
+            color: #FFD700; /* Change color on hover */
+        }
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+    .footer-links ul li {
+        margin-bottom: 10px;
+    }
+
+        .footer-links ul li a {
+            text-decoration: none;
+        }
+
+            .footer-links ul li a:hover {
+                text-decoration: underline;
+            }
+
+.copyright {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #eaeaea; /* Light grey for copyright */
+}
+
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+    position: fixed; /* Fixes the preloader to the viewport */
+    inset: 0; /* Sets all sides (top, right, bottom, left) to 0 for full coverage */
+    z-index: 999999; /* Ensures the preloader is on top of all other elements */
+    overflow: hidden; /* Hides any overflow content */
+    background: var(--background-color); /* Sets the background color using a variable */
+    transition: all 0.6s ease-out; /* Smooth transition for all properties over 0.6 seconds */
+}
+
+    #preloader:before {
+        content: ""; /* Creates an empty content for the pseudo-element */
+        position: fixed; /* Fixes the pseudo-element to the viewport */
+        top: calc(50% - 30px); /* Centers the spinner vertically */
+        left: calc(50% - 30px); /* Centers the spinner horizontally */
+        border: 6px solid #ffffff; /* Sets a white border for the spinner */
+        border-color: var(--accent-color) transparent var(--accent-color) transparent; /* Creates a colorful border effect */
+        border-radius: 50%; /* Makes the spinner circular */
+        width: 60px; /* Sets the width of the spinner */
+        height: 60px; /* Sets the height of the spinner */
+        animation: animate-preloader 1.5s linear infinite; /* Applies an infinite rotating animation */
+    }
+
+@keyframes animate-preloader {
+    0% {
+        transform: rotate(0deg); /* Starts the rotation from 0 degrees */
+    }
+
+    100% {
+        transform: rotate(360deg); /* Ends the rotation at 360 degrees */
+    }
+}
+
+/*--------------------------------------------------------------
+# Scroll Top Button
+--------------------------------------------------------------*/
+.scroll-top {
+    position: fixed; /* Fixes the button to the viewport */
+    visibility: hidden; /* Hides the button by default */
+    opacity: 0; /* Sets initial opacity to 0 for fading effect */
+    right: 15px; /* Positions the button 15px from the right */
+    bottom: 15px; /* Positions the button 15px from the bottom */
+    z-index: 99999; /* Ensures the button is on top of other elements */
+    background-color: var(--accent-color); /* Sets the background color using a variable */
+    width: 40px; /* Sets the width of the button */
+    height: 40px; /* Sets the height of the button */
+    border-radius: 4px; /* Rounds the corners of the button */
+    transition: all 0.4s; /* Smooth transition for all properties over 0.4 seconds */
+}
+
+    .scroll-top i {
+        font-size: 24px; /* Sets the font size for the icon */
+        color: var(--contrast-color); /* Sets the icon color using a variable */
+        line-height: 0; /* Aligns the icon properly within the button */
+    }
+
+    .scroll-top:hover {
+        background-color: color-mix(in srgb, var(--accent-color), transparent 20%); /* Changes background color on hover */
+        color: var(--contrast-color); /* Keeps the icon color on hover */
+    }
+
+    .scroll-top.active {
+        visibility: visible; /* Shows the button when active */
+        opacity: 1; /* Sets opacity to 1 for fading effect */
+    }
+
+/*--------------------------------------------------------------
+# Disable AOS Animation Delay on Mobile Devices
+--------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+    [data-aos-delay] {
+        transition-delay: 0 !important; /* Removes animation delay for mobile devices */
+    }
+}
+
+/*--------------------------------------------------------------
+# Global Page Titles & Breadcrumbs
+--------------------------------------------------------------*/
+.page-title {
+    color: var(--default-color); /* Sets the text color for the page title */
+    background-color: var(--background-color); /* Sets the background color for the page title */
+    position: relative; /* Allows positioning of child elements relative to this element */
+}
+
+    .page-title .heading {
+        padding: 80px 0; /* Adds vertical padding to the heading */
+        border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); /* Adds a top border with mixed color */
+    }
+
+        .page-title .heading h1 {
+            font-size: 38px; /* Sets the font size for the main heading */
+            font-weight: 700; /* Makes the main heading bold */
+        }
+
+    .page-title nav {
+        background-color: color-mix(in srgb, var(--default-color), transparent 95%); /* Sets the background color for the navigation area */
+        padding: 20px 0; /* Adds vertical padding to the navigation area */
+    }
+
+        .page-title nav ol {
+            display: flex; /* Uses flexbox for layout */
+            flex-wrap: wrap; /* Allows items to wrap onto the next line */
+            list-style: none; /* Removes default list styling */
+            margin: 0; /* Removes default margin */
+            font-size: 16px; /* Sets the font size for breadcrumb items */
+            font-weight: 600; /* Makes breadcrumb items semi-bold */
+        }
+
+            .page-title nav ol li + li {
+                padding-left: 10px; /* Adds space to the left of each breadcrumb item, except the first */
+            }
+
+                .page-title nav ol li + li::before {
+                    content: "/"; /* Adds a separator before each breadcrumb item */
+                    display: inline-block; /* Makes the separator an inline block */
+                    padding-right: 10px; /* Adds space to the right of the separator */
+                    color: color-mix(in srgb, var(--default-color), transparent 70%); /* Sets the color of the separator */
+                }
+
+/*--------------------------------------------------------------
+# Global Sections
+--------------------------------------------------------------*/
+section,
+.section {
+    color: var(--default-color); /* Sets the text color for the sections */
+    background-color: var(--background-color); /* Sets the background color for the sections */
+    padding: 60px 0; /* Adds vertical padding (60px) to the top and bottom of each section */
+    scroll-margin-top: 98px; /* Adds a top margin for smooth scrolling when links to sections are clicked */
+    overflow: clip; /* Clips the content that overflows the element's box */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1199px) {
+    section,
+    .section {
+        scroll-margin-top: 64px; /* Reduces the scroll margin for smaller screens */
+    }
+}
+
+/*--------------------------------------------------------------
+# Global Section Titles
+--------------------------------------------------------------*/
+.section-title {
+    text-align: center; /* Centers the title text */
+    padding-bottom: 60px; /* Adds padding below the title */
+    position: relative; /* Positions the title relative to its normal position */
+}
+
+    .section-title h2 {
+        font-size: 32px; /* Sets the font size for the section title */
+        font-weight: 700; /* Makes the section title bold */
+        position: relative; /* Positions the title relative to its normal position for child elements */
+    }
+
+        .section-title h2:before,
+        .section-title h2:after {
+            content: ""; /* Creates an empty content for pseudo-elements */
+            width: 50px; /* Sets the width of the line */
+            height: 2px; /* Sets the height of the line */
+            background: var(--accent-color); /* Sets the background color of the line */
+            display: inline-block; /* Makes the lines inline blocks to sit beside the title */
+        }
+
+        .section-title h2:before {
+            margin: 0 15px 10px 0; /* Adds margin to the right and bottom of the left line */
+        }
+
+        .section-title h2:after {
+            margin: 0 0 10px 15px; /* Adds margin to the bottom and left of the right line */
+        }
+
+    .section-title p {
+        margin-bottom: 0; /* Removes bottom margin from paragraphs within section titles */
+    }
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+.hero {
+    width: 100%; /* The hero section takes up the full width of the viewport */
+    min-height: 100vh; /* Ensures the hero section covers the full height of the viewport */
+    position: relative; /* Positions the hero section relative to other elements */
+    padding: 80px 0; /* Adds vertical padding inside the hero section */
+    display: flex; /* Uses Flexbox to align content inside the hero section */
+    align-items: center; /* Vertically centers content */
+    justify-content: center; /* Horizontally centers content */
+}
+
+    .hero img {
+        position: absolute; /* Positions the image absolutely inside the hero */
+        inset: 0; /* Stretches the image to all four edges of the hero */
+        display: block; /* Ensures the image is displayed as a block-level element */
+        width: 100%; /* Sets the image to take up the full width of its container */
+        height: 100%; /* Sets the image to take up the full height */
+        object-fit: cover; /* Ensures the image covers the hero section without distortion */
+        z-index: 1; /* Sets the image layer behind the other elements in the hero */
+    }
+
+    .hero:before {
+        content: ""; /* Empty content for the pseudo-element */
+        background: color-mix(in srgb, var(--background-color), transparent 50%); /* Creates a semi-transparent overlay */
+        position: absolute; /* Positions it to cover the whole hero section */
+        inset: 0; /* Stretches it to all four edges of the hero */
+        z-index: 2; /* Places the overlay between the image and the text */
+    }
+
+    .hero .container {
+        position: relative; /* Positions the content container inside the hero */
+        z-index: 3; /* Ensures the container appears above the background and overlay */
+    }
+
+    .hero h2 {
+        margin: 0; /* Removes default margin */
+        font-size: 44px; /* Large, bold text size for headings */
+        font-weight: 700; /* Bold text for strong emphasis */
+    }
+
+    .hero p {
+        color: color-mix(in srgb, var(--default-color), transparent 20%); /* Subtle text color to contrast the hero background */
+        margin: 5px 0 0 0; /* Adds a small margin to separate the paragraph from the heading */
+        font-size: 20px; /* Medium-sized font for the hero paragraph */
+    }
+
+/*--------------------------------------------------------------
+# About Section
+--------------------------------------------------------------*/
+.about .content h3 {
+    font-size: 24px; /* Sets a slightly smaller font size than the hero for the section titles */
+    font-weight: 700; /* Bold text for the section titles */
+    line-height: 1.5; /* Improves readability by increasing line spacing */
+    padding: 10px 20px; /* Adds padding inside the section title box */
+    background: white; /* White background for the section title box */
+    color: var(--accent-color); /* Accent color for the text */
+    border-radius: 7px; /* Rounds the corners of the section title box */
+    display: inline-block; /* Ensures the title box does not stretch to full width */
+    margin-bottom: 20px; /* Adds spacing below the section title */
+}
+
+.about .content p {
+    font-size: 1.125rem; /* A slightly smaller font size for body text */
+    line-height: 1.6; /* Improves readability by increasing line spacing */
+}
+
+.about .icon-box {
+    background-color: var(--surface-color); /* Sets the background color for the icon box */
+    padding: 40px; /* Adds ample padding inside the icon box */
+    box-shadow: 0px 10px 30px white; /* Creates a subtle shadow around the box */
+    border-radius: 10px; /* Rounds the corners of the icon box */
+    transition: all 0.3s ease; /* Adds smooth transitions for hover effects */
+}
+
+    .about .icon-box i {
+        width: 80px; /* Sets the width of the icon */
+        height: 80px; /* Sets the height of the icon */
+        border-radius: 50%; /* Makes the icon box a circle */
+        display: inline-flex; /* Uses Flexbox for centering */
+        align-items: center; /* Vertically centers the icon */
+        justify-content: center; /* Horizontally centers the icon */
+        margin-bottom: 20px; /* Adds space below the icon */
+        font-size: 36px; /* Makes the icon larger */
+        line-height: 0; /* Resets line height */
+        transition: all 0.4s ease; /* Smooth transition for hover effect */
+        background-color: white; /* White background for the icon */
+        color: var(--accent-color); /* Accent color for the icon */
+    }
+
+    .about .icon-box:hover i {
+        background-color: var(--accent-color); /* Changes the icon background color on hover */
+        color: var(--contrast-color); /* Changes the icon color on hover */
+    }
+
+/* Adjustments for layout on smaller screens */
+@media (max-width: 768px) {
+    .about .icon-box {
+        padding: 30px; /* Reduces padding for smaller screen sizes */
+    }
+}
+
+/*--------------------------------------------------------------
+# Services Section
+--------------------------------------------------------------*/
+.services .service-item {
+    position: relative; /* Sets the positioning context for absolute elements inside */
+    padding-top: 40px; /* Adds space above each service item */
+}
+
+    .services .service-item:before {
+        content: ""; /* Empty content for the pseudo-element */
+        position: absolute; /* Positions the line absolutely within the service item */
+        top: 0; /* Aligns the line to the top of the service item */
+        left: 0; /* Aligns the line to the left */
+        right: 0; /* Aligns the line to the right */
+        height: 2px; /* Sets the height of the line */
+        background: #000000; /* Color of the top line */
+    }
+
+    .services .service-item::after {
+        content: ""; /* Empty content for the pseudo-element */
+        position: absolute; /* Positions this line absolutely */
+        top: 0; /* Aligns the line to the top */
+        left: 0; /* Aligns the line to the left */
+        width: 30px; /* Width of the accent line */
+        height: 2px; /* Height of the accent line */
+        background: var(--accent-color); /* Uses the accent color for the line */
+        border-right: 5px solid var(--background-color); /* Adds a border to the right with the background color */
+    }
+
+    .services .service-item .icon {
+        width: 48px; /* Sets a fixed width for the icon container */
+        height: 48px; /* Sets a fixed height for the icon container */
+        position: relative; /* Positions the icon container relative to its parent */
+        margin-right: 50px; /* Adds space to the right of the icon */
+        line-height: 0; /* Resets line height to eliminate extra spacing */
+    }
+
+        .services .service-item .icon i {
+            color: color-mix(in srgb, var(--default-color), transparent 20%); /* Slightly transparent icon color */
+            font-size: 56px; /* Large font size for the icon */
+            transition: ease-in-out 0.3s; /* Smooth transition for hover effects */
+            z-index: 2; /* Ensures the icon appears above the pseudo-elements */
+            position: relative; /* Positions the icon relative to the icon container */
+        }
+
+        .services .service-item .icon:before {
+            position: absolute; /* Positions the circle behind the icon */
+            content: ""; /* Empty content for the pseudo-element */
+            height: 30px; /* Height of the circle */
+            width: 30px; /* Width of the circle */
+            background: white; /* White background for the circle */
+            border-radius: 50px; /* Rounds the corners to create a circle */
+            z-index: 1; /* Places the circle behind the icon */
+            bottom: -15px; /* Positions the circle below the icon */
+            right: -15px; /* Positions the circle to the right of the icon */
+            transition: 0.3s; /* Smooth transition for hover effects */
+        }
+
+    .services .service-item .title {
+        font-weight: 700; /* Bold text for service titles */
+        margin-bottom: 15px; /* Adds space below the title */
+        font-size: 18px; /* Sets the font size for the title */
+    }
+
+        .services .service-item .title a {
+            color: var(--heading-color); /* Sets the link color to the heading color */
+        }
+
+            .services .service-item .title a:hover {
+                color: var(--accent-color); /* Changes the link color on hover to the accent color */
+            }
+
+    .services .service-item .description {
+        line-height: 24px; /* Sets line height for improved readability */
+        font-size: 14px; /* Sets a smaller font size for descriptions */
+    }
+
+/*--------------------------------------------------------------
+# Faq Section
+--------------------------------------------------------------*/
+.faq .content h3 {
+    font-weight: 500; /* Medium weight for headings */
+    font-size: 36px; /* Larger font size for visibility */
+    color: var(--primary-color); /* Primary color for headings */
+}
+
+.faq .content p {
+    font-size: 16px; /* Standard font size for paragraph text */
+    color: color-mix(in srgb, var(--default-color), transparent 30%); /* Lightened default color for improved readability */
+}
+
+.faq .faq-container .faq-item {
+    background-color: var(--surface-color); /* Background color for each FAQ item */
+    position: relative; /* Establishes a positioning context for child elements */
+    padding: 25px; /* Inner spacing for comfort */
+    margin-bottom: 20px; /* Space between FAQ items */
+    box-shadow: 0px 5px 25px white; /* Soft shadow for depth */
+    transition: background-color 0.3s; /* Smooth transition for background color on hover */
+}
+
+    .faq .faq-container .faq-item:hover {
+        background-color: color-mix(in srgb, var(--accent-color), transparent 90%); /* Accent color on hover for interactivity */
+    }
+
+    .faq .faq-container .faq-item:last-child {
+        margin-bottom: 0; /* Removes margin for the last item */
+    }
+
+    .faq .faq-container .faq-item h3 {
+        font-weight: 600; /* Strong weight for FAQ titles */
+        font-size: 20px; /* Font size for titles */
+        line-height: 28px; /* Line height for readability */
+        margin: 0 30px 0 0; /* Margin for spacing */
+        cursor: pointer; /* Indicates that the title is clickable */
+        display: flex; /* Flexbox for alignment */
+        align-items: flex-start; /* Aligns items to the start of the container */
+        transition: color 0.3s; /* Smooth transition for title color on hover */
+    }
+
+        .faq .faq-container .faq-item h3 .num {
+            color: var(--accent-color); /* Accent color for numbering */
+            padding-right: 8px; /* Space between number and text */
+        }
+
+        .faq .faq-container .faq-item h3:hover {
+            color: var(--accent-color); /* Changes title color on hover for emphasis */
+        }
+
+    .faq .faq-container .faq-item .faq-content {
+        display: grid; /* Grid layout for FAQ content */
+        grid-template-rows: 0fr; /* Sets initial height to zero */
+        transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Smooth transitions for visibility and opacity */
+        visibility: hidden; /* Initially hidden content */
+        opacity: 0; /* Fully transparent */
+    }
+
+        .faq .faq-container .faq-item .faq-content p {
+            margin-bottom: 0; /* Removes default bottom margin for paragraphs */
+        }
+
+    .faq .faq-container .faq-item .faq-toggle {
+        position: absolute; /* Positions the toggle button absolutely */
+        top: 20px; /* Distance from the top of the container */
+        right: 20px; /* Distance from the right side */
+        font-size: 16px; /* Font size for the toggle button */
+        transition: transform 0.3s; /* Smooth rotation for the toggle */
+        cursor: pointer; /* Indicates clickable element */
+    }
+
+        .faq .faq-container .faq-item .faq-toggle:hover {
+            color: var(--accent-color); /* Changes color on hover for visibility */
+        }
+
+.faq .faq-container .faq-active h3 {
+    color: var(--accent-color); /* Changes title color for active FAQ */
+}
+
+.faq .faq-container .faq-active .faq-content {
+    grid-template-rows: 1fr; /* Sets height to occupy space */
+    visibility: visible; /* Makes content visible when active */
+    opacity: 1; /* Fully opaque */
+    padding-top: 10px; /* Adds space above the content */
+}
+
+.faq .faq-container .faq-active .faq-toggle {
+    transform: rotate(90deg); /* Rotates toggle button when active */
+    color: var(--accent-color); /* Changes color to accent when active */
+}
+
+.faq .btn-link {
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Inherits color from parent */
+    font-size: 18px; /* Font size for links */
+    font-weight: 600; /* Bold weight for emphasis */
+}
+
+    .faq .btn-link:hover {
+        color: var(--accent-color); /* Changes link color on hover */
+    }
+
+/* Team.css */
+.team {
+    background-color: #f9f9f9; /* Light background for contrast */
+    padding: 5rem 0;
+}
+
+.section-title h2 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.member-img {
+    position: relative;
+    overflow: hidden;
+}
+
+.member-img img {
+    transition: transform 0.3s ease; /* Smooth image scale effect */
+}
+
+.member-img:hover img {
+    transform: scale(1.1); /* Scale image on hover */
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 10px; /* Position social icons at the bottom of the image */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease;
+}
+
+.member-img:hover .social {
+    opacity: 1; /* Show social icons on hover */
+}
+
+.card {
+    border-radius: 10px; /* Rounded corners for cards */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease; /* Smooth card hover effect */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+}
+
+.social-icon {
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+.job-description {
+    font-style: italic; /* Italics for job descriptions */
+}
+
+
+.contact {
+    background: linear-gradient(135deg, #e7f0f7 0%, #cfd9df 100%);
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+    .section-title h2 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #007bff; /* Primary color */
+    }
+
+    .section-title p {
+        font-size: 18px;
+        color: #555;
+    }
+
+.info-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+    .info-item i {
+        font-size: 36px;
+        color: #007bff; /* Match with the primary color */
+        margin-bottom: 10px;
+    }
+
+    .info-item h3 {
+        font-size: 20px;
+        margin: 15px 0;
+        color: #333;
+    }
+
+    .info-item p {
+        color: #666;
+    }
+
+    .info-item:hover {
+        transform: translateY(-5px);
+    }
+
+.php-email-form .form-control {
+    border: 1px solid #007bff;
+    border-radius: 8px;
+    padding: 15px;
+    transition: border-color 0.3s;
+}
+
+    .php-email-form .form-control:focus {
+        border-color: #0056b3; /* Darker blue on focus */
+    }
+
+.php-email-form button {
+    background-color: #007bff; /* Primary color */
+    color: #fff;
+    border-radius: 8px;
+    padding: 15px 30px;
+    border: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+    .php-email-form button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+        transform: translateY(-2px);
+    }
+
+/*--------------------------------------------------------------
+# Service Details Section
+--------------------------------------------------------------*/
+
+/* The .service-box class defines the main container for each service detail. */
+.service-details .service-box {
+    background-color: var(--surface-color); /* Sets the background color using a CSS variable. */
+    padding: 20px; /* Adds padding inside the box for spacing. */
+    box-shadow: 0px 2px 20px white; /* Creates a soft shadow effect around the box. */
+}
+
+    /* Adds margin to the top of service boxes that follow another service box for spacing. */
+    .service-details .service-box + .service-box {
+        margin-top: 30px; /* Ensures space between consecutive service boxes. */
+    }
+
+    /* Styles for the service title within the service box. */
+    .service-details .service-box h4 {
+        font-size: 20px; /* Sets the font size for the heading. */
+        font-weight: 700; /* Makes the font bold. */
+        border-bottom: 2px solid color-mix(in srgb, var(--default-color), transparent 92%); /* Creates a bottom border with a mixed color. */
+        padding-bottom: 15px; /* Adds space below the heading. */
+        margin-bottom: 15px; /* Adds space below the heading. */
+    }
+
+/* Styles for the list of services. */
+.service-details .services-list {
+    background-color: var(--surface-color); /* Sets the background color for the services list. */
+}
+
+    /* Styles for each service link within the services list. */
+    .service-details .services-list a {
+        color: color-mix(in srgb, var(--default-color), transparent 20%); /* Sets the text color with a mixed color. */
+        background-color: color-mix(in srgb, var(--default-color), transparent 96%); /* Sets a light background color for the links. */
+        display: flex; /* Enables flexbox layout for easy alignment. */
+        align-items: center; /* Centers items vertically within the link. */
+        padding: 12px 15px; /* Adds padding around the link text. */
+        margin-top: 15px; /* Adds space above each link. */
+        transition: 0.3s; /* Smooth transition for hover effects. */
+    }
+
+        /* Removes top margin for the first link in the list. */
+        .service-details .services-list a:first-child {
+            margin-top: 0; /* Resets margin for the first link. */
+        }
+
+        /* Styles for icons within the service links. */
+        .service-details .services-list a i {
+            font-size: 16px; /* Sets the size of the icon. */
+            margin-right: 8px; /* Adds space between the icon and text. */
+            color: var(--accent-color); /* Sets the color of the icon using a variable. */
+        }
+
+        /* Styles for the active link in the services list. */
+        .service-details .services-list a.active {
+            color: var(--contrast-color); /* Changes text color for active link. */
+            background-color: var(--accent-color); /* Changes background color for active link. */
+        }
+
+            /* Changes icon color for active links. */
+            .service-details .services-list a.active i {
+                color: var(--contrast-color); /* Ensures icon matches the active link text color. */
+            }
+
+        /* Styles for hover effects on service links. */
+        .service-details .services-list a:hover {
+            background-color: color-mix(in srgb, var(--accent-color), transparent 95%); /* Changes background on hover. */
+            color: var(--accent-color); /* Changes text color on hover. */
+        }
+
+/* Styles for the download catalog section. */
+.service-details .download-catalog a {
+    color: var(--default-color); /* Sets text color for download links. */
+    display: flex; /* Enables flexbox for alignment. */
+    align-items: center; /* Centers items vertically. */
+    padding: 10px 0; /* Adds padding around the link. */
+    transition: 0.3s; /* Smooth transition for hover effects. */
+    border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); /* Adds a top border with mixed color. */
+}
+
+    /* Resets border and padding for the first link in the download catalog. */
+    .service-details .download-catalog a:first-child {
+        border-top: 0; /* Removes the top border for the first link. */
+        padding-top: 0; /* Removes top padding for the first link. */
+    }
+
+    /* Resets padding for the last link in the download catalog. */
+    .service-details .download-catalog a:last-child {
+        padding-bottom: 0; /* Removes bottom padding for the last link. */
+    }
+
+    /* Styles for icons in the download catalog section. */
+    .service-details .download-catalog a i {
+        font-size: 24px; /* Sets icon size. */
+        margin-right: 8px; /* Adds space between icon and text. */
+        color: var(--accent-color); /* Sets icon color. */
+    }
+
+    /* Changes link color on hover for the download catalog. */
+    .service-details .download-catalog a:hover {
+        color: var(--accent-color); /* Changes text color on hover. */
+    }
+
+/* Styles for the help box. */
+.service-details .help-box {
+    background-color: var(--accent-color); /* Sets background color for the help box. */
+    color: var(--contrast-color); /* Sets text color for the help box. */
+    margin-top: 30px; /* Adds space above the help box. */
+    padding: 30px 15px; /* Adds padding inside the help box. */
+}
+
+    /* Styles for the help icon within the help box. */
+    .service-details .help-box .help-icon {
+        font-size: 48px; /* Sets icon size. */
+    }
+
+    /* Ensures text color for heading and links in the help box. */
+    .service-details .help-box h4,
+    .service-details .help-box a {
+        color: var(--contrast-color); /* Sets text color to contrast color. */
+    }
+
+/* Styles for images in the service details section. */
+.service-details .services-img {
+    margin-bottom: 20px; /* Adds space below the images. */
+}
+
+/* Styles for main service title. */
+.service-details h3 {
+    font-size: 26px; /* Sets font size for the main title. */
+    font-weight: 700; /* Makes the font bold. */
+}
+
+/* Styles for paragraphs in the service details section. */
+.service-details p {
+    font-size: 15px; /* Sets font size for paragraphs. */
+}
+
+/* Styles for lists in the service details section. */
+.service-details ul {
+    list-style: none; /* Removes default list style. */
+    padding: 0; /* Resets padding for the list. */
+    font-size: 15px; /* Sets font size for list items. */
+}
+
+    /* Styles for each list item in the service details section. */
+    .service-details ul li {
+        padding: 5px 0; /* Adds vertical space for list items. */
+        display: flex; /* Enables flexbox layout for list items. */
+        align-items: center; /* Centers items vertically. */
+    }
+
+    /* Styles for icons within list items. */
+    .service-details ul i {
+        font-size: 20px; /* Sets icon size. */
+        margin-right: 8px; /* Adds space between icon and text. */
+        color: var(--accent-color); /* Sets icon color using a variable. */
+    }
+
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+/*Login Form*/
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-form {
+    max-width: 400px;
+    width: 100%;
+    padding: 30px;
+    background-color: white; /* Light gray background */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.form-title {
+    text-align: center;
+    color: blue;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da; /* Lighter border color */
+    border-radius: 5px;
+}
+
+.login-btn-primary {
+    background-color: #007bff; /* Professional blue color */
+    border: none;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Button width adjusted for smaller screens */
+}
+
+    .login-btn-primary:hover {
+        background-color: #0056b3; /* Darker shade of blue on hover */
+        color: #ffffff;
+    }
+
+.error-message {
+    color: #dc3545; /* Error color */
+    font-size: 14px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-link {
+    color: #007bff; /* Professional blue color */
+    text-decoration: none;
+}
+
+    .text-link:hover {
+        text-decoration: underline;
+    }
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+    .login-form {
+        padding: 30px;
+    }
+}
+
+.password-toggle-container {
+    position: inline-block;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+    .password-toggle-container input[type="checkbox"] {
+        display: inline-block;
+    }
+
+.password-toggle-label {
+    cursor: pointer;
+}
+
+    .password-toggle-label span {
+        display: inline-block;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+/*Forgot Password*/
+.forgot-password-container {
+    margin-top: 50px;
+}
+
+.password-reset-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border: 1px solid #e9e9e9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.forgot-password-btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #fff;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+    .forgot-password-btn-primary:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 780px) {
+    .password-reset-form {
+        max-width: 100%;
+    }
+}
+
+/* Sign Up */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.register-form {
+    max-width: 500px;
+    width: 100%;
+    padding: 40px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 576px) {
+    .register-form {
+        padding: 20px; /* Reduce padding on smaller screens */
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .register-container {
+        padding: 10px; /* Add some breathing space */
+    }
+}
+
+
+.register-btn-primary {
+    background-color: #007bff; /* Professional blue color */
+    border: none;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .register-btn-primary:hover {
+        background-color: #0056b3; /* Darker shade of blue on hover */
+        color: white;
+    }

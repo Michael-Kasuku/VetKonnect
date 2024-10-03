@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "VzPlbDY+2M6giM3a9Y+o2YouscFlLuDTsELaeay5k98=",
+  "Source": "vetkonnect.Server",
+  "BasePath": "_content/vetkonnect.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\vetkonnect.client.esproj",
+      "Version": 2,
+      "Source": "vetkonnect.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,6 @@
+@vetkonnect.Server_HostAddress = http://localhost:5078
+
+GET {{vetkonnect.Server_HostAddress}}/vetkonnect/
+Accept: application/json
+
+###
