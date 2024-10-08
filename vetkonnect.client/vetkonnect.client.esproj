@@ -13,6 +13,8 @@
     <Folder Include="src\components\LandingPage\" />
     <Folder Include="src\components\LoginPage\" />
     <Folder Include="src\components\ForgotPasswordPage\" />
+    <Folder Include="src\components\Farmer\" />
+    <Folder Include="src\components\Vet\" />
     <Folder Include="src\components\SignUpPage\" />
     <Folder Include="src\components\PrivacyPolicyPage\" />
     <Folder Include="src\components\TermsOfServicePage\" />

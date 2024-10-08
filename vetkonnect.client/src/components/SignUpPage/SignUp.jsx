@@ -1,158 +1,483 @@
-import React, { Component } from 'react';
-import $ from 'jquery'; // Ensure you have jQuery for handling the JavaScript parts
+﻿import React, { Component } from 'react';
+import $ from 'jquery';
+import { Link } from 'react-router-dom';
+import {
+    TextField,
+    Button,
+    MenuItem,
+    InputAdornment,
+    IconButton,
+    Typography,
+    Stepper,
+    Step,
+    StepLabel,
+    Card,
+    CircularProgress,
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { addDays } from 'date-fns';
 
 class SignUp extends Component {
-    componentDidMount() {
-        $(document).ready(function () {
-            // Toggle password visibility
-            $('#show-password-toggle').click(function () {
-                const passwordField = $('#password');
-                const eyeIcon = $('#eye-icon');
+    state = {
+        activeStep: 0,
+        showPassword: false,
+        showConfirmPassword: false,
+        currentRole: 'Farmer',
+        formData: {
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            gender: '',
+            dateOfBirth: null,
+            email: '',
+            password: '',
+            confirmPassword: '',
+            kvbNumber: '',
+            nationalIdNo: '',
+        },
+        formErrors: {},
+        isLoading: false,
+    };
 
-                if (passwordField.attr('type') === 'password') {
-                    passwordField.attr('type', 'text');
-                    eyeIcon.removeClass('fa-eye').addClass('fa-eye-slash');
-                } else {
-                    passwordField.attr('type', 'password');
-                    eyeIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+    handleRoleChange = (event) => {
+        this.setState({ currentRole: event.target.value });
+        this.showRoleSpecificFields(event.target.value);
+    };
+
+    showRoleSpecificFields = (role) => {
+        if (role === 'Vet') {
+            $("#kvbNumber, #nationalIdNo").fadeIn();
+        } else {
+            $("#kvbNumber, #nationalIdNo").fadeOut();
+            this.setState(prevState => ({
+                formData: {
+                    ...prevState.formData,
+                    kvbNumber: '',
+                    nationalIdNo: '',
                 }
-            });
+            }));
+        }
+    };
 
-            $('#show-confirm-password-toggle').click(function () {
-                const confirmPasswordField = $('#confirm_password');
-                const confirmEyeIcon = $('#confirm-eye-icon');
+    handleInputChange = (event) => {
+        const { name, value } = event.target;
+        this.setState((prevState) => ({
+            formData: {
+                ...prevState.formData,
+                [name]: value,
+            },
+        }));
 
-                if (confirmPasswordField.attr('type') === 'password') {
-                    confirmPasswordField.attr('type', 'text');
-                    confirmEyeIcon.removeClass('fa-eye').addClass('fa-eye-slash');
-                } else {
-                    confirmPasswordField.attr('type', 'password');
-                    confirmEyeIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+        $(event.target).addClass('input-focus');
+        $(event.target).siblings('.error-message').fadeOut();
+    };
+
+    handleDateChange = (date) => {
+        this.setState((prevState) => ({
+            formData: {
+                ...prevState.formData,
+                dateOfBirth: date,
+            },
+        }));
+    };
+
+    togglePasswordVisibility = () => {
+        this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
+    };
+
+    toggleConfirmPasswordVisibility = () => {
+        this.setState((prevState) => ({ showConfirmPassword: !prevState.showConfirmPassword }));
+    };
+
+    handleNext = () => {
+        const { activeStep } = this.state;
+        const errors = this.validateFields(activeStep);
+
+        if (Object.keys(errors).length === 0) {
+            this.setState((prevState) => ({
+                activeStep: prevState.activeStep + 1,
+                formErrors: {},
+            }));
+        } else {
+            this.setState({ formErrors: errors });
+            for (const key in errors) {
+                $(`#${key}`).siblings('.error-message').fadeIn();
+            }
+        }
+    };
+
+    handleBack = () => {
+        this.setState((prevState) => ({ activeStep: prevState.activeStep - 1 }));
+    };
+
+    validateFields = (step) => {
+        const { formData, currentRole } = this.state;
+        const errors = {};
+
+        if (step === 0) {
+            if (!formData.firstName) errors.firstName = 'First Name is required';
+            if (!formData.lastName) errors.lastName = 'Last Name is required';
+        }
+
+        if (step === 1) {
+            if (!formData.phoneNumber) {
+                errors.phoneNumber = 'Phone Number is required';
+            } else {
+                const phoneRegex = /^(07\d{8}|01\d{8}|\+2547\d{8}|\+2541\d{8})$/;
+                if (!phoneRegex.test(formData.phoneNumber)) {
+                    errors.phoneNumber = 'Phone Number must be valid';
                 }
-            });
+            }
+            if (!formData.gender) errors.gender = 'Gender is required';
+            if (!formData.dateOfBirth) errors.dateOfBirth = 'Date of Birth is required';
+            if (currentRole === 'Vet') {
+                if (!formData.kvbNumber) errors.kvbNumber = 'KVB Number is required';
+                if (!formData.nationalIdNo) errors.nationalIdNo = 'National ID No is required';
+            }
+        }
 
-            // Show/Hide License No field based on role
-            $('#current_role').change(function () {
-                if ($(this).val() === 'Vet') {
-                    $('#license-field').show();
-                } else {
-                    $('#license-field').hide();
-                }
-            }).trigger('change');
+        if (step === 2) {
+            if (!formData.email) errors.email = 'Email is required';
+            if (!formData.password) errors.password = 'Password is required';
+            if (formData.password.length < 8) errors.password = 'Password must be at least 8 characters';
+            if (!formData.confirmPassword) errors.confirmPassword = 'Confirm Password is required';
+            if (formData.password !== formData.confirmPassword) {
+                errors.confirmPassword = 'Passwords do not match';
+            }
+        }
 
-            // Next button functionality
-            $('#nextBtn').click(function () {
-                $('#step1').hide(); // Hide Step 1
-                $('#step2').show(); // Show Step 2
-                $(this).hide(); // Hide the Next button
-            });
-
-            // Back button functionality
-            $('#backBtn').click(function () {
-                $('#step2').hide(); // Hide Step 2
-                $('#step1').show(); // Show Step 1
-                $('#nextBtn').show(); // Show the Next button again
-            });
-        });
-    }
+        return errors;
+    };
 
     render() {
-        return (
-            <section className="register-container d-flex justify-content-center align-items-center vh-100">
-                <div className="card shadow-lg p-4 register-form">
-                    <div className="card-body">
-                        <h2 className="form-title">Create a New Account</h2>
-                        <form method="post" id="registration-form">
-                            {/* Step 1: User Info */}
-                            <div className="form-step" id="step1">
-                                <div className="form-group mb-3">
-                                    <label htmlFor="first_name" className="form-label">
-                                        <i className="fas fa-user"></i> First Name
-                                    </label>
-                                    <input id="first_name" type="text" name="first_name" className="form-control" placeholder="Enter your first name" required />
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="last_name" className="form-label">
-                                        <i className="fas fa-user"></i> Last Name
-                                    </label>
-                                    <input id="last_name" type="text" name="last_name" className="form-control" placeholder="Enter your last name" required />
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="current_role" className="form-label">
-                                        <i className="fas fa-briefcase"></i> Choose Your Role
-                                    </label>
-                                    <select id="current_role" name="current_role" className="form-select" required>
-                                        <option value="Farmer" selected>Farmer</option>
-                                        <option value="Vet">Vet</option>
-                                    </select>
-                                </div>
-                                <div className="form-group mb-3" id="license-field" style={{ display: 'none' }}>
-                                    <label htmlFor="vet_license_no" className="form-label">
-                                        <i className="fas fa-id-badge"></i> Vet License No
-                                    </label>
-                                    <input id="vet_license_no" type="text" name="vet_license_no" className="form-control" placeholder="Enter your vet license number" />
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="phone_number" className="form-label">
-                                        <i className="fas fa-phone"></i> Phone Number
-                                    </label>
-                                    <input id="phone_number" type="text" name="phone_number" className="form-control" placeholder="Enter your phone number" required />
-                                </div>
-                            </div>
-                            <button type="button" className="btn btn-primary btn-block w-100" id="nextBtn">
-                                <i className="fas fa-arrow-right"></i> Next
-                            </button>
+        const { activeStep, showPassword, showConfirmPassword, currentRole, formData, formErrors, isLoading } = this.state;
+        const steps = ['Personal Information', 'Contact Information', 'Account Setup', 'Review Information'];
 
-                            {/* Step 2: Account Details */}
-                            <div className="form-step" id="step2" style={{ display: 'none' }}>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="email_address" className="form-label">
-                                        <i className="fas fa-envelope"></i> Email Address
-                                    </label>
-                                    <input id="email_address" type="email" name="email_address" className="form-control" placeholder="Enter your email address" required />
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label htmlFor="password" className="form-label">
-                                        <i className="fas fa-lock"></i> Password
-                                    </label>
-                                    <div className="input-group">
-                                        <input id="password" type="password" name="password" className="form-control" placeholder="Enter your password" required />
-                                        <span className="input-group-text" id="show-password-toggle">
-                                            <i className="fas fa-eye" id="eye-icon"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="form-group mb-4">
-                                    <label htmlFor="confirm_password" className="form-label">
-                                        <i className="fas fa-lock"></i> Confirm Password
-                                    </label>
-                                    <div className="input-group">
-                                        <input id="confirm_password" type="password" name="confirm_password" className="form-control" placeholder="Re-enter your password" required />
-                                        <span className="input-group-text" id="show-confirm-password-toggle">
-                                            <i className="fas fa-eye" id="confirm-eye-icon"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <button type="button" className="btn btn-secondary" id="backBtn">
-                                        <i className="fas fa-arrow-left"></i> Back
-                                    </button>
-                                    <button type="submit" className="btn btn-primary">
-                                        <i className="fas fa-user-plus"></i> Register
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <div className="mt-3 text-center">
-                            <p>
-                                Already have an account? <a href="/login" className="text-decoration-none">Log In</a>
-                            </p>
+        return (
+            <section style={styles.container}>
+                <Card style={{ ...styles.card, opacity: isLoading ? 0.5 : 1 }}>
+                    {isLoading && (
+                        <div style={styles.loadingOverlay}>
+                            <CircularProgress />
                         </div>
-                    </div>
-                </div>
+                    )}
+                    <Typography variant="h4" style={styles.title}>
+                        Create a New Account
+                    </Typography>
+
+                    <Stepper activeStep={activeStep} alternativeLabel style={styles.stepper}>
+                        {steps.map((label) => (
+                            <Step key={label}>
+                                <StepLabel>{label}</StepLabel>
+                            </Step>
+                        ))}
+                    </Stepper>
+
+                    <form id="registration-form">
+                        {activeStep === 0 && this.renderStepOne()}
+                        {activeStep === 1 && this.renderStepTwo()}
+                        {activeStep === 2 && this.renderStepThree()}
+                        {activeStep === 3 && this.renderReviewInformation()}
+
+                        <div style={styles.buttonContainer}>
+                            {activeStep > 0 && (
+                                <Button onClick={this.handleBack} variant="contained" style={styles.backButton}>
+                                    Back
+                                </Button>
+                            )}
+                            <Button
+                                onClick={this.handleNext}
+                                variant="contained"
+                                style={styles.nextButton}
+                                disabled={isLoading}
+                            >
+                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                            </Button>
+                        </div>
+                    </form>
+                </Card>
             </section>
         );
     }
+
+    renderStepOne() {
+        const { formData, formErrors, currentRole } = this.state;
+
+        return (
+            <>
+                <TextField
+                    label="First Name"
+                    name="firstName"
+                    id="firstName"
+                    value={formData.firstName}
+                    onChange={this.handleInputChange}
+                    fullWidth
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    error={!!formErrors.firstName}
+                    helperText={formErrors.firstName}
+                />
+                <TextField
+                    label="Last Name"
+                    name="lastName"
+                    id="lastName"
+                    value={formData.lastName}
+                    onChange={this.handleInputChange}
+                    fullWidth
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    error={!!formErrors.lastName}
+                    helperText={formErrors.lastName}
+                />
+                <TextField
+                    label="Choose Your Role"
+                    name="currentRole"
+                    select
+                    fullWidth
+                    margin="normal"
+                    value={currentRole}
+                    onChange={this.handleRoleChange}
+                    required
+                    variant="outlined"
+                >
+                    <MenuItem value="Farmer">Farmer</MenuItem>
+                    <MenuItem value="Vet">Vet</MenuItem>
+                </TextField>
+            </>
+        );
+    }
+
+    renderStepTwo() {
+        const { formData, formErrors, currentRole } = this.state;
+
+        return (
+            <>
+                <TextField
+                    label="Phone Number"
+                    name="phoneNumber"
+                    id="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={this.handleInputChange}
+                    fullWidth
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    error={!!formErrors.phoneNumber}
+                    helperText={formErrors.phoneNumber}
+                />
+                <TextField
+                    label="Gender"
+                    name="gender"
+                    id="gender"
+                    select
+                    fullWidth
+                    margin="normal"
+                    value={formData.gender}
+                    onChange={this.handleInputChange}
+                    required
+                    variant="outlined"
+                    error={!!formErrors.gender}
+                    helperText={formErrors.gender}
+                >
+                    <MenuItem value="Male">Male</MenuItem>
+                    <MenuItem value="Female">Female</MenuItem>
+                </TextField>
+
+                <DatePicker
+                    selected={formData.dateOfBirth}
+                    onChange={this.handleDateChange}
+                    maxDate={addDays(new Date(), 0)}
+                    showYearDropdown
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="Date of Birth"
+                    customInput={<TextField
+                        id="dateOfBirth"
+                        label="Date of Birth"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        error={!!formErrors.dateOfBirth}
+                        helperText={formErrors.dateOfBirth}
+                    />}
+                />
+
+                {currentRole === 'Vet' && (
+                    <>
+                        <TextField
+                            label="KVB Number"
+                            name="kvbNumber"
+                            id="kvbNumber"
+                            value={formData.kvbNumber}
+                            onChange={this.handleInputChange}
+                            fullWidth
+                            margin="normal"
+                            required
+                            variant="outlined"
+                            error={!!formErrors.kvbNumber}
+                            helperText={formErrors.kvbNumber}
+                        />
+                        <TextField
+                            label="National ID No"
+                            name="nationalIdNo"
+                            id="nationalIdNo"
+                            value={formData.nationalIdNo}
+                            onChange={this.handleInputChange}
+                            fullWidth
+                            margin="normal"
+                            required
+                            variant="outlined"
+                            error={!!formErrors.nationalIdNo}
+                            helperText={formErrors.nationalIdNo}
+                        />
+                    </>
+                )}
+            </>
+        );
+    }
+
+    renderStepThree() {
+        const { formData, formErrors } = this.state;
+
+        return (
+            <>
+                <TextField
+                    label="Email"
+                    name="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={this.handleInputChange}
+                    fullWidth
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    error={!!formErrors.email}
+                    helperText={formErrors.email}
+                />
+                <TextField
+                    label="Password"
+                    name="password"
+                    type={this.state.showPassword ? 'text' : 'password'}
+                    id="password"
+                    value={formData.password}
+                    onChange={this.handleInputChange}
+                    fullWidth
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    error={!!formErrors.password}
+                    helperText={formErrors.password}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={this.togglePasswordVisibility}>
+                                    {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                <TextField
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    type={this.state.showConfirmPassword ? 'text' : 'password'}
+                    id="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={this.handleInputChange}
+                    fullWidth
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    error={!!formErrors.confirmPassword}
+                    helperText={formErrors.confirmPassword}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={this.toggleConfirmPasswordVisibility}>
+                                    {this.state.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+            </>
+        );
+    }
+
+    renderReviewInformation() {
+        const { formData } = this.state;
+
+        return (
+            <>
+                <Typography variant="h6" style={styles.reviewTitle}>
+                    Review Your Information
+                </Typography>
+                <Typography variant="body1"><strong>First Name:</strong> {formData.firstName}</Typography>
+                <Typography variant="body1"><strong>Last Name:</strong> {formData.lastName}</Typography>
+                <Typography variant="body1"><strong>Phone Number:</strong> {formData.phoneNumber}</Typography>
+                <Typography variant="body1"><strong>Gender:</strong> {formData.gender}</Typography>
+                <Typography variant="body1"><strong>Date of Birth:</strong> {formData.dateOfBirth?.toLocaleDateString()}</Typography>
+                <Typography variant="body1"><strong>Email:</strong> {formData.email}</Typography>
+                {this.state.currentRole === 'Vet' && (
+                    <>
+                        <Typography variant="body1"><strong>KVB Number:</strong> {formData.kvbNumber}</Typography>
+                        <Typography variant="body1"><strong>National ID No:</strong> {formData.nationalIdNo}</Typography>
+                    </>
+                )}
+            </>
+        );
+    }
 }
+
+const styles = {
+    container: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        background: '#f5f5f5',
+    },
+    card: {
+        padding: '20px',
+        maxWidth: '600px',
+        width: '100%',
+    },
+    title: {
+        marginBottom: '20px',
+        textAlign: 'center',
+    },
+    stepper: {
+        marginBottom: '20px',
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '20px',
+    },
+    backButton: {
+        backgroundColor: 'green',
+    },
+    nextButton: {
+        backgroundColor: 'blue',
+        color: 'white',
+    },
+    loadingOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    },
+    reviewTitle: {
+        marginBottom: '15px',
+    },
+};
 
 export default SignUp;

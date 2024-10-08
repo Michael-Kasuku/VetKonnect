@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\signuppage\\signup.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\signuppage\\signup.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\farmer\\verticalnavbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\farmer\\verticalnavbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +18,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SignUp.jsx",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\SignUpPage\\SignUp.jsx",
+              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\SignUpPage\\SignUp.jsx",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\SignUpPage\\SignUp.jsx",
+              "RelativeToolTip": "vetkonnect.client\\src\\components\\SignUpPage\\SignUp.jsx",
+              "ViewState": "AgIAANQBAAAAAAAAAAAAAOMBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-10-08T06:00:59.659Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VerticalNavBar.jsx",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Farmer\\VerticalNavBar.jsx",
+              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\Farmer\\VerticalNavBar.jsx",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Farmer\\VerticalNavBar.jsx",
+              "RelativeToolTip": "vetkonnect.client\\src\\components\\Farmer\\VerticalNavBar.jsx",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAAAI4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-10-08T05:49:11.779Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"

@@ -12,6 +12,8 @@ import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage';
+import VetDashboard from './components/VetDashboard';
+import FarmerDashboard from './components/FarmerDashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root')); // Create root
 
@@ -25,6 +27,8 @@ root.render(
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/forgot" element={<ForgotPasswordPage />} />
+                <Route path="/vet" element={<VetDashboard />} />
+                <Route path="/farmer" element={<FarmerDashboard />} />
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
