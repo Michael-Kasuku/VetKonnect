@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Routes, Route } from 'react-router-dom'; // Import Routes and Route
 import HorizontalNavBar from './Farmer/HorizontalNavBar';
 import VerticalNavBar from './Farmer/VerticalNavBar';
 import Dashboard from './Farmer/Dashboard'
@@ -59,7 +60,9 @@ class FarmerDashboard extends Component {
                     <VerticalNavBar />
                 </aside>
                 <main style={mainContentStyle}>
-                    <Dashboard />
+                    <Routes>
+                        <Route path="" element={<Dashboard />} /> {/* Default Dashboard component */}
+                    </Routes>
                 </main>
             </div>
         );

@@ -27,8 +27,8 @@ root.render(
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/forgot" element={<ForgotPasswordPage />} />
-                <Route path="/vet" element={<VetDashboard />} />
-                <Route path="/farmer" element={<FarmerDashboard />} />
+                <Route path="/vet/*" element={<VetDashboard />} /> {/* Use wildcard for nested routes */}
+                <Route path="/farmer/*" element={<FarmerDashboard />} /> {/* Use wildcard for nested routes */}
             </Routes>
         </BrowserRouter>
     </React.StrictMode>
