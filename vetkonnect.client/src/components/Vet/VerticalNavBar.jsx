@@ -64,43 +64,43 @@ class VerticalNavBar extends Component {
         const navItems = [
             {
                 text: "Dashboard",
-                icon: <Home />,
-                link: "/vet",
+                icon: <Home fontSize="large" style={{ color: '#1976d2' }} />, // Updated color and size
+                link: "",
                 subItems: null,
             },
             {
                 text: "Vet Directory",
-                icon: <Folder />,
+                icon: <Folder fontSize="large" style={{ color: '#1976d2' }} />,
                 link: null,
                 subItems: [
-                    { text: "Appointments", icon: <Event />, link: "/appointments" },
-                    { text: "Vet Profiles", icon: <Assignment />, link: "/vet-profiles" },
-                    { text: "Available Services", icon: <MedicalServices />, link: "/available-services" },
+                    { text: "Appointments", icon: <Event fontSize="large" style={{ color: '#1976d2' }} />, link: "appointments" },
+                    { text: "Vet Profiles", icon: <Assignment fontSize="large" style={{ color: '#1976d2' }} />, link: "vet-profiles" },
                 ],
             },
             {
                 text: "Agrovet Hub",
-                icon: <ShoppingCart />,
+                icon: <ShoppingCart fontSize="large" style={{ color: '#1976d2' }} />,
                 link: null,
                 subItems: [
-                    { text: "Products", icon: <ListAlt />, link: "/products" },
-                    { text: "Suppliers", icon: <Group />, link: "/suppliers" },
+                    { text: "Products", icon: <ListAlt fontSize="large" style={{ color: '#1976d2' }} />, link: "products" },
+                    { text: "Order Management", icon: <ListAlt fontSize="large" style={{ color: '#1976d2' }} />, link: "order-management" }, // New subitem added
                 ],
             },
             {
                 text: "Educational Resources",
-                icon: <School />,
+                icon: <School fontSize="large" style={{ color: '#1976d2' }} />,
                 link: null,
                 subItems: [
-                    { text: "Blogs", icon: <Article />, link: "/blogs" },
+                    { text: "Blogs", icon: <Article fontSize="large" style={{ color: '#1976d2' }} />, link: "blogs" },
+                    { text: "Webinars", icon: <Event fontSize="large" style={{ color: '#1976d2' }} />, link: "webinars" },
                 ],
             },
             {
                 text: "Community Forum",
-                icon: <Forum />,
+                icon: <Forum fontSize="large" style={{ color: '#1976d2' }} />,
                 link: null,
                 subItems: [
-                    { text: "Discussions", icon: <Chat />, link: "/discussions" },
+                    { text: "Discussions", icon: <Chat fontSize="large" style={{ color: '#1976d2' }} />, link: "discussions" },
                 ],
             },
         ];
@@ -110,8 +110,12 @@ class VerticalNavBar extends Component {
                 <div style={{ height: '60px' }} /> {/* Space above the profile section */}
                 {navItems.map((item, index) => (
                     <React.Fragment key={index}>
-                        <ListItem button onClick={() => item.subItems && this.toggleCollapse(item.text.replace(/\s+/g, '').toLowerCase())}>
-                            <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItem
+                            button
+                            onClick={() => item.subItems && this.toggleCollapse(item.text.replace(/\s+/g, '').toLowerCase())}
+                            style={{ '&:hover': { backgroundColor: '#f5f5f5' } }} // Hover effect
+                        >
+                            <ListItemIcon style={{ minWidth: '40px' }}>{item.icon}</ListItemIcon> {/* Consistent icon width */}
                             <ListItemText primary={item.text} />
                             {item.subItems && (openSections[item.text.replace(/\s+/g, '').toLowerCase()] ? <ExpandLess /> : <ExpandMore />)}
                         </ListItem>
@@ -120,7 +124,7 @@ class VerticalNavBar extends Component {
                                 <List component="div" disablePadding>
                                     {item.subItems.map((subItem, subIndex) => (
                                         <ListItem button key={subIndex} component={Link} to={subItem.link} style={{ paddingLeft: '40px' }}>
-                                            <ListItemIcon>{subItem.icon}</ListItemIcon>
+                                            <ListItemIcon style={{ minWidth: '40px' }}>{subItem.icon}</ListItemIcon>
                                             <ListItemText primary={subItem.text} />
                                         </ListItem>
                                     ))}
@@ -144,9 +148,6 @@ class VerticalNavBar extends Component {
                         <IconButton color="inherit" edge="start" onClick={this.handleDrawerToggle} style={{ marginRight: '16px', display: { xs: 'none', sm: 'block' } }}>
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" noWrap>
-                            Vet Konnect
-                        </Typography>
                     </Toolbar>
                 </AppBar>
 

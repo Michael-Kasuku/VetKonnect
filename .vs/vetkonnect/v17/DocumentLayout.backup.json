@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\vet\\verticalnavbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\vet\\horizontalnavbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\vet\\horizontalnavbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\vetdashboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\vetdashboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\vet\\dashboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\vet\\dashboard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\vet\\products.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\vet\\products.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\app.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,20 +26,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Dashboard.jsx",
-              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Vet\\Dashboard.jsx",
-              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\Vet\\Dashboard.jsx",
-              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Vet\\Dashboard.jsx",
-              "RelativeToolTip": "vetkonnect.client\\src\\components\\Vet\\Dashboard.jsx",
-              "ViewState": "AgIAAH0AAAAAAAAAAAAowJIAAAAAAAAAAAAAAA==",
+              "Title": "App.jsx",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\App.jsx",
+              "RelativeDocumentMoniker": "vetkonnect.client\\src\\App.jsx",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\App.jsx",
+              "RelativeToolTip": "vetkonnect.client\\src\\App.jsx",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAowBgAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-17T14:26:04.072Z",
-              "IsPinned": true,
+              "WhenOpened": "2024-10-18T06:34:37.311Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VetDashboard.jsx",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\VetDashboard.jsx",
+              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\VetDashboard.jsx",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\VetDashboard.jsx",
+              "RelativeToolTip": "vetkonnect.client\\src\\components\\VetDashboard.jsx",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAAAGwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-10-18T13:34:59.176Z",
               "EditorCaption": ""
             },
             {
@@ -50,35 +62,22 @@
               "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\Vet\\VerticalNavBar.jsx",
               "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Vet\\VerticalNavBar.jsx",
               "RelativeToolTip": "vetkonnect.client\\src\\components\\Vet\\VerticalNavBar.jsx",
-              "ViewState": "AgIAAOUAAAAAAAAAAAAAAO0AAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAEMAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-17T14:26:52.802Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HorizontalNavBar.jsx",
-              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Vet\\HorizontalNavBar.jsx",
-              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\Vet\\HorizontalNavBar.jsx",
-              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Vet\\HorizontalNavBar.jsx",
-              "RelativeToolTip": "vetkonnect.client\\src\\components\\Vet\\HorizontalNavBar.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-17T14:26:15.983Z",
+              "WhenOpened": "2024-10-18T13:33:52.51Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "VetDashboard.jsx",
-              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\VetDashboard.jsx",
-              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\VetDashboard.jsx",
-              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\VetDashboard.jsx",
-              "RelativeToolTip": "vetkonnect.client\\src\\components\\VetDashboard.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFQAAAAAAAAAAAAAAA==",
+              "Title": "Products.jsx",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Vet\\Products.jsx",
+              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\Vet\\Products.jsx",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Vet\\Products.jsx",
+              "RelativeToolTip": "vetkonnect.client\\src\\components\\Vet\\Products.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2024-10-17T13:25:56.549Z",
+              "WhenOpened": "2024-10-18T10:31:15.685Z",
               "EditorCaption": ""
             },
             {
