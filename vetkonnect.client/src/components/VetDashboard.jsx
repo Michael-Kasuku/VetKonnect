@@ -105,7 +105,7 @@ class VetDashboard extends Component {
 
                         <main style={styles.mainContent}>
                             <Routes>
-                                <Route path="" element={<Dashboard />} />
+                                <Route path="/" element={<Dashboard />} />
                                 <Route path="/appointments" element={<Appointments />} />
                                 <Route path="/vet-profiles" element={<VetProfiles />} />
                                 <Route path="/products" element={<Products />} />

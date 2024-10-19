@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import {
+    AppBar,
+    Toolbar,
+    IconButton,
+    Drawer,
     List,
     ListItem,
     ListItemText,
     Collapse,
-    Avatar,
-    Divider,
     ListItemIcon,
-    Typography
+    Typography,
 } from '@mui/material';
 import {
+    Menu as MenuIcon,
     ExpandLess,
     ExpandMore,
     Home,
@@ -23,196 +26,150 @@ import {
     Event,
     Assignment,
     MedicalServices,
-    Report,
-    Chat
+    Chat,
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import $ from 'jquery'; // Import jQuery
+import $ from 'jquery'; // jQuery for animations
 
 class VerticalNavBar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            openVetDirectory: false,
-            openAgrovetHub: false,
-            openEducationalResources: false,
-            openCommunityForum: false,
-        };
-    }
+    state = {
+        openSections: {
+            vetDirectory: false,
+            agrovetHub: false,
+            educationalResources: false,
+            communityForum: false,
+        },
+        mobileOpen: false,
+    };
 
     toggleCollapse = (section) => {
         this.setState((prevState) => ({
-            [section]: !prevState[section],
+            openSections: {
+                ...prevState.openSections,
+                [section]: !prevState.openSections[section],
+            },
         }), () => {
-            // jQuery for collapse effect
             const sectionElement = $(`.${section}`);
-            if (this.state[section]) {
-                sectionElement.slideDown(); // Show the section
-            } else {
-                sectionElement.slideUp(); // Hide the section
-            }
+            this.state.openSections[section] ? sectionElement.slideDown() : sectionElement.slideUp();
         });
     };
 
-    render() {
-        const { openVetDirectory, openAgrovetHub, openEducationalResources, openCommunityForum } = this.state;
+    handleDrawerToggle = () => {
+        this.setState((prevState) => ({ mobileOpen: !prevState.mobileOpen }));
+    };
+
+    renderNavContent = () => {
+        const { openSections } = this.state;
+
+        const navItems = [
+            {
+                text: "Dashboard",
+                icon: <Home fontSize="large" style={{ color: '#1976d2' }} />, // Updated color and size
+                link: "/",
+                subItems: null,
+            },
+            {
+                text: "Vet Directory",
+                icon: <Folder fontSize="large" style={{ color: '#1976d2' }} />,
+                link: null,
+                subItems: [
+                    { text: "Appointments", icon: <Event fontSize="large" style={{ color: '#1976d2' }} />, link: "appointments" },
+                    { text: "Vet Profiles", icon: <Assignment fontSize="large" style={{ color: '#1976d2' }} />, link: "vet-profiles" },
+                ],
+            },
+            {
+                text: "Agrovet Hub",
+                icon: <ShoppingCart fontSize="large" style={{ color: '#1976d2' }} />,
+                link: null,
+                subItems: [
+                    { text: "Products", icon: <ListAlt fontSize="large" style={{ color: '#1976d2' }} />, link: "products" },
+                    { text: "Order Management", icon: <ListAlt fontSize="large" style={{ color: '#1976d2' }} />, link: "order-management" }, // New subitem added
+                ],
+            },
+            {
+                text: "Educational Resources",
+                icon: <School fontSize="large" style={{ color: '#1976d2' }} />,
+                link: null,
+                subItems: [
+                    { text: "Blogs", icon: <Article fontSize="large" style={{ color: '#1976d2' }} />, link: "blogs" },
+                    { text: "Webinars", icon: <Event fontSize="large" style={{ color: '#1976d2' }} />, link: "webinars" },
+                ],
+            },
+            {
+                text: "Community Forum",
+                icon: <Forum fontSize="large" style={{ color: '#1976d2' }} />,
+                link: null,
+                subItems: [
+                    { text: "Discussions", icon: <Chat fontSize="large" style={{ color: '#1976d2' }} />, link: "discussions" },
+                ],
+            },
+        ];
 
         return (
-            <nav className="sidebar" style={{ width: '280px', backgroundColor: '#f7f7f7' }}>
-                <List component="nav" disablePadding>
-                    {/* Profile Section */}
-                    <ListItem className="nav-profile" style={{ padding: '20px 15px' }}>
-                        <Avatar alt="Michael Kasuku" src="assets/img/team/kasuku.jpg" sx={{ width: 56, height: 56 }} />
-                        <div style={{ marginLeft: '15px' }}>
-                            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                                Michael Kasuku
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary">
-                                Project Manager
-                            </Typography>
-                        </div>
-                    </ListItem>
-                    <Divider />
+            <List component="nav" disablePadding style={{ padding: '0', overflowY: 'auto' }}>
+                <div style={{ height: '60px' }} /> {/* Space above the profile section */}
+                {navItems.map((item, index) => (
+                    <React.Fragment key={index}>
+                        <ListItem
+                            button
+                            onClick={() => item.subItems && this.toggleCollapse(item.text.replace(/\s+/g, '').toLowerCase())}
+                            style={{ '&:hover': { backgroundColor: '#f5f5f5' } }} // Hover effect
+                        >
+                            <ListItemIcon style={{ minWidth: '40px' }}>{item.icon}</ListItemIcon> {/* Consistent icon width */}
+                            <ListItemText primary={item.text} />
+                            {item.subItems && (openSections[item.text.replace(/\s+/g, '').toLowerCase()] ? <ExpandLess /> : <ExpandMore />)}
+                        </ListItem>
+                        {item.subItems && (
+                            <Collapse className={item.text.replace(/\s+/g, '').toLowerCase()} in={openSections[item.text.replace(/\s+/g, '').toLowerCase()]} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    {item.subItems.map((subItem, subIndex) => (
+                                        <ListItem button key={subIndex} component={Link} to={subItem.link} style={{ paddingLeft: '40px' }}>
+                                            <ListItemIcon style={{ minWidth: '40px' }}>{subItem.icon}</ListItemIcon>
+                                            <ListItemText primary={subItem.text} />
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Collapse>
+                        )}
+                    </React.Fragment>
+                ))}
+            </List>
+        );
+    };
 
-                    {/* Dashboard */}
-                    <ListItem button component={Link} to="/vet">
-                        <ListItemIcon>
-                            <Home />
-                        </ListItemIcon>
-                        <ListItemText primary="Dashboard" />
-                    </ListItem>
+    render() {
+        const { mobileOpen } = this.state;
 
-                    {/* Vet Directory */}
-                    <ListItem button onClick={() => this.toggleCollapse('openVetDirectory')}>
-                        <ListItemIcon>
-                            <Folder />
-                        </ListItemIcon>
-                        <ListItemText primary="Vet Directory" />
-                        {openVetDirectory ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse className="openVetDirectory" in={openVetDirectory} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItem button component={Link} to="/appointments">
-                                <ListItemIcon>
-                                    <Event />
-                                </ListItemIcon>
-                                <ListItemText primary="Appointments" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/vet-profiles">
-                                <ListItemIcon>
-                                    <Assignment />
-                                </ListItemIcon>
-                                <ListItemText primary="Vet Profiles" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/available-services">
-                                <ListItemIcon>
-                                    <MedicalServices />
-                                </ListItemIcon>
-                                <ListItemText primary="Available Services" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/reports">
-                                <ListItemIcon>
-                                    <Report />
-                                </ListItemIcon>
-                                <ListItemText primary="Reports" />
-                            </ListItem>
-                        </List>
-                    </Collapse>
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
+                {/* AppBar */}
+                <AppBar position="fixed" style={{ zIndex: 1201 }}>
+                    <Toolbar>
+                        <IconButton color="inherit" edge="start" onClick={this.handleDrawerToggle} style={{ marginRight: '16px', display: { xs: 'none', sm: 'block' } }}>
+                            <MenuIcon />
+                        </IconButton>
+                    </Toolbar>
+                </AppBar>
 
-                    {/* Agrovet Hub */}
-                    <ListItem button onClick={() => this.toggleCollapse('openAgrovetHub')}>
-                        <ListItemIcon>
-                            <ShoppingCart />
-                        </ListItemIcon>
-                        <ListItemText primary="Agrovet Hub" />
-                        {openAgrovetHub ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse className="openAgrovetHub" in={openAgrovetHub} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItem button component={Link} to="/products">
-                                <ListItemIcon>
-                                    <ListAlt />
-                                </ListItemIcon>
-                                <ListItemText primary="Products" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/suppliers">
-                                <ListItemIcon>
-                                    <Group />
-                                </ListItemIcon>
-                                <ListItemText primary="Suppliers" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/order-management">
-                                <ListItemIcon>
-                                    <Assignment />
-                                </ListItemIcon>
-                                <ListItemText primary="Order Management" />
-                            </ListItem>
-                        </List>
-                    </Collapse>
+                {/* Drawer */}
+                <Drawer
+                    variant="temporary"
+                    open={mobileOpen}
+                    onClose={this.handleDrawerToggle}
+                    ModalProps={{ keepMounted: true }}
+                    style={{ display: { xs: 'block', sm: 'none' }, '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 280, overflowY: 'auto' } }}
+                >
+                    {this.renderNavContent()}
+                </Drawer>
 
-                    {/* Educational Resources */}
-                    <ListItem button onClick={() => this.toggleCollapse('openEducationalResources')}>
-                        <ListItemIcon>
-                            <School />
-                        </ListItemIcon>
-                        <ListItemText primary="Educational Resources" />
-                        {openEducationalResources ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse className="openEducationalResources" in={openEducationalResources} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItem button component={Link} to="/blogs">
-                                <ListItemIcon>
-                                    <Article />
-                                </ListItemIcon>
-                                <ListItemText primary="Blogs" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/webinars">
-                                <ListItemIcon>
-                                    <Event />
-                                </ListItemIcon>
-                                <ListItemText primary="Webinars" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/research-papers">
-                                <ListItemIcon>
-                                    <ListAlt />
-                                </ListItemIcon>
-                                <ListItemText primary="Research Papers" />
-                            </ListItem>
-                        </List>
-                    </Collapse>
-
-                    {/* Community Forum */}
-                    <ListItem button onClick={() => this.toggleCollapse('openCommunityForum')}>
-                        <ListItemIcon>
-                            <Forum />
-                        </ListItemIcon>
-                        <ListItemText primary="Community Forum" />
-                        {openCommunityForum ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse className="openCommunityForum" in={openCommunityForum} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItem button component={Link} to="/discussions">
-                                <ListItemIcon>
-                                    <Chat />
-                                </ListItemIcon>
-                                <ListItemText primary="Discussions" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/communities">
-                                <ListItemIcon>
-                                    <Group />
-                                </ListItemIcon>
-                                <ListItemText primary="Communities" />
-                            </ListItem>
-                            <ListItem button component={Link} to="/forum-topics">
-                                <ListItemIcon>
-                                    <Assignment />
-                                </ListItemIcon>
-                                <ListItemText primary="Forum Topics" />
-                            </ListItem>
-                        </List>
-                    </Collapse>
-                </List>
-            </nav>
+                <Drawer
+                    variant="permanent"
+                    style={{ display: { xs: 'none', sm: 'block' }, '& .MuiDrawer-paper': { width: 280, boxSizing: 'border-box', overflowY: 'auto' } }}
+                    open
+                >
+                    {this.renderNavContent()}
+                </Drawer>
+            </div>
         );
     }
 }
