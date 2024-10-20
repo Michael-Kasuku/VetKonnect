@@ -53,24 +53,31 @@ class ForgotPassword extends React.Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                     minHeight: '100vh',
-                    bgcolor: '#fff',
-                    p: 2
+                    bgcolor: '#f0f2f5', // Light Facebook-style background
+                    p: 2,
                 }}
             >
                 <Box
                     sx={{
                         bgcolor: '#fff',
                         p: 4,
-                        borderRadius: 2,
-                        boxShadow: 3,
-                        textAlign: 'center'
+                        borderRadius: 3,
+                        boxShadow: 2,
+                        textAlign: 'center',
+                        width: '100%',
                     }}
                 >
-                    <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold', color: '#333' }}>
+                    <Typography
+                        variant="h5"
+                        sx={{ mb: 2, fontWeight: 'bold', color: '#1877f2' }} // Facebook blue color
+                    >
                         Forgot Password
                     </Typography>
-                    <Typography variant="body2" sx={{ mb: 3, color: '#666' }}>
-                        Enter your registered email to reset your password.
+                    <Typography
+                        variant="body2"
+                        sx={{ mb: 3, color: '#4b4f56' }} // Light gray text
+                    >
+                        Enter your email address and we'll send you a link to reset your password.
                     </Typography>
 
                     {submissionError && (
@@ -101,17 +108,29 @@ class ForgotPassword extends React.Component {
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
                             fullWidth
-                            sx={{ mt: 2 }}
+                            sx={{
+                                mt: 2,
+                                bgcolor: '#1877f2', // Facebook blue
+                                color: '#fff',
+                                borderRadius: '20px',
+                                textTransform: 'none',
+                                '&:hover': {
+                                    bgcolor: '#166fe5',
+                                },
+                            }}
                             disabled={isLoading}
                         >
-                            {isLoading ? <CircularProgress size={24} /> : 'Reset Password'}
+                            {isLoading ? <CircularProgress size={24} sx={{ color: '#fff' }} /> : 'Reset Password'}
                         </Button>
                     </form>
+
                     <Box sx={{ mt: 2 }}>
-                        <Typography variant="body2" sx={{ color: '#666' }}>
-                            Remembered your password? <Link to="/login">Back to Login</Link>
+                        <Typography variant="body2" sx={{ color: '#4b4f56' }}>
+                            Remember your password?{' '}
+                            <Link to="/login" style={{ color: '#1877f2', textDecoration: 'none' }}>
+                                Back to Login
+                            </Link>
                         </Typography>
                     </Box>
                 </Box>

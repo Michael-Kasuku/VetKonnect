@@ -25,6 +25,8 @@ namespace vetkonnect.Server.Models
         public DbSet<DeliveryPoint> DeliveryPoints { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<KvbMember> KvbMembers { get; set; }
+        public DbSet<KvbNumber> KvbNumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -147,6 +149,12 @@ namespace vetkonnect.Server.Models
                 .HasForeignKey(dp => dp.AddedBy)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // KvbMember and KvbNumber relationship
+            modelBuilder.Entity<KvbNumber>()
+                .HasOne<KvbMember>()
+                .WithMany()
+                .HasForeignKey(u => u.KvbMemberId)
+                .OnDelete(DeleteBehavior.Restrict); // Adjust as per your requirement
             // Add additional constraints, default values, and indices as necessary
         }
 

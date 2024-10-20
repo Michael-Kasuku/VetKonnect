@@ -11,7 +11,9 @@ import {
     CircularProgress,
     InputAdornment,
     IconButton,
-    Alert
+    Alert,
+    Fade,
+    Collapse
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import $ from 'jquery';
@@ -24,16 +26,13 @@ class Login extends React.Component {
             isLoading: false,
             email: '',
             password: '',
-            formErrors: {
-                email: '',
-                password: ''
-            },
-            submissionError: ''
+            formErrors: { email: '', password: '' },
+            submissionError: '',
         };
     }
 
     togglePasswordVisibility = () => {
-        this.setState(prevState => ({ showPassword: !prevState.showPassword }));
+        this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
     };
 
     validateForm = () => {
@@ -41,19 +40,17 @@ class Login extends React.Component {
         let emailError = '';
         let passwordError = '';
 
-        // Basic email validation
         if (!email || !/\S+@\S+\.\S+/.test(email)) {
             emailError = 'Please enter a valid email address.';
         }
 
-        // Basic password validation
         if (!password || password.length < 6) {
             passwordError = 'Password must be at least 6 characters long.';
         }
 
         this.setState({
             formErrors: { email: emailError, password: passwordError },
-            submissionError: ''  // Clear previous submission error
+            submissionError: '',
         });
 
         return !emailError && !passwordError;
@@ -65,16 +62,14 @@ class Login extends React.Component {
 
         this.setState({ isLoading: true });
 
-        // Simulating a login request
         setTimeout(() => {
             this.setState({ isLoading: false });
-            // Simulated failure for demonstration purposes
+
             if (this.state.email !== 'test@example.com' || this.state.password !== 'password123') {
                 this.setState({ submissionError: 'Invalid email or password. Please try again.' });
-                $('.error-message').fadeIn(); // jQuery for showing the error message
+                $('.error-message').fadeIn();
             } else {
                 alert('Login successful');
-                // Redirect or perform any other action after successful login
             }
         }, 2000);
     };
@@ -82,10 +77,7 @@ class Login extends React.Component {
     handleInputChange = (e) => {
         const { name, value } = e.target;
         this.setState({ [name]: value }, () => {
-            // Hide error message when the user starts typing
-            if (value) {
-                $('.error-message').fadeOut(); // jQuery for hiding the error message
-            }
+            if (value) $('.error-message').fadeOut();
         });
     };
 
@@ -94,15 +86,15 @@ class Login extends React.Component {
 
         return (
             <Container
-                component="section"
+                component="main"
                 maxWidth="xs"
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     minHeight: '100vh',
-                    bgcolor: '#fff',  // Changed to a grey background
-                    p: 2
+                    bgcolor: '#f0f2f5',
+                    transition: 'background-color 0.3s ease',
                 }}
             >
                 <Box
@@ -113,22 +105,28 @@ class Login extends React.Component {
                         boxShadow: 3,
                         textAlign: 'center',
                         position: 'relative',
-                        opacity: isLoading ? 0.5 : 1, // Reduce opacity when loading
+                        opacity: isLoading ? 0.5 : 1,
+                        width: '100%',
+                        maxWidth: 400,
+                        transition: 'opacity 0.3s ease-in-out',
                     }}
                 >
-                    <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold', color: '#333' }}>
-                        Welcome Back!
+                    <Typography
+                        variant="h4"
+                        sx={{ mb: 3, fontWeight: 'bold', color: '#1877f2', fontSize: '2rem' }}
+                    >
+                        Log in to Vet Konnect
                     </Typography>
 
-                    {submissionError && (
+                    <Collapse in={!!submissionError}>
                         <Alert severity="error" sx={{ mb: 2 }} className="error-message">
                             {submissionError}
                         </Alert>
-                    )}
+                    </Collapse>
 
                     <form onSubmit={this.handleSubmit}>
                         <TextField
-                            label="Email Address"
+                            label="Email or Phone"
                             name="email"
                             variant="outlined"
                             fullWidth
@@ -139,7 +137,7 @@ class Login extends React.Component {
                             error={!!formErrors.email}
                             helperText={formErrors.email}
                             sx={{ mb: 2 }}
-                            onFocus={() => $('.error-message').fadeOut()} // Hide error on focus
+                            onFocus={() => $('.error-message').fadeOut()}
                         />
                         <TextField
                             label="Password"
@@ -163,7 +161,7 @@ class Login extends React.Component {
                                 ),
                             }}
                             sx={{ mb: 2 }}
-                            onFocus={() => $('.error-message').fadeOut()} // Hide error on focus
+                            onFocus={() => $('.error-message').fadeOut()}
                         />
                         <FormControlLabel
                             control={
@@ -179,22 +177,57 @@ class Login extends React.Component {
                         <Button
                             type="submit"
                             variant="contained"
-                            color="primary"
                             fullWidth
-                            sx={{ mt: 2 }}
+                            sx={{
+                                mt: 2,
+                                bgcolor: '#1877f2',
+                                '&:hover': { bgcolor: '#145dbf' },
+                                '&:active': { transform: 'scale(0.98)' },
+                                transition: 'transform 0.1s ease-in-out',
+                            }}
                             disabled={isLoading}
                         >
-                            {isLoading ? <CircularProgress size={24} /> : 'Login'}
+                            {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Log In'}
                         </Button>
                     </form>
+
                     <Box sx={{ mt: 2 }}>
                         <Typography variant="body2">
-                            Don't have an account? <Link to="/signup">Register</Link>
-                        </Typography>
-                        <Typography variant="body2">
-                            <Link to="/forgot">Forgot your password?</Link>
+                            <Link to="/forgot" style={{ color: '#1877f2' }}>
+                                Forgotten password?
+                            </Link>
                         </Typography>
                     </Box>
+
+                    <Fade in timeout={500}>
+                        <Box
+                            sx={{
+                                mt: 4,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                flexDirection: 'column',
+                                gap: 1,
+                            }}
+                        >
+                            <Typography variant="body1">or</Typography>
+                            <Button
+                                component={Link}
+                                to="/signup"
+                                variant="outlined"
+                                sx={{
+                                    borderColor: '#42b72a',
+                                    color: '#42b72a',
+                                    '&:hover': {
+                                        borderColor: '#36a420',
+                                        bgcolor: '#e6f2e6',
+                                    },
+                                }}
+                            >
+                                Create New Account
+                            </Button>
+                        </Box>
+                    </Fade>
                 </Box>
             </Container>
         );

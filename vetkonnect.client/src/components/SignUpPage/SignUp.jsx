@@ -119,9 +119,6 @@ class SignUp extends Component {
         if (step === 0) {
             if (!formData.firstName) errors.firstName = 'First Name is required';
             if (!formData.lastName) errors.lastName = 'Last Name is required';
-        }
-
-        if (step === 1) {
             if (!formData.phoneNumber) {
                 errors.phoneNumber = 'Phone Number is required';
             } else {
@@ -130,6 +127,9 @@ class SignUp extends Component {
                     errors.phoneNumber = 'Phone Number must be valid';
                 }
             }
+        }
+
+        if (step === 1) {
             if (!formData.gender) errors.gender = 'Gender is required';
             if (!formData.dateOfBirth) errors.dateOfBirth = 'Date of Birth is required';
             if (currentRole === 'Vet') {
@@ -183,7 +183,7 @@ class SignUp extends Component {
 
                         <div style={styles.buttonContainer}>
                             {activeStep > 0 && (
-                                <Button onClick={this.handleBack} variant="contained" style={styles.backButton}>
+                                <Button onClick={this.handleBack} variant="outlined" style={styles.backButton}>
                                     Back
                                 </Button>
                             )}
@@ -234,6 +234,19 @@ class SignUp extends Component {
                     helperText={formErrors.lastName}
                 />
                 <TextField
+                    label="Phone Number"
+                    name="phoneNumber"
+                    id="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={this.handleInputChange}
+                    fullWidth
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    error={!!formErrors.phoneNumber}
+                    helperText={formErrors.phoneNumber}
+                />
+                <TextField
                     label="Choose Your Role"
                     name="currentRole"
                     select
@@ -256,19 +269,6 @@ class SignUp extends Component {
 
         return (
             <>
-                <TextField
-                    label="Phone Number"
-                    name="phoneNumber"
-                    id="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    error={!!formErrors.phoneNumber}
-                    helperText={formErrors.phoneNumber}
-                />
                 <TextField
                     label="Gender"
                     name="gender"
@@ -294,15 +294,17 @@ class SignUp extends Component {
                     showYearDropdown
                     dateFormat="dd/MM/yyyy"
                     placeholderText="Date of Birth"
-                    customInput={<TextField
-                        id="dateOfBirth"
-                        label="Date of Birth"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        error={!!formErrors.dateOfBirth}
-                        helperText={formErrors.dateOfBirth}
-                    />}
+                    customInput={
+                        <TextField
+                            id="dateOfBirth"
+                            fullWidth
+                            margin="normal"
+                            required
+                            variant="outlined"
+                            error={!!formErrors.dateOfBirth}
+                            helperText={formErrors.dateOfBirth}
+                        />
+                    }
                 />
 
                 {currentRole === 'Vet' && (
@@ -340,7 +342,7 @@ class SignUp extends Component {
     }
 
     renderStepThree() {
-        const { formData, formErrors } = this.state;
+        const { formData, formErrors, showPassword, showConfirmPassword } = this.state;
 
         return (
             <>
@@ -360,8 +362,8 @@ class SignUp extends Component {
                 <TextField
                     label="Password"
                     name="password"
-                    type={this.state.showPassword ? 'text' : 'password'}
                     id="password"
+                    type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={this.handleInputChange}
                     fullWidth
@@ -374,7 +376,7 @@ class SignUp extends Component {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton onClick={this.togglePasswordVisibility}>
-                                    {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
                         ),
@@ -383,8 +385,8 @@ class SignUp extends Component {
                 <TextField
                     label="Confirm Password"
                     name="confirmPassword"
-                    type={this.state.showConfirmPassword ? 'text' : 'password'}
                     id="confirmPassword"
+                    type={showConfirmPassword ? 'text' : 'password'}
                     value={formData.confirmPassword}
                     onChange={this.handleInputChange}
                     fullWidth
@@ -397,7 +399,7 @@ class SignUp extends Component {
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton onClick={this.toggleConfirmPasswordVisibility}>
-                                    {this.state.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                                 </IconButton>
                             </InputAdornment>
                         ),
@@ -412,21 +414,17 @@ class SignUp extends Component {
 
         return (
             <>
-                <Typography variant="h6" style={styles.reviewTitle}>
-                    Review Your Information
-                </Typography>
-                <Typography variant="body1"><strong>First Name:</strong> {formData.firstName}</Typography>
-                <Typography variant="body1"><strong>Last Name:</strong> {formData.lastName}</Typography>
-                <Typography variant="body1"><strong>Phone Number:</strong> {formData.phoneNumber}</Typography>
-                <Typography variant="body1"><strong>Gender:</strong> {formData.gender}</Typography>
-                <Typography variant="body1"><strong>Date of Birth:</strong> {formData.dateOfBirth?.toLocaleDateString()}</Typography>
-                <Typography variant="body1"><strong>Email:</strong> {formData.email}</Typography>
-                {this.state.currentRole === 'Vet' && (
-                    <>
-                        <Typography variant="body1"><strong>KVB Number:</strong> {formData.kvbNumber}</Typography>
-                        <Typography variant="body1"><strong>National ID No:</strong> {formData.nationalIdNo}</Typography>
-                    </>
-                )}
+                <Typography variant="h6">Review Your Information</Typography>
+                <div>
+                    <Typography><strong>First Name:</strong> {formData.firstName}</Typography>
+                    <Typography><strong>Last Name:</strong> {formData.lastName}</Typography>
+                    <Typography><strong>Phone Number:</strong> {formData.phoneNumber}</Typography>
+                    <Typography><strong>Gender:</strong> {formData.gender}</Typography>
+                    <Typography><strong>Date of Birth:</strong> {formData.dateOfBirth?.toLocaleDateString()}</Typography>
+                    <Typography><strong>Email:</strong> {formData.email}</Typography>
+                    {formData.kvbNumber && <Typography><strong>KVB Number:</strong> {formData.kvbNumber}</Typography>}
+                    {formData.nationalIdNo && <Typography><strong>National ID No:</strong> {formData.nationalIdNo}</Typography>}
+                </div>
             </>
         );
     }
@@ -437,17 +435,18 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
-        background: '#f5f5f5',
+        minHeight: '100vh',
+        backgroundColor: '#f5f5f5',
     },
     card: {
         padding: '20px',
-        maxWidth: '600px',
+        maxWidth: '400px',
         width: '100%',
+        position: 'relative',
     },
     title: {
-        marginBottom: '20px',
         textAlign: 'center',
+        marginBottom: '20px',
     },
     stepper: {
         marginBottom: '20px',
@@ -458,11 +457,11 @@ const styles = {
         marginTop: '20px',
     },
     backButton: {
-        backgroundColor: 'green',
+        flexGrow: 1,
+        marginRight: '10px',
     },
     nextButton: {
-        backgroundColor: 'blue',
-        color: 'white',
+        flexGrow: 1,
     },
     loadingOverlay: {
         position: 'absolute',
@@ -470,13 +469,10 @@ const styles = {
         left: 0,
         right: 0,
         bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    },
-    reviewTitle: {
-        marginBottom: '15px',
     },
 };
 

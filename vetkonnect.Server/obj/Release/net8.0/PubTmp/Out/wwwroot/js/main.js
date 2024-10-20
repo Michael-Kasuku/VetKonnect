@@ -1,12 +1,6 @@
 ﻿(function () {
     "use strict";
 
-    // Global error handler
-    window.onerror = function (message, source, lineno, colno, error) {
-        console.error(`Error occurred: ${message} at ${source}:${lineno}:${colno}`);
-        // You can also send this error information to your server for logging
-    };
-
     /**
      * Mobile navigation toggle.
      */

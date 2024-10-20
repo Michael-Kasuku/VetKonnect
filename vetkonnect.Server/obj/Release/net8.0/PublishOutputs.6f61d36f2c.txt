@@ -7,6 +7,9 @@ C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\P
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\vetkonnect.Server.pdb
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Azure.Core.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Azure.Identity.dll
+C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\EPPlus.dll
+C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\EPPlus.Interfaces.dll
+C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\EPPlus.System.Drawing.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -28,6 +31,7 @@ C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\P
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
@@ -48,9 +52,8 @@ C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\P
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Windows.Extensions.dll

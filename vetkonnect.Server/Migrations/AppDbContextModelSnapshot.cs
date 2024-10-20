@@ -171,6 +171,55 @@ namespace vetkonnect.Server.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("vetkonnect.Server.Models.KvbMember", b =>
+                {
+                    b.Property<int>("KvbMemberId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KvbMemberId"));
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NationalIdNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("KvbMemberId");
+
+                    b.ToTable("KvbMembers");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.KvbNumber", b =>
+                {
+                    b.Property<int>("KvbNumberId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KvbNumberId"));
+
+                    b.Property<string>("DateOfExpiry")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DateOfIssue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KVBNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KvbMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("KvbNumberId");
+
+                    b.HasIndex("KvbMemberId");
+
+                    b.ToTable("KvbNumbers");
+                });
+
             modelBuilder.Entity("vetkonnect.Server.Models.Message", b =>
                 {
                     b.Property<int>("MessageId")
@@ -657,6 +706,15 @@ namespace vetkonnect.Server.Migrations
                     b.Navigation("GuestUser");
 
                     b.Navigation("HostUser");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.KvbNumber", b =>
+                {
+                    b.HasOne("vetkonnect.Server.Models.KvbMember", null)
+                        .WithMany()
+                        .HasForeignKey("KvbMemberId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("vetkonnect.Server.Models.Order", b =>

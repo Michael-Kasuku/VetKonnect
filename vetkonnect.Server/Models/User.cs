@@ -18,8 +18,8 @@
         public string? BioData { get; set; }
         public string? JobTitle { get; set; }
         public int CurrentRole { get; set; }
-	public string? YearOfBirth { get; set; }
-	public string? Gender { get; set; }
+	    public string? YearOfBirth { get; set; }
+	    public string? Gender { get; set; }
 
 
         // Navigation properties

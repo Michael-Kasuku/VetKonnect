@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9OUG9EFItErt613u5QAzrDmEdCR0nE+wAp68OLvLEVg=",
+  "Hash": "OBUDRoQrNyPwjDX3Fv2TB1nfsNAha9epLo6ocbKk03E=",
   "Source": "vetkonnect.Server",
   "BasePath": "_content/vetkonnect.Server",
   "Mode": "Default",
@@ -192,6 +192,25 @@
       "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\about.jpg"
     },
     {
+      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\fertilizer.jfif",
+      "SourceId": "vetkonnect.client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\",
+      "BasePath": "/",
+      "RelativePath": "assets/img/fertilizer.jfif",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\fertilizer.jfif"
+    },
+    {
       "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\hero-bg.jpg",
       "SourceId": "vetkonnect.client",
       "SourceType": "Discovered",
@@ -209,6 +228,44 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\hero-bg.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\repellant.jfif",
+      "SourceId": "vetkonnect.client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\",
+      "BasePath": "/",
+      "RelativePath": "assets/img/repellant.jfif",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\repellant.jfif"
+    },
+    {
+      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\supplement.jfif",
+      "SourceId": "vetkonnect.client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\",
+      "BasePath": "/",
+      "RelativePath": "assets/img/supplement.jfif",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\supplement.jfif"
     },
     {
       "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\team\\josphine.jpg",
@@ -287,12 +344,12 @@
       "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\img\\vetkonnect.jpg"
     },
     {
-      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\index-CeRcrFTa.js",
+      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\index-B0sGH82p.js",
       "SourceId": "vetkonnect.client",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\",
       "BasePath": "/",
-      "RelativePath": "assets/index-CeRcrFTa.js",
+      "RelativePath": "assets/index-B0sGH82p.js",
       "AssetKind": "Publish",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -303,15 +360,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\index-CeRcrFTa.js"
+      "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\index-B0sGH82p.js"
     },
     {
-      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\index-hHN2UFh-.css",
+      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\index-DlqwYHDk.css",
       "SourceId": "vetkonnect.client",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\",
       "BasePath": "/",
-      "RelativePath": "assets/index-hHN2UFh-.css",
+      "RelativePath": "assets/index-DlqwYHDk.css",
       "AssetKind": "Publish",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -322,7 +379,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\index-hHN2UFh-.css"
+      "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\assets\\index-DlqwYHDk.css"
     },
     {
       "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\css\\main.css",
@@ -342,6 +399,25 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\css\\main.css"
+    },
+    {
+      "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\css\\style.css",
+      "SourceId": "vetkonnect.client",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\",
+      "BasePath": "/",
+      "RelativePath": "css/style.css",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\css\\style.css"
     },
     {
       "Identity": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\dist\\index.html",
