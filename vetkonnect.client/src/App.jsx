@@ -6,14 +6,14 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; // Import Font Awesome C
 import React from 'react';
 import ReactDOM from 'react-dom/client'; // Update import to use 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import Routes and Route components
-import LandingPage from './components/LandingPage';
-import TermsOfServicePage from './components/TermsOfServicePage';
-import PrivacyPolicyPage from './components/PrivacyPolicyPage';
-import LoginPage from './components/LoginPage';
-import SignUpPage from './components/SignUpPage';
-import ForgotPasswordPage from './components/ForgotPasswordPage';
-import VetDashboard from './components/VetDashboard';
-import FarmerDashboard from './components/FarmerDashboard';
+/*User defined components*/
+import LandingPage from './components/Landing/LandingPage';
+import TermsOfServicePage from './components/Landing/TermsOfServicePage';
+import PrivacyPolicyPage from './components/Landing/PrivacyPolicyPage';
+import VetLoginPage from './components/Vet/Authentication/VetLoginPage';
+import VetSignUpPage from './components/Vet/Authentication/VetSignUpPage';
+import VetForgotPasswordPage from './components/Vet/Authentication/VetForgotPasswordPage';
+import VetDashboard from './components/Vet/Dashboard/VetDashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root')); // Create root
 
@@ -24,11 +24,10 @@ root.render(
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="/privacy" element={<PrivacyPolicyPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
-                <Route path="/forgot" element={<ForgotPasswordPage />} />
+                <Route path="/vet/login" element={<VetLoginPage />} />
+                <Route path="/vet/signup" element={<VetSignUpPage />} />
+                <Route path="/vet/forgot" element={<VetForgotPasswordPage />} />
                 <Route path="/vet/*" element={<VetDashboard />} /> {/* Use wildcard for nested routes */}
-                <Route path="/farmer/*" element={<FarmerDashboard />} /> {/* Use wildcard for nested routes */}
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

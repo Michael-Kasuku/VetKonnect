@@ -14,9 +14,13 @@
     <Folder Include="src\components\LoginPage\" />
     <Folder Include="src\components\ForgotPasswordPage\" />
     <Folder Include="src\components\Farmer\" />
-    <Folder Include="src\components\Vet\" />
     <Folder Include="src\components\SignUpPage\" />
     <Folder Include="src\components\PrivacyPolicyPage\" />
     <Folder Include="src\components\TermsOfServicePage\" />
+    <Folder Include="src\components\Vet\Dashboard\" />
+    <Folder Include="src\components\Vet\AgrovetHub\" />
+    <Folder Include="src\components\Vet\EduContent\" />
+    <Folder Include="src\components\Vet\CommunityForum\" />
+    <Folder Include="src\components\Vet\VetDirectory\" />
   </ItemGroup>
 </Project>
