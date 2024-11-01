@@ -12,11 +12,9 @@ import {
     InputAdornment,
     IconButton,
     Alert,
-    Fade,
     Collapse
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import $ from 'jquery';
 
 class VetLogin extends React.Component {
     constructor(props) {
@@ -24,9 +22,9 @@ class VetLogin extends React.Component {
         this.state = {
             showPassword: false,
             isLoading: false,
-            email: '',
+            username: '',
             password: '',
-            formErrors: { email: '', password: '' },
+            formErrors: { username: '', password: '' },
             submissionError: '',
         };
     }
@@ -36,12 +34,12 @@ class VetLogin extends React.Component {
     };
 
     validateForm = () => {
-        const { email, password } = this.state;
-        let emailError = '';
+        const { username, password } = this.state;
+        let usernameError = '';
         let passwordError = '';
 
-        if (!email || !/\S+@\S+\.\S+/.test(email)) {
-            emailError = 'Please enter a valid email address.';
+        if (!username || username.length < 3) {
+            usernameError = 'Please enter a valid username.';
         }
 
         if (!password || password.length < 6) {
@@ -49,11 +47,11 @@ class VetLogin extends React.Component {
         }
 
         this.setState({
-            formErrors: { email: emailError, password: passwordError },
+            formErrors: { username: usernameError, password: passwordError },
             submissionError: '',
         });
 
-        return !emailError && !passwordError;
+        return !usernameError && !passwordError;
     };
 
     handleSubmit = (e) => {
@@ -62,12 +60,12 @@ class VetLogin extends React.Component {
 
         this.setState({ isLoading: true });
 
+        // Simulate an API call for demonstration purposes
         setTimeout(() => {
             this.setState({ isLoading: false });
 
-            if (this.state.email !== 'test@example.com' || this.state.password !== 'password123') {
-                this.setState({ submissionError: 'Invalid email or password. Please try again.' });
-                $('.error-message').fadeIn();
+            if (this.state.username !== 'testuser' || this.state.password !== 'password123') {
+                this.setState({ submissionError: 'Invalid username or password. Please try again.' });
             } else {
                 alert('Login successful');
             }
@@ -76,13 +74,11 @@ class VetLogin extends React.Component {
 
     handleInputChange = (e) => {
         const { name, value } = e.target;
-        this.setState({ [name]: value }, () => {
-            if (value) $('.error-message').fadeOut();
-        });
+        this.setState({ [name]: value, submissionError: '' });
     };
 
     render() {
-        const { showPassword, isLoading, formErrors, email, password, submissionError } = this.state;
+        const { showPassword, isLoading, formErrors, username, password, submissionError } = this.state;
 
         return (
             <Container
@@ -119,25 +115,24 @@ class VetLogin extends React.Component {
                     </Typography>
 
                     <Collapse in={!!submissionError}>
-                        <Alert severity="error" sx={{ mb: 2 }} className="error-message">
+                        <Alert severity="error" sx={{ mb: 2 }}>
                             {submissionError}
                         </Alert>
                     </Collapse>
 
                     <form onSubmit={this.handleSubmit}>
                         <TextField
-                            label="Email or Phone"
-                            name="email"
+                            label="Username"
+                            name="username"
                             variant="outlined"
                             fullWidth
                             margin="normal"
                             required
-                            value={email}
+                            value={username}
                             onChange={this.handleInputChange}
-                            error={!!formErrors.email}
-                            helperText={formErrors.email}
+                            error={!!formErrors.username}
+                            helperText={formErrors.username}
                             sx={{ mb: 2 }}
-                            onFocus={() => $('.error-message').fadeOut()}
                         />
                         <TextField
                             label="Password"
@@ -161,7 +156,6 @@ class VetLogin extends React.Component {
                                 ),
                             }}
                             sx={{ mb: 2 }}
-                            onFocus={() => $('.error-message').fadeOut()}
                         />
                         <FormControlLabel
                             control={
@@ -172,7 +166,12 @@ class VetLogin extends React.Component {
                                 />
                             }
                             label="Show Password"
-                            sx={{ mb: 2 }}
+                            sx={{
+                                mb: 2,
+                                justifyContent: 'flex-start',
+                                width: '100%', // Ensures alignment with the full width of the container
+                                pl: '0px'      // Aligns with the left edge of the container
+                            }}
                         />
                         <Button
                             type="submit"
@@ -199,35 +198,33 @@ class VetLogin extends React.Component {
                         </Typography>
                     </Box>
 
-                    <Fade in timeout={500}>
-                        <Box
+                    <Box
+                        sx={{
+                            mt: 4,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                            gap: 1,
+                        }}
+                    >
+                        <Typography variant="body1">or</Typography>
+                        <Button
+                            component={Link}
+                            to="/vet/signup"
+                            variant="outlined"
                             sx={{
-                                mt: 4,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                flexDirection: 'column',
-                                gap: 1,
+                                borderColor: '#42b72a',
+                                color: '#42b72a',
+                                '&:hover': {
+                                    borderColor: '#36a420',
+                                    bgcolor: '#e6f2e6',
+                                },
                             }}
                         >
-                            <Typography variant="body1">or</Typography>
-                            <Button
-                                component={Link}
-                                to="/vet/signup"
-                                variant="outlined"
-                                sx={{
-                                    borderColor: '#42b72a',
-                                    color: '#42b72a',
-                                    '&:hover': {
-                                        borderColor: '#36a420',
-                                        bgcolor: '#e6f2e6',
-                                    },
-                                }}
-                            >
-                                Create New Account
-                            </Button>
-                        </Box>
-                    </Fade>
+                            Create New Account
+                        </Button>
+                    </Box>
                 </Box>
             </Container>
         );

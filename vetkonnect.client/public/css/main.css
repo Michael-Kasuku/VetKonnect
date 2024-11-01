@@ -1236,14 +1236,13 @@ section,
 }
 
 .password-toggle-container {
-    position: inline-block;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
     .password-toggle-container input[type="checkbox"] {
-        display: inline-block;
+        margin-right: 10px; /* Adds spacing between the checkbox and label text */
     }
 
 .password-toggle-label {
@@ -1251,10 +1250,9 @@ section,
 }
 
     .password-toggle-label span {
-        display: inline-block;
         font-size: 14px;
-        margin-left: 10px;
     }
+
 
 /*Forgot Password*/
 .forgot-password-container {

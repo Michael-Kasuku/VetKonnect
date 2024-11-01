@@ -2,16 +2,14 @@
 {
     public class Product
     {
-        public int ProductId { get; set; }
-        public int BelongingTo { get; set; }
-        public string? ProductName { get; set; }
+        public int Id { get; set; }
+        public string? Name { get; set; }
         public string? Description { get; set; }
-        public byte[]? ProductPhoto { get; set; }
-        public int QuantityInStock { get; set; }
-        public float Price { get; set; }
-        public int Owner { get; set; }
+        public decimal Price { get; set; }
+        public string? Category { get; set; } // E.g., medication, feed, equipment
+        public string? ImageUrl { get; set; } // URL to product image
+        public string? OwnerId { get; set; } // Foreign key to ApplicationUser
 
-        // Navigation property for User
-        public virtual User? OwnerUser { get; set; } // Added for relationship with User
+        public ApplicationUser? Owner { get; set; } // Navigation property for Owner
     }
 }

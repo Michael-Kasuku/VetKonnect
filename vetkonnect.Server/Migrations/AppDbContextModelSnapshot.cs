@@ -22,162 +22,25 @@ namespace vetkonnect.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("vetkonnect.Server.Models.Appointment", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.ApplicationUser", b =>
                 {
-                    b.Property<int>("AppointmentId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"));
-
-                    b.Property<DateTime>("AppointmentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Guest")
+                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GuestUserUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Host")
-                        .HasColumnType("int");
-
-                    b.HasKey("AppointmentId");
-
-                    b.HasIndex("GuestUserUserId");
-
-                    b.HasIndex("Host");
-
-                    b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.DeliveryPoint", b =>
-                {
-                    b.Property<int>("DeliveryPointId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryPointId"));
-
-                    b.Property<int>("AddedBy")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DeliveryFee")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("FarmerId")
                         .HasColumnType("int");
-
-                    b.HasKey("DeliveryPointId");
-
-                    b.HasIndex("AddedBy");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("DeliveryPoints");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.EduContent", b =>
-                {
-                    b.Property<int>("EduContentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EduContentId"));
-
-                    b.Property<byte[]>("Content")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PostedBy")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EduContentId");
-
-                    b.HasIndex("PostedBy");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EduContents");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.EmailAddressOTP", b =>
-                {
-                    b.Property<int>("EmailAddressOtpId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmailAddressOtpId"));
-
-                    b.Property<int>("BelongingTo")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ExpiryTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OtpCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReceiverEmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SenderEmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TimeGenerated")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("EmailAddressOtpId");
-
-                    b.HasIndex("BelongingTo");
-
-                    b.ToTable("EmailAddressOTPs");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.Event", b =>
-                {
-                    b.Property<int>("EventId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"));
-
-                    b.Property<DateTime>("EventDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Guest")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GuestUserUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Host")
-                        .HasColumnType("int");
-
-                    b.HasKey("EventId");
-
-                    b.HasIndex("GuestUserUserId");
-
-                    b.HasIndex("Host");
-
-                    b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.KvbMember", b =>
-                {
-                    b.Property<int>("KvbMemberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KvbMemberId"));
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -185,39 +48,196 @@ namespace vetkonnect.Server.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NationalIdNo")
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("KvbMemberId");
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("KvbMembers");
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("VeterinarianId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FarmerId");
+
+                    b.HasIndex("VeterinarianId");
+
+                    b.ToTable("ApplicationUsers");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.KvbNumber", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.Appointment", b =>
                 {
-                    b.Property<int>("KvbNumberId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KvbNumberId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DateOfExpiry")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("DateOfIssue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KVBNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("KvbMemberId")
+                    b.Property<int>("FarmerId")
                         .HasColumnType("int");
 
-                    b.HasKey("KvbNumberId");
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("KvbMemberId");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("KvbNumbers");
+                    b.Property<int>("VeterinarianId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FarmerId");
+
+                    b.HasIndex("VeterinarianId");
+
+                    b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommunityPostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommunityPostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.CommunityPost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CommunityPosts");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.Farmer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContactInformation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FarmName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("Farmers");
                 });
 
             modelBuilder.Entity("vetkonnect.Server.Models.Message", b =>
@@ -248,640 +268,274 @@ namespace vetkonnect.Server.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.Order", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.Notification", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DeliveredAt")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("DeliveryStatus")
+                    b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("ExpectedDeliveryTime")
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NotificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Payment")
-                        .HasColumnType("real");
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("PaymentStatus")
-                        .HasColumnType("bit");
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("PlacedBy")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
+                    b.HasIndex("ReceiverId");
 
-                    b.Property<int>("ProductOrdered")
-                        .HasColumnType("int");
+                    b.HasIndex("SenderId");
 
-                    b.Property<string>("ReceiptNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("TimeDelivered")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("TimeOrdered")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("DeliveredAt");
-
-                    b.HasIndex("PlacedBy");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductOrdered");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.Package", b =>
-                {
-                    b.Property<int>("PackageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PackageId"));
-
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Cost")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.HasKey("PackageId");
-
-                    b.ToTable("Packages");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.PhoneNumber", b =>
-                {
-                    b.Property<int>("PhoneNumberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhoneNumberId"));
-
-                    b.Property<int>("OwnedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberVerified")
-                        .HasColumnType("bit");
-
-                    b.HasKey("PhoneNumberId");
-
-                    b.HasIndex("OwnedBy");
-
-                    b.ToTable("PhoneNumbers");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.PhoneNumberOTP", b =>
-                {
-                    b.Property<int>("PhoneNumberOtpId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhoneNumberOtpId"));
-
-                    b.Property<DateTime>("ExpiryTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OtpCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReceiverPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SenderPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SentTo")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeGenerated")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("PhoneNumberOtpId");
-
-                    b.HasIndex("SentTo");
-
-                    b.ToTable("PhoneNumberOTPs");
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("vetkonnect.Server.Models.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BelongingTo")
-                        .HasColumnType("int");
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Owner")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
-                    b.Property<string>("ProductName")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("ProductPhoto")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("QuantityInStock")
-                        .HasColumnType("int");
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("BelongingTo");
-
-                    b.HasIndex("Owner");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.ProductCategory", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.TreatmentRecord", b =>
                 {
-                    b.Property<int>("ProductCategoryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductCategoryId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CategoryName")
+                    b.Property<string>("AnimalId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductCategoryId");
-
-                    b.ToTable("ProductCategories");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.Role", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("FarmerId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
-
-                    b.Property<string>("RoleName")
+                    b.Property<string>("MedicationAdministered")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RoleId");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.Service", b =>
-                {
-                    b.Property<int>("ServiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
-
-                    b.Property<int>("OfferedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ServiceName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ServiceId");
-
-                    b.HasIndex("OfferedBy");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Services");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.Subscription", b =>
-                {
-                    b.Property<int>("SubscriptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubscriptionId"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ExpiryDate")
+                    b.Property<DateTime>("TreatmentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PackageId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ReceiptNo")
+                    b.Property<string>("TreatmentDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubscribedTo")
+                    b.Property<int>("VeterinarianId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Subscriber")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.Property<DateTime>("SubscriptionDate")
-                        .HasColumnType("datetime2");
+                    b.HasIndex("FarmerId");
 
-                    b.Property<bool>("SubscriptionStatus")
-                        .HasColumnType("bit");
+                    b.HasIndex("VeterinarianId");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SubscriptionId");
-
-                    b.HasIndex("PackageId");
-
-                    b.HasIndex("SubscribedTo");
-
-                    b.HasIndex("Subscriber");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Subscriptions");
+                    b.ToTable("TreatmentRecords");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.User", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.Veterinarian", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("AccountActivationStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("AvailabilityStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("BioData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CurrentRole")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailAddressConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobTitle")
+                    b.Property<string>("ContactInformation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KvbNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("KvbNumberApprovalStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NationalIdNo")
+                    b.Property<string>("Specialty")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("NationalIdNoApprovalStatus")
-                        .HasColumnType("bit");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.Property<byte[]>("ProfilePicture")
-                        .HasColumnType("varbinary(max)");
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
-                    b.Property<string>("YearOfBirth")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("CurrentRole");
-
-                    b.ToTable("Users");
+                    b.ToTable("Veterinarians");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.Webinar", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.ApplicationUser", b =>
                 {
-                    b.Property<int>("WebinarId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("vetkonnect.Server.Models.Farmer", "Farmer")
+                        .WithMany()
+                        .HasForeignKey("FarmerId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WebinarId"));
+                    b.HasOne("vetkonnect.Server.Models.Veterinarian", "Veterinarian")
+                        .WithMany()
+                        .HasForeignKey("VeterinarianId");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Navigation("Farmer");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PostedBy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("WebinarId");
-
-                    b.HasIndex("PostedBy");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Webinars");
+                    b.Navigation("Veterinarian");
                 });
 
             modelBuilder.Entity("vetkonnect.Server.Models.Appointment", b =>
                 {
-                    b.HasOne("vetkonnect.Server.Models.User", "GuestUser")
+                    b.HasOne("vetkonnect.Server.Models.Farmer", "Farmer")
                         .WithMany()
-                        .HasForeignKey("GuestUserUserId");
-
-                    b.HasOne("vetkonnect.Server.Models.User", "HostUser")
-                        .WithMany()
-                        .HasForeignKey("Host")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("FarmerId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("GuestUser");
+                    b.HasOne("vetkonnect.Server.Models.Veterinarian", "Veterinarian")
+                        .WithMany()
+                        .HasForeignKey("VeterinarianId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("HostUser");
+                    b.Navigation("Farmer");
+
+                    b.Navigation("Veterinarian");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.DeliveryPoint", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.Article", b =>
                 {
-                    b.HasOne("vetkonnect.Server.Models.User", "AddedByUser")
+                    b.HasOne("vetkonnect.Server.Models.ApplicationUser", "Author")
                         .WithMany()
-                        .HasForeignKey("AddedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("vetkonnect.Server.Models.User", null)
-                        .WithMany("DeliveryPointsAdded")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("AddedByUser");
+                    b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.EduContent", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.Comment", b =>
                 {
-                    b.HasOne("vetkonnect.Server.Models.User", "PostedByUser")
+                    b.HasOne("vetkonnect.Server.Models.CommunityPost", "CommunityPost")
                         .WithMany()
-                        .HasForeignKey("PostedBy")
+                        .HasForeignKey("CommunityPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("vetkonnect.Server.Models.User", null)
-                        .WithMany("EduContentsPosted")
-                        .HasForeignKey("UserId");
+                    b.HasOne("vetkonnect.Server.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("PostedByUser");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.EmailAddressOTP", b =>
-                {
-                    b.HasOne("vetkonnect.Server.Models.User", "User")
-                        .WithMany("EmailAddressOTPs")
-                        .HasForeignKey("BelongingTo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("CommunityPost");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.Event", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.CommunityPost", b =>
                 {
-                    b.HasOne("vetkonnect.Server.Models.User", "GuestUser")
-                        .WithMany("EventsHosted")
-                        .HasForeignKey("GuestUserUserId");
-
-                    b.HasOne("vetkonnect.Server.Models.User", "HostUser")
+                    b.HasOne("vetkonnect.Server.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("Host")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GuestUser");
-
-                    b.Navigation("HostUser");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.KvbNumber", b =>
-                {
-                    b.HasOne("vetkonnect.Server.Models.KvbMember", null)
-                        .WithMany()
-                        .HasForeignKey("KvbMemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.Order", b =>
-                {
-                    b.HasOne("vetkonnect.Server.Models.DeliveryPoint", null)
-                        .WithMany()
-                        .HasForeignKey("DeliveredAt")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("vetkonnect.Server.Models.User", "PlacedByUser")
-                        .WithMany()
-                        .HasForeignKey("PlacedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("vetkonnect.Server.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("vetkonnect.Server.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductOrdered")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("vetkonnect.Server.Models.User", null)
-                        .WithMany("OrdersPlaced")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("PlacedByUser");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.PhoneNumber", b =>
-                {
-                    b.HasOne("vetkonnect.Server.Models.User", "User")
-                        .WithMany("PhoneNumbers")
-                        .HasForeignKey("OwnedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.PhoneNumberOTP", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.Farmer", b =>
                 {
-                    b.HasOne("vetkonnect.Server.Models.User", "User")
-                        .WithMany("PhoneNumberOTPs")
-                        .HasForeignKey("SentTo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("vetkonnect.Server.Models.ApplicationUser", "User")
+                        .WithOne()
+                        .HasForeignKey("vetkonnect.Server.Models.Farmer", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.Notification", b =>
+                {
+                    b.HasOne("vetkonnect.Server.Models.ApplicationUser", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("vetkonnect.Server.Models.ApplicationUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("vetkonnect.Server.Models.Product", b =>
                 {
-                    b.HasOne("vetkonnect.Server.Models.ProductCategory", null)
+                    b.HasOne("vetkonnect.Server.Models.ApplicationUser", "Owner")
                         .WithMany()
-                        .HasForeignKey("BelongingTo")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.TreatmentRecord", b =>
+                {
+                    b.HasOne("vetkonnect.Server.Models.Farmer", "Farmer")
+                        .WithMany()
+                        .HasForeignKey("FarmerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("vetkonnect.Server.Models.User", "OwnerUser")
+                    b.HasOne("vetkonnect.Server.Models.Veterinarian", "Veterinarian")
                         .WithMany()
-                        .HasForeignKey("Owner")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("vetkonnect.Server.Models.User", null)
-                        .WithMany("ProductsOwned")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("OwnerUser");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.Service", b =>
-                {
-                    b.HasOne("vetkonnect.Server.Models.User", "OfferedByUser")
-                        .WithMany()
-                        .HasForeignKey("OfferedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("vetkonnect.Server.Models.User", null)
-                        .WithMany("ServicesOffered")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("OfferedByUser");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.Subscription", b =>
-                {
-                    b.HasOne("vetkonnect.Server.Models.Package", "Package")
-                        .WithMany()
-                        .HasForeignKey("PackageId");
-
-                    b.HasOne("vetkonnect.Server.Models.Package", null)
-                        .WithMany()
-                        .HasForeignKey("SubscribedTo")
+                        .HasForeignKey("VeterinarianId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("vetkonnect.Server.Models.User", "SubscriberUser")
-                        .WithMany()
-                        .HasForeignKey("Subscriber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Farmer");
 
-                    b.HasOne("vetkonnect.Server.Models.User", null)
-                        .WithMany("Subscriptions")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Package");
-
-                    b.Navigation("SubscriberUser");
+                    b.Navigation("Veterinarian");
                 });
 
-            modelBuilder.Entity("vetkonnect.Server.Models.User", b =>
+            modelBuilder.Entity("vetkonnect.Server.Models.Veterinarian", b =>
                 {
-                    b.HasOne("vetkonnect.Server.Models.Role", null)
-                        .WithMany()
-                        .HasForeignKey("CurrentRole")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
+                    b.HasOne("vetkonnect.Server.Models.ApplicationUser", "User")
+                        .WithOne()
+                        .HasForeignKey("vetkonnect.Server.Models.Veterinarian", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity("vetkonnect.Server.Models.Webinar", b =>
-                {
-                    b.HasOne("vetkonnect.Server.Models.User", "PostedByUser")
-                        .WithMany()
-                        .HasForeignKey("PostedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("vetkonnect.Server.Models.User", null)
-                        .WithMany("WebinarsPosted")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("PostedByUser");
-                });
-
-            modelBuilder.Entity("vetkonnect.Server.Models.User", b =>
-                {
-                    b.Navigation("DeliveryPointsAdded");
-
-                    b.Navigation("EduContentsPosted");
-
-                    b.Navigation("EmailAddressOTPs");
-
-                    b.Navigation("EventsHosted");
-
-                    b.Navigation("OrdersPlaced");
-
-                    b.Navigation("PhoneNumberOTPs");
-
-                    b.Navigation("PhoneNumbers");
-
-                    b.Navigation("ProductsOwned");
-
-                    b.Navigation("ServicesOffered");
-
-                    b.Navigation("Subscriptions");
-
-                    b.Navigation("WebinarsPosted");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

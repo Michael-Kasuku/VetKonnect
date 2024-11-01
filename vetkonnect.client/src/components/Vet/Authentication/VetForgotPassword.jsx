@@ -22,11 +22,12 @@ class VetForgotPassword extends React.Component {
         };
     }
 
+    // Handle form submission
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ isLoading: true, formError: '', submissionError: '', submissionSuccess: '' });
 
-        // Simulate an API call to reset password
+        // Simulate an API call for password reset
         setTimeout(() => {
             this.setState({ isLoading: false });
             if (this.state.email !== 'test@example.com') {
@@ -37,6 +38,7 @@ class VetForgotPassword extends React.Component {
         }, 2000);
     };
 
+    // Handle input changes
     handleInputChange = (e) => {
         this.setState({ email: e.target.value });
     };
@@ -53,7 +55,7 @@ class VetForgotPassword extends React.Component {
                     justifyContent: 'center',
                     alignItems: 'center',
                     minHeight: '100vh',
-                    bgcolor: '#f0f2f5', // Light Facebook-style background
+                    bgcolor: '#f0f2f5', // Light background
                     p: 2,
                 }}
             >
@@ -69,13 +71,13 @@ class VetForgotPassword extends React.Component {
                 >
                     <Typography
                         variant="h5"
-                        sx={{ mb: 2, fontWeight: 'bold', color: '#1877f2' }} // Facebook blue color
+                        sx={{ mb: 2, fontWeight: 'bold', color: '#1877f2' }} // Main title color
                     >
                         Forgot Password
                     </Typography>
                     <Typography
                         variant="body2"
-                        sx={{ mb: 3, color: '#4b4f56' }} // Light gray text
+                        sx={{ mb: 3, color: '#4b4f56' }} // Instruction text color
                     >
                         Enter your email address and we'll send you a link to reset your password.
                     </Typography>
@@ -111,17 +113,21 @@ class VetForgotPassword extends React.Component {
                             fullWidth
                             sx={{
                                 mt: 2,
-                                bgcolor: '#1877f2', // Facebook blue
+                                bgcolor: '#1877f2', // Button color
                                 color: '#fff',
                                 borderRadius: '20px',
                                 textTransform: 'none',
                                 '&:hover': {
-                                    bgcolor: '#166fe5',
+                                    bgcolor: '#166fe5', // Hover color
                                 },
                             }}
                             disabled={isLoading}
                         >
-                            {isLoading ? <CircularProgress size={24} sx={{ color: '#fff' }} /> : 'Reset Password'}
+                            {isLoading ? (
+                                <CircularProgress size={24} sx={{ color: '#fff' }} />
+                            ) : (
+                                'Reset Password'
+                            )}
                         </Button>
                     </form>
 

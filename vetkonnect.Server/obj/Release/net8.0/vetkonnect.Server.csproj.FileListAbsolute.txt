@@ -148,3 +148,4 @@ C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\P
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\bin\Release\net8.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\bin\Release\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\vetkonnect.Server.sourcelink.json
+C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\bin\Release\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -2,17 +2,14 @@
 {
     public class Appointment
     {
-        public int AppointmentId { get; set; }
-        public int Host { get; set; }
-        public string? Guest { get; set; }
+        public int Id { get; set; }
+        public int VeterinarianId { get; set; } // Foreign key to Veterinarian
+        public int FarmerId { get; set; } // Foreign key to Farmer
         public DateTime AppointmentDate { get; set; }
+        public string? Status { get; set; } // e.g., "Scheduled", "Completed", "Cancelled"
+        public string? Notes { get; set; }
 
-        // Navigation property for HostUser
-        public virtual User? HostUser { get; set; }
-
-        // Navigation property for GuestUser
-        public virtual User? GuestUser { get; set; }
-
-        // Additional properties can be added here
+        public Veterinarian? Veterinarian { get; set; } // Navigation property
+        public Farmer? Farmer { get; set; } // Navigation property
     }
 }

@@ -10,6 +10,7 @@ C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\P
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\EPPlus.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\EPPlus.Interfaces.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\EPPlus.System.Drawing.dll
+C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Michael Kasuku\Documents\Computer Science\fourth year\Web Development\Project\version_3\vetkonnect\vetkonnect.Server\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

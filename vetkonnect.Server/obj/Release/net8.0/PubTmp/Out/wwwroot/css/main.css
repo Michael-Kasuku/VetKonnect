@@ -3,38 +3,37 @@
     --default-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     --heading-font: "Montserrat", sans-serif;
     --nav-font: "Poppins", sans-serif;
-    /* Global Colors - Simplified for a modern, cohesive look */
-    --background-color: #f9f9f9; /* Light gray background for soft contrast */
-    --default-color: #333333; /* Dark grey for text, ensuring readability */
-    --heading-color: #222222; /* Darker grey for headings */
-    --accent-color: #ffcc00; /* Amber for buttons, links, and key highlights */
+    /* Global Colors - Veterinary Medicine Theme */
+    --background-color: #eaf7ef; /* Light green background for a soft, calming effect */
+    --default-color: #4a4a4a; /* Dark grey for text, ensuring readability */
+    --heading-color: #2e2e2e; /* Darker grey for headings */
+    --accent-color: #4cae4c; /* Green for buttons, links, and key highlights */
     --surface-color: #ffffff; /* White for boxed elements to ensure contrast */
     --contrast-color: #ffffff; /* White text color for contrast against dark or accent backgrounds */
     /* Nav Menu Colors */
-    --nav-color: #333333; /* Dark grey for navmenu links */
-    --nav-hover-color: blue; /* Amber for nav hover for a vibrant feel */
+    --nav-color: #4a4a4a; /* Dark grey for navmenu links */
+    --nav-hover-color: #FFBF00; /* Amber for nav hover for a vibrant feel */
     --nav-mobile-background-color: #ffffff; /* White for mobile navigation */
-    --nav-dropdown-background-color: #ffffff; /* white background for dropdowns */
-    --nav-dropdown-color: #333333; /* Dark grey for dropdown links */
-    --nav-dropdown-hover-color: #ffffff; /* white for dropdown hover links */
+    --nav-dropdown-background-color: #ffffff; /* White background for dropdowns */
+    --nav-dropdown-color: #4a4a4a; /* Dark grey for dropdown links */
+    --nav-dropdown-hover-color: #FFBF00; /* Amber for dropdown hover links */
     /* Smooth scroll */
     scroll-behavior: smooth;
 }
 
 /* Color Presets - Custom Background Classes */
 .light-background {
-    --background-color: #ffffff;
-    --surface-color: #f9f9f9;
+    --background-color: #ffffff; /* White for light backgrounds */
+    --surface-color: #eaf7ef; /* Light green for surface elements */
 }
 
 .dark-background {
-    --background-color: #222222; /* Dark grey for dark backgrounds */
-    --default-color: #f9f9f9;
-    --heading-color: #ffffff;
-    --surface-color: #333333;
-    --contrast-color: #ffffff;
+    --background-color: #2e2e2e; /* Dark grey for dark backgrounds */
+    --default-color: #eaf7ef; /* Light green for text in dark mode */
+    --heading-color: #ffffff; /* White for headings in dark mode */
+    --surface-color: #4a4a4a; /* Dark grey for surface elements in dark mode */
+    --contrast-color: #ffffff; /* White for contrast against dark backgrounds */
 }
-
 
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
@@ -53,7 +52,7 @@ a {
 }
 
     a:hover {
-        color: color-mix(in srgb, var(--accent-color), transparent 25%);
+        color: #FFBF00;
     }
 
 h1, h2, h3, h4, h5, h6 {
@@ -67,14 +66,19 @@ h1, h2, h3, h4, h5, h6 {
 .header {
     color: var(--default-color); /* Dark grey for the header text */
     background-color: var(--background-color); /* Light grey for the header background */
-    padding: 20px 0;
+    padding: 15px 20px; /* Adjusted padding for better spacing */
     transition: all 0.3s ease-in-out;
     z-index: 997;
     border-bottom: 1px solid #ddd; /* Subtle border for separation */
+    display: flex; /* Flexbox for layout */
+    justify-content: space-between; /* Space between logo and menu */
+    align-items: center; /* Center vertically */
 }
 
     .header .logo {
         line-height: 1;
+        display: flex; /* Align logo elements */
+        align-items: center; /* Center vertically */
     }
 
         .header .logo img {
@@ -102,7 +106,7 @@ h1, h2, h3, h4, h5, h6 {
         background-color: var(--accent-color); /* Blue button background */
         font-size: 14px;
         padding: 10px 30px;
-        margin: 0;
+        margin-left: 15px; /* Margin for spacing */
         border-radius: 4px;
         transition: background-color 0.3s ease-in-out;
     }
@@ -112,65 +116,53 @@ h1, h2, h3, h4, h5, h6 {
             background: color-mix(in srgb, var(--accent-color), transparent 15%); /* Lighter blue on hover */
         }
 
-.navmenu a {
-    color: var(--nav-color);
-    font-family: var(--nav-font);
-    font-weight: 500;
-    font-size: 16px;
-    padding: 0 15px;
-    transition: color 0.3s ease-in-out;
+.navmenu {
+    display: flex; /* Use flex for layout */
+    align-items: center; /* Center vertically */
 }
 
-    .navmenu a:hover {
-        color: var(--nav-hover-color); /* Hover color for navigation */
+    .navmenu a {
+        color: var(--nav-color);
+        font-family: var(--nav-font);
+        font-weight: 500;
+        font-size: 16px;
+        padding: 0 20px; /* Adjusted padding for better spacing */
+        transition: color 0.3s ease-in-out;
     }
 
-/* Dropdown Styling */
-.navmenu .dropdown-menu {
-    background-color: var(--nav-dropdown-background-color);
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-    .navmenu .dropdown-menu a {
-        color: var(--nav-dropdown-color);
-        padding: 10px 20px;
-    }
-
-        .navmenu .dropdown-menu a:hover {
-            background-color: var(--nav-hover-color); /* Blue background on hover */
-            color: var(--contrast-color); /* White text on hover */
+        .navmenu a:hover {
+            color: #FFBF00; /* Hover color for navigation */
         }
+
+    /* Dropdown Styling */
+    .navmenu .dropdown-menu {
+        background-color: var(--nav-dropdown-background-color);
+        border: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+        .navmenu .dropdown-menu a {
+            color: var(--nav-dropdown-color);
+            padding: 10px 20px;
+        }
+
+            .navmenu .dropdown-menu a:hover {
+                background-color: var(--nav-hover-color); /* Blue background on hover */
+                color: var(--contrast-color); /* White text on hover */
+            }
 
 /* Sticky Header Shadow */
 .scrolled .header {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for scrolled state */
 }
 
-@media (max-width: 1200px) {
-    .header .logo {
-        order: 1;
-    }
-
-    .header .btn-getstarted {
-        order: 2;
-        margin: 0 15px 0 0;
-        padding: 6px 20px;
-    }
-
-    .header .navmenu {
-        order: 3;
-    }
-}
-
 /*--------------------------------------------------------------
 # Index Page Header
 --------------------------------------------------------------*/
-/* Transparent Header for the Index Page */
 .index-page .header {
     --background-color: rgba(255, 255, 255, 0); /* Transparent background for a clean look */
     --heading-color: #ffffff; /* White text for better contrast against the background */
-    --nav-color: #000000; /* amber navigation links */
+    --nav-color: #000000; /* Amber navigation links */
     --nav-hover-color: blue; /* Full white on hover for navigation links */
 }
 
@@ -188,13 +180,17 @@ h1, h2, h3, h4, h5, h6 {
 /* Desktop Navigation Menu */
 @media (min-width: 1200px) {
     .navmenu {
-        padding: 0;
+        padding: 0; /* Remove padding for nav */
+        margin-left: auto; /* Align to the right */
+        margin-right: auto; /* Center the nav menu */
+        max-width: 1200px; /* Set max width for the menu */
     }
 
         .navmenu ul {
             margin: 0;
             padding: 0;
-            display: flex;
+            display: flex; /* Use flexbox for better alignment */
+            justify-content: space-around; /* Evenly distribute space between items */
             list-style: none;
             align-items: center; /* Align items centrally */
         }
@@ -213,7 +209,7 @@ h1, h2, h3, h4, h5, h6 {
             font-weight: 400;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; /* Center text and icons */
             white-space: nowrap; /* Prevent text wrapping */
             transition: 0.3s; /* Smooth transition effect */
         }
@@ -244,8 +240,8 @@ h1, h2, h3, h4, h5, h6 {
             background: var(--nav-dropdown-background-color); /* Background for dropdown */
             position: absolute;
             visibility: hidden;
-            left: 14px;
-            top: 130%;
+            left: 0; /* Align dropdown under parent */
+            top: 100%; /* Align dropdown below parent */
             opacity: 0;
             transition: 0.3s; /* Smooth dropdown transition */
             border-radius: 4px;
@@ -314,6 +310,7 @@ h1, h2, h3, h4, h5, h6 {
             color: var(--nav-dropdown-color); /* Default color for mobile nav links */
             padding: 15px; /* Spacing for mobile */
             font-size: 18px; /* Larger font size */
+            text-align: center; /* Center text for mobile */
         }
 
             /* Hover State for Mobile Links */
@@ -322,6 +319,7 @@ h1, h2, h3, h4, h5, h6 {
                 color: var(--contrast-color); /* White text on hover */
             }
 }
+
 
 .footer {
     background: linear-gradient(135deg, #6c757d 0%, #343a40 100%);
@@ -1238,14 +1236,13 @@ section,
 }
 
 .password-toggle-container {
-    position: inline-block;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
     .password-toggle-container input[type="checkbox"] {
-        display: inline-block;
+        margin-right: 10px; /* Adds spacing between the checkbox and label text */
     }
 
 .password-toggle-label {
@@ -1253,10 +1250,9 @@ section,
 }
 
     .password-toggle-label span {
-        display: inline-block;
         font-size: 14px;
-        margin-left: 10px;
     }
+
 
 /*Forgot Password*/
 .forgot-password-container {

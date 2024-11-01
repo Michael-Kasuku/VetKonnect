@@ -1,163 +1,120 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
+﻿// Importing the necessary namespace for Entity Framework Core
+using Microsoft.EntityFrameworkCore;
 
 namespace vetkonnect.Server.Models
 {
-    public class AppDbContext: DbContext
+    // Defines the application database context inheriting from DbContext
+    public class AppDbContext : DbContext
     {
+        // Constructor that takes DbContextOptions and passes it to the base DbContext class
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<EmailAddressOTP> EmailAddressOTPs { get; set; }
-        public DbSet<PhoneNumber> PhoneNumbers { get; set; }
-        public DbSet<PhoneNumberOTP> PhoneNumberOTPs { get; set; }
-        public DbSet<Event> Events { get; set; }
+        // Defining DbSet properties representing tables in the database for each model/entity
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Veterinarian> Veterinarians { get; set; }
+        public DbSet<Farmer> Farmers { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Webinar> Webinars { get; set; }
-        public DbSet<EduContent> EduContents { get; set; }
-        public DbSet<Service> Services { get; set; }
-        public DbSet<Package> Packages { get; set; }
-        public DbSet<Subscription> Subscriptions { get; set; }
-        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<TreatmentRecord> TreatmentRecords { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<DeliveryPoint> DeliveryPoints { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<CommunityPost> CommunityPosts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<KvbMember> KvbMembers { get; set; }
-        public DbSet<KvbNumber> KvbNumbers { get; set; }
 
+        // Overriding the OnModelCreating method to configure entity relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Role and User relationship
-            modelBuilder.Entity<User>()
-                .HasOne<Role>()
-                .WithMany()
-                .HasForeignKey(u => u.CurrentRole)
-                .OnDelete(DeleteBehavior.Restrict); // Adjust as per your requirement
+            // Configures a one-to-one relationship between Veterinarian and ApplicationUser
+            modelBuilder.Entity<Veterinarian>()
+                .HasOne(vet => vet.User)                           // Each Veterinarian has one associated ApplicationUser
+                .WithOne()                                         // No collection of Veterinarians in ApplicationUser
+                .HasForeignKey<Veterinarian>(vet => vet.UserId)    // UserId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of User if Veterinarian exists
 
-            // EmailAddressOTP and User relationship
-            modelBuilder.Entity<EmailAddressOTP>()
-                .HasOne<User>(e => e.User) // Specify navigation property
-                .WithMany(u => u.EmailAddressOTPs) // Specify collection property in User
-                .HasForeignKey(e => e.BelongingTo)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Configures a one-to-one relationship between Farmer and ApplicationUser
+            modelBuilder.Entity<Farmer>()
+                .HasOne(farmer => farmer.User)                     // Each Farmer has one associated ApplicationUser
+                .WithOne()                                         // No collection of Farmers in ApplicationUser
+                .HasForeignKey<Farmer>(farmer => farmer.UserId)    // UserId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of User if Farmer exists
 
-            // PhoneNumber and User relationship
-            modelBuilder.Entity<PhoneNumber>()
-                .HasOne<User>(p => p.User) // Specify navigation property
-                .WithMany(u => u.PhoneNumbers) // Specify collection property in User
-                .HasForeignKey(p => p.OwnedBy)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // PhoneNumberOTP and User relationship
-            modelBuilder.Entity<PhoneNumberOTP>()
-                .HasOne<User>(p => p.User) // Specify navigation property
-                .WithMany(u => u.PhoneNumberOTPs) // Specify collection property in User
-                .HasForeignKey(p => p.SentTo)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // Event table relationships
-            modelBuilder.Entity<Event>()
-                .HasOne<User>(e => e.HostUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(e => e.Host)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // Appointment table relationships
+            // Configures Appointment relationship with Veterinarian
             modelBuilder.Entity<Appointment>()
-                .HasOne<User>(a => a.HostUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(a => a.Host)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(appointment => appointment.Veterinarian)   // Each Appointment is associated with one Veterinarian
+                .WithMany()                                        // Veterinarian does not have a collection of Appointments
+                .HasForeignKey(appointment => appointment.VeterinarianId) // VeterinarianId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Veterinarian if Appointment exists
 
-            // Webinar and User relationship
-            modelBuilder.Entity<Webinar>()
-                .HasOne<User>(w => w.PostedByUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(w => w.PostedBy)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Configures Appointment relationship with Farmer
+            modelBuilder.Entity<Appointment>()
+                .HasOne(appointment => appointment.Farmer)         // Each Appointment is associated with one Farmer
+                .WithMany()                                        // Farmer does not have a collection of Appointments
+                .HasForeignKey(appointment => appointment.FarmerId) // FarmerId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Farmer if Appointment exists
 
-            // EduContent and User relationship
-            modelBuilder.Entity<EduContent>()
-                .HasOne<User>(ec => ec.PostedByUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(ec => ec.PostedBy)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Configures Article relationship with ApplicationUser for Author
+            modelBuilder.Entity<Article>()
+                .HasOne(article => article.Author)                 // Each Article has one associated Author
+                .WithMany()                                        // Author does not have a collection of Articles
+                .HasForeignKey(article => article.AuthorId)        // AuthorId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Author if Article exists
 
-            // Service and User relationship
-            modelBuilder.Entity<Service>()
-                .HasOne<User>(s => s.OfferedByUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(s => s.OfferedBy)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Configures Comment relationship with CommunityPost
+            modelBuilder.Entity<Comment>()
+                .HasOne(comment => comment.CommunityPost)          // Each Comment is associated with one CommunityPost
+                .WithMany()                                        // CommunityPost does not have a collection of Comments
+                .HasForeignKey(comment => comment.CommunityPostId) // CommunityPostId as foreign key
+                .OnDelete(DeleteBehavior.Cascade);                // Cascade delete to remove Comments if CommunityPost is deleted
 
-            // Subscription and Package relationship
-            modelBuilder.Entity<Subscription>()
-                .HasOne<Package>()
-                .WithMany()
-                .HasForeignKey(sub => sub.SubscribedTo)
-                .OnDelete(DeleteBehavior.Restrict);
+            // Configures Comment relationship with ApplicationUser for User
+            modelBuilder.Entity<Comment>()
+                .HasOne(comment => comment.User)                   // Each Comment is associated with one User
+                .WithMany()                                        // User does not have a collection of Comments
+                .HasForeignKey(comment => comment.UserId)          // UserId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of User if Comment exists
 
-            // Subscription and User relationship
-            modelBuilder.Entity<Subscription>()
-                .HasOne<User>(sub => sub.SubscriberUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(sub => sub.Subscriber)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Configures CommunityPost relationship with ApplicationUser for User
+            modelBuilder.Entity<CommunityPost>()
+                .HasOne(post => post.User)                         // Each CommunityPost is associated with one User
+                .WithMany()                                        // User does not have a collection of CommunityPosts
+                .HasForeignKey(post => post.UserId)                // UserId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of User if CommunityPost exists
 
-            // Product and User relationship
+            // Configures TreatmentRecord relationship with Veterinarian
+            modelBuilder.Entity<TreatmentRecord>()
+                .HasOne(record => record.Veterinarian)             // Each TreatmentRecord has an associated Veterinarian
+                .WithMany()                                        // Veterinarian does not have a collection of TreatmentRecords
+                .HasForeignKey(record => record.VeterinarianId)    // VeterinarianId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Veterinarian if TreatmentRecord exists
+
+            // Configures TreatmentRecord relationship with Farmer
+            modelBuilder.Entity<TreatmentRecord>()
+                .HasOne(record => record.Farmer)                   // Each TreatmentRecord is associated with one Farmer
+                .WithMany()                                        // Farmer does not have a collection of TreatmentRecords
+                .HasForeignKey(record => record.FarmerId)          // FarmerId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Farmer if TreatmentRecord exists
+
+            // Configures Product relationship with ApplicationUser for Owner
             modelBuilder.Entity<Product>()
-                .HasOne<User>(p => p.OwnerUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(p => p.Owner)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(product => product.Owner)                  // Each Product has an associated Owner
+                .WithMany()                                        // Owner does not have a collection of Products
+                .HasForeignKey(product => product.OwnerId)         // OwnerId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Owner if Product exists
 
-            // Product and ProductCategory relationship
-            modelBuilder.Entity<Product>()
-                .HasOne<ProductCategory>()
-                .WithMany()
-                .HasForeignKey(p => p.BelongingTo)
-                .OnDelete(DeleteBehavior.Restrict);
+            // Configures Notification relationship with ApplicationUser for the Sender
+            modelBuilder.Entity<Notification>()
+                .HasOne(notification => notification.Sender)       // Each Notification has a Sender
+                .WithMany()                                        // Sender does not have a collection of Notifications
+                .HasForeignKey(notification => notification.SenderId) // SenderId is the foreign key in Notification
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Sender if Notification exists
 
-            // Order and User relationship
-            modelBuilder.Entity<Order>()
-                .HasOne<User>(o => o.PlacedByUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(o => o.PlacedBy)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // Order and Product relationship
-            modelBuilder.Entity<Order>()
-                .HasOne<Product>()
-                .WithMany()
-                .HasForeignKey(o => o.ProductOrdered)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Order and DeliveryPoint relationship
-            modelBuilder.Entity<Order>()
-                .HasOne<DeliveryPoint>()
-                .WithMany()
-                .HasForeignKey(o => o.DeliveredAt)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // DeliveryPoint and User relationship
-            modelBuilder.Entity<DeliveryPoint>()
-                .HasOne<User>(dp => dp.AddedByUser) // Specify navigation property
-                .WithMany() // Adjust if you have a collection in User
-                .HasForeignKey(dp => dp.AddedBy)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // KvbMember and KvbNumber relationship
-            modelBuilder.Entity<KvbNumber>()
-                .HasOne<KvbMember>()
-                .WithMany()
-                .HasForeignKey(u => u.KvbMemberId)
-                .OnDelete(DeleteBehavior.Restrict); // Adjust as per your requirement
-            // Add additional constraints, default values, and indices as necessary
+            // Configures Notification relationship with ApplicationUser for the Receiver
+            modelBuilder.Entity<Notification>()
+                .HasOne(notification => notification.Receiver)     // Each Notification has a Receiver
+                .WithMany()                                        // Receiver does not have a collection of Notifications
+                .HasForeignKey(notification => notification.ReceiverId) // ReceiverId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Receiver if Notification exists
         }
-
-
     }
 }

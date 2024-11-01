@@ -1,551 +1,277 @@
-﻿import React, { Component } from 'react';
-import axios from 'axios'; // Import Axios
-import $ from 'jquery';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import {
+    Container,
+    Box,
     TextField,
     Button,
-    MenuItem,
+    Typography,
+    CircularProgress,
     InputAdornment,
     IconButton,
-    Typography,
-    Stepper,
-    Step,
-    StepLabel,
-    Card,
-    CircularProgress,
+    Alert,
+    Collapse
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { addDays } from 'date-fns';
 
-class VetSignUp extends Component {
-    state = {
-        activeStep: 0,
-        showPassword: false,
-        showConfirmPassword: false,
-        currentRole: 'Farmer',
-        formData: {
-            firstName: '',
-            lastName: '',
-            phoneNumber: '',
-            gender: '',
-            dateOfBirth: null,
-            email: '',
+class VetSignUp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showPassword: false,
+            isLoading: false,
+            username: '',
             password: '',
             confirmPassword: '',
+            emailAddress: '',
+            phoneNumber: '',
             kvbNumber: '',
-            nationalIdNo: '',
-        },
-        formErrors: {},
-        isLoading: false,        
-        successMessage: '',
-        errorMessage: '',
-    };
-
-    handleRoleChange = (event) => {
-        const role = event.target.value;
-        this.setState({ currentRole: role });
-        this.showRoleSpecificFields(role);
-    };
-
-    showRoleSpecificFields = (role) => {
-        const isVet = role === 'Vet';
-        $("#kvbNumber, #nationalIdNo").fadeToggle(isVet);
-        if (!isVet) {
-            this.setState((prevState) => ({
-                formData: {
-                    ...prevState.formData,
-                    kvbNumber: '',
-                    nationalIdNo: '',
-                }
-            }));
-        }
-    };
-
-    handleInputChange = (event) => {
-        const { name, value } = event.target;
-        this.setState((prevState) => ({
-            formData: {
-                ...prevState.formData,
-                [name]: value,
-            },
-        }));
-
-        $(event.target).addClass('input-focus');
-        $(event.target).siblings('.error-message').fadeOut();
-    };
-
-    handleDateChange = (date) => {
-        this.setState((prevState) => ({
-            formData: {
-                ...prevState.formData,
-                dateOfBirth: date,
-            },
-        }));
-    };
+            formErrors: { username: '', password: '', confirmPassword: '', emailAddress: '', phoneNumber: '', kvbNumber: '' },
+            submissionError: '',
+        };
+    }
 
     togglePasswordVisibility = () => {
         this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
     };
 
-    toggleConfirmPasswordVisibility = () => {
-        this.setState((prevState) => ({ showConfirmPassword: !prevState.showConfirmPassword }));
+    validateForm = () => {
+        const { username, password, confirmPassword, emailAddress, phoneNumber, kvbNumber } = this.state;
+        let usernameError = '';
+        let passwordError = '';
+        let confirmPasswordError = '';
+        let emailError = '';
+        let phoneError = '';
+        let kvbError = '';
+
+        if (!username || username.length < 3) {
+            usernameError = 'Please enter a valid username.';
+        }
+
+        if (!password || password.length < 6 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[!@#$%^&*]/.test(password)) {
+            passwordError = 'Password must be at least 6 characters long and include upper case, lower case, and a special character.';
+        }
+
+        if (password !== confirmPassword) {
+            confirmPasswordError = 'Passwords do not match.';
+        }
+
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailAddress || !emailPattern.test(emailAddress)) {
+            emailError = 'Please enter a valid email address.';
+        }
+
+        const phonePattern = /^(01\d{8}|07\d{8}|\+2547\d{8}|\+2541\d{8})$/;
+        if (!phoneNumber || !phonePattern.test(phoneNumber)) {
+            phoneError = 'Please enter a valid phone number (formats: 01XXXXXXXX, 07XXXXXXXX, +2547XXXXXXXX, +2541XXXXXXXX).';
+        }
+
+        if (!kvbNumber) {
+            kvbError = 'KVB Number is required.';
+        }
+
+        this.setState({
+            formErrors: { username: usernameError, password: passwordError, confirmPassword: confirmPasswordError, emailAddress: emailError, phoneNumber: phoneError, kvbNumber: kvbError },
+            submissionError: '',
+        });
+
+        return !usernameError && !passwordError && !confirmPasswordError && !emailError && !phoneError && !kvbError;
     };
 
-    handleNext = () => {
-        const { activeStep } = this.state;
+    handleSubmit = (e) => {
+        e.preventDefault();
+        if (!this.validateForm()) return;
 
-        if (activeStep === 3) {
-            this.submitSignUp(); // Call the function to submit data when at the last step
-        } else {
-            const errors = this.validateFields(activeStep);
+        this.setState({ isLoading: true });
 
-            if (Object.keys(errors).length === 0) {
-                this.setState((prevState) => ({
-                    activeStep: prevState.activeStep + 1,
-                    formErrors: {},
-                }));
+        // Simulate an API call for demonstration purposes
+        setTimeout(() => {
+            this.setState({ isLoading: false });
+
+            // Replace this with actual API response handling
+            const apiCallSuccess = true; // Change this based on your API logic
+            if (apiCallSuccess) {
+                alert('Registration successful');
             } else {
-                this.setState({ formErrors: errors });
-                for (const key in errors) {
-                    $(`#${key}`).siblings('.error-message').fadeIn();
-                }
+                this.setState({ submissionError: 'Registration failed. Please try again.' });
             }
-        }
+        }, 2000);
     };
 
-    submitSignUp = async (e) => {
-        this.setState({ isLoading: true, successMessage: '', errorMessage: '' }); // Reset messages and show loader
-
-        const { formData } = this.state;
-
-        // Simple validation to ensure required fields are filled
-        if (
-            !formData.firstName ||
-            !formData.lastName ||
-            !formData.email ||
-            !formData.password ||
-            !formData.gender ||
-            !formData.phoneNumber ||
-            (formData.currentRole === 'Vet' && (!formData.kvbNumber || !formData.nationalIdNo))
-        ) {
-            this.setState({
-                errorMessage: 'Please fill all required fields.',
-                isLoading: false
-            });
-            return;
-        }
-
-        try {
-            const apiUrl = `https://localhost:7164/api/signup`; // Define your API endpoint
-
-            const response = await axios.post(apiUrl, {
-                FirstName: formData.firstName,
-                LastName: formData.lastName,
-                EmailAddress: formData.email,
-                Password: formData.password,
-                Gender: formData.gender,
-                YearOfBirth: formData.dateOfBirth
-                    ? formData.dateOfBirth.getFullYear()
-                    : null,
-                PhoneNumbers: [{ Phone: formData.phoneNumber }],
-                CurrentRole: formData.currentRole,
-                KvbNumber: formData.currentRole === 'Vet' ? formData.kvbNumber : null,
-                NationalIdNo: formData.currentRole === 'Vet' ? formData.nationalIdNo : null,
-            });
-
-            if (response.status === 201) {
-                // Display success message and clear form data
-                this.setState({
-                    successMessage: 'Signup successful! Welcome onboard.',
-                    isLoading: false,
-                    errorMessage: '',
-                    formData: {
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                        password: '',
-                        gender: '',
-                        dateOfBirth: null,
-                        phoneNumber: '',
-                        currentRole: '',
-                        kvbNumber: '',
-                        nationalIdNo: ''
-                    },
-                });
-            }
-        } catch (error) {
-            const errorMsg =
-                error.response && error.response.data
-                    ? error.response.data.message || 'An unexpected error occurred. Please try again.'
-                    : 'An unexpected error occurred. Please try again.';
-
-            // Display error message
-            this.setState({
-                errorMessage: errorMsg,
-                isLoading: false,
-            });
-        }
-    };
-
-    handleBack = () => {
-        this.setState((prevState) => ({ activeStep: prevState.activeStep - 1 }));
-    };
-
-    validateFields = (step) => {
-        const { formData, currentRole } = this.state;
-        const errors = {};
-
-        if (step === 0) {
-            if (!formData.firstName) errors.firstName = 'First Name is required';
-            if (!formData.lastName) errors.lastName = 'Last Name is required';
-            if (!formData.phoneNumber) {
-                errors.phoneNumber = 'Phone Number is required';
-            } else {
-                const phoneRegex = /^(07\d{8}|01\d{8}|\+2547\d{8}|\+2541\d{8})$/;
-                if (!phoneRegex.test(formData.phoneNumber)) {
-                    errors.phoneNumber = 'Phone Number must be valid';
-                }
-            }
-        }
-
-        if (step === 1) {
-            if (!formData.gender) errors.gender = 'Gender is required';
-            if (!formData.dateOfBirth) errors.dateOfBirth = 'Date of Birth is required';
-            if (currentRole === 'Vet') {
-                if (!formData.kvbNumber) errors.kvbNumber = 'KVB Number is required';
-                if (!formData.nationalIdNo) errors.nationalIdNo = 'National ID No is required';
-            }
-        }
-
-        if (step === 2) {
-            if (!formData.email) errors.email = 'Email is required';
-            if (!formData.password) errors.password = 'Password is required';
-            if (formData.password.length < 8) errors.password = 'Password must be at least 8 characters';
-            if (!formData.confirmPassword) errors.confirmPassword = 'Confirm Password is required';
-            if (formData.password !== formData.confirmPassword) {
-                errors.confirmPassword = 'Passwords do not match';
-            }
-        }
-
-        return errors;
+    handleInputChange = (e) => {
+        const { name, value } = e.target;
+        this.setState({ [name]: value, submissionError: '' }, () => {
+            // Validate the form after updating state
+            this.validateForm();
+        });
     };
 
     render() {
-        const { activeStep, showPassword, showConfirmPassword, currentRole, formData, formErrors, isLoading } = this.state;
-        const steps = ['Personal Information', 'Contact Information', 'Account Setup', 'Review Information'];
+        const { showPassword, isLoading, formErrors, username, password, confirmPassword, emailAddress, phoneNumber, kvbNumber, submissionError } = this.state;
 
         return (
-            <section style={styles.container}>
-                <Card style={{ ...styles.card, opacity: isLoading ? 0.5 : 1 }}>
-                    {isLoading && (
-                        <div style={styles.loadingOverlay}>
-                            <CircularProgress />
-                        </div>
-                    )}
-                    <Typography variant="h4" style={styles.title}>
-                        Create a New Account
+            <Container
+                component="main"
+                maxWidth="xs"
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minHeight: '100vh',
+                    bgcolor: '#f0f2f5',
+                    transition: 'background-color 0.3s ease',
+                }}
+            >
+                <Box
+                    sx={{
+                        bgcolor: '#fff',
+                        p: 4,
+                        borderRadius: 2,
+                        boxShadow: 3,
+                        textAlign: 'center',
+                        position: 'relative',
+                        opacity: isLoading ? 0.5 : 1,
+                        width: '100%',
+                        maxWidth: 400,
+                        transition: 'opacity 0.3s ease-in-out',
+                    }}
+                >
+                    <Typography
+                        variant="h4"
+                        sx={{ mb: 3, fontWeight: 'bold', color: '#1877f2', fontSize: '2rem' }}
+                    >
+                        Sign Up
                     </Typography>
 
-                    <Stepper activeStep={activeStep} alternativeLabel style={styles.stepper}>
-                        {steps.map((label) => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
+                    <Collapse in={!!submissionError}>
+                        <Alert severity="error" sx={{ mb: 2 }}>
+                            {submissionError}
+                        </Alert>
+                    </Collapse>
 
-                    <form id="registration-form">
-                        {activeStep === 0 && this.renderStepOne()}
-                        {activeStep === 1 && this.renderStepTwo()}
-                        {activeStep === 2 && this.renderStepThree()}
-                        {activeStep === 3 && this.renderReviewInformation()}
-
-                        <div style={styles.buttonContainer}>
-                            {activeStep > 0 && (
-                                <Button onClick={this.handleBack} variant="outlined" style={styles.backButton}>
-                                    Back
-                                </Button>
-                            )}
-                            <Button
-                                onClick={this.handleNext}
-                                variant="contained"
-                                style={styles.nextButton}
-                                disabled={isLoading}
-                            >
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
-                        </div>
-                    </form>
-                </Card>
-            </section>
-        );
-    }
-
-    renderStepOne() {
-        const { formData, formErrors, currentRole } = this.state;
-
-        return (
-            <>
-                <TextField
-                    label="First Name"
-                    name="firstName"
-                    id="firstName"
-                    value={formData.firstName}
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    error={!!formErrors.firstName}
-                    helperText={formErrors.firstName}
-                />
-                <TextField
-                    label="Last Name"
-                    name="lastName"
-                    id="lastName"
-                    value={formData.lastName}
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    error={!!formErrors.lastName}
-                    helperText={formErrors.lastName}
-                />
-                <TextField
-                    label="Phone Number"
-                    name="phoneNumber"
-                    id="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    error={!!formErrors.phoneNumber}
-                    helperText={formErrors.phoneNumber}
-                />
-                <TextField
-                    label="Choose Your Role"
-                    name="currentRole"
-                    select
-                    fullWidth
-                    margin="normal"
-                    value={currentRole}
-                    onChange={this.handleRoleChange}
-                    required
-                    variant="outlined"
-                >
-                    <MenuItem value="Farmer">Farmer</MenuItem>
-                    <MenuItem value="Vet">Vet</MenuItem>
-                </TextField>
-            </>
-        );
-    }
-
-    renderStepTwo() {
-        const { formData, formErrors, currentRole } = this.state;
-
-        return (
-            <>
-                <TextField
-                    label="Gender"
-                    name="gender"
-                    id="gender"
-                    select
-                    value={formData.gender}
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    error={!!formErrors.gender}
-                    helperText={formErrors.gender}
-                >
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
-                    <MenuItem value="Other">Other</MenuItem>
-                </TextField>
-                <DatePicker
-                    selected={formData.dateOfBirth}
-                    onChange={this.handleDateChange}
-                    dateFormat="yyyy/MM/dd"
-                    placeholderText="Date of Birth"
-                    className={`datepicker ${formErrors.dateOfBirth ? 'error' : ''}`}
-                    showYearDropdown
-                    scrollableYearDropdown
-                    yearDropdownItemNumber={100}
-                    dropdownMode="select"
-                    required
-                />
-                {currentRole === 'Vet' && (
-                    <>
+                    <form onSubmit={this.handleSubmit}>
+                        <TextField
+                            label="Username"
+                            name="username"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                            value={username}
+                            onChange={this.handleInputChange}
+                            error={!!formErrors.username}
+                            helperText={formErrors.username}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            label="Password"
+                            name="password"
+                            type={showPassword ? 'text' : 'password'}
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                            value={password}
+                            onChange={this.handleInputChange}
+                            error={!!formErrors.password}
+                            helperText={formErrors.password}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={this.togglePasswordVisibility}>
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            label="Confirm Password"
+                            name="confirmPassword"
+                            type={showPassword ? 'text' : 'password'}
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                            value={confirmPassword}
+                            onChange={this.handleInputChange}
+                            error={!!formErrors.confirmPassword}
+                            helperText={formErrors.confirmPassword}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={this.togglePasswordVisibility}>
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            label="Email Address"
+                            name="emailAddress"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                            value={emailAddress}
+                            onChange={this.handleInputChange}
+                            error={!!formErrors.emailAddress}
+                            helperText={formErrors.emailAddress}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            label="Phone Number"
+                            name="phoneNumber"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                            value={phoneNumber}
+                            onChange={this.handleInputChange}
+                            error={!!formErrors.phoneNumber}
+                            helperText={formErrors.phoneNumber}
+                            sx={{ mb: 2 }}
+                        />
                         <TextField
                             label="KVB Number"
                             name="kvbNumber"
-                            id="kvbNumber"
-                            value={formData.kvbNumber}
-                            onChange={this.handleInputChange}
+                            variant="outlined"
                             fullWidth
                             margin="normal"
-                            variant="outlined"
+                            required
+                            value={kvbNumber}
+                            onChange={this.handleInputChange}
                             error={!!formErrors.kvbNumber}
                             helperText={formErrors.kvbNumber}
+                            sx={{ mb: 2 }}
                         />
-                        <TextField
-                            label="National ID No"
-                            name="nationalIdNo"
-                            id="nationalIdNo"
-                            value={formData.nationalIdNo}
-                            onChange={this.handleInputChange}
+                        <Button
+                            type="submit"
+                            variant="contained"
                             fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            error={!!formErrors.nationalIdNo}
-                            helperText={formErrors.nationalIdNo}
-                        />
-                    </>
-                )}
-            </>
-        );
-    }
+                            sx={{
+                                mt: 2,
+                                bgcolor: '#1877f2',
+                                '&:hover': { bgcolor: '#145dbf' },
+                                '&:active': { transform: 'scale(0.98)' },
+                                transition: 'transform 0.1s ease-in-out',
+                            }}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign Up'}
+                        </Button>
+                    </form>
 
-    renderStepThree() {
-        const { formData, formErrors, showPassword, showConfirmPassword } = this.state;
-
-        return (
-            <>
-                <TextField
-                    label="Email"
-                    name="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    error={!!formErrors.email}
-                    helperText={formErrors.email}
-                />
-                <TextField
-                    label="Password"
-                    name="password"
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    value={formData.password}
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    error={!!formErrors.password}
-                    helperText={formErrors.password}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton onClick={this.togglePasswordVisibility}>
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                <TextField
-                    label="Confirm Password"
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    value={formData.confirmPassword}
-                    onChange={this.handleInputChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    error={!!formErrors.confirmPassword}
-                    helperText={formErrors.confirmPassword}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton onClick={this.toggleConfirmPasswordVisibility}>
-                                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </>
-        );
-    }
-
-    renderReviewInformation() {
-        const { formData } = this.state;
-
-        return (
-            <div>
-                <Typography variant="h6">Review Your Information</Typography>
-                <Typography>First Name: {formData.firstName}</Typography>
-                <Typography>Last Name: {formData.lastName}</Typography>
-                <Typography>Phone Number: {formData.phoneNumber}</Typography>
-                <Typography>Role: {this.state.currentRole}</Typography>
-                <Typography>Gender: {formData.gender}</Typography>
-                <Typography>Date of Birth: {formData.dateOfBirth ? formData.dateOfBirth.toLocaleDateString() : ''}</Typography>
-                {this.state.currentRole === 'Vet' && (
-                    <>
-                        <Typography>KVB Number: {formData.kvbNumber}</Typography>
-                        <Typography>National ID No: {formData.nationalIdNo}</Typography>
-                    </>
-                )}
-                <Typography>Email: {formData.email}</Typography>
-            </div>
+                    <Typography variant="body2" sx={{ mt: 2 }}>
+                        Already have an account? <Link to="/vet/login">Log In</Link>
+                    </Typography>
+                </Box>
+            </Container>
         );
     }
 }
-
-const styles = {
-    container: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#f5f5f5',
-    },
-    card: {
-        padding: '20px',
-        width: '400px',
-        textAlign: 'center',
-    },
-    title: {
-        marginBottom: '20px',
-    },
-    stepper: {
-        marginBottom: '20px',
-    },
-    buttonContainer: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginTop: '20px',
-    },
-    backButton: {
-        marginRight: '10px',
-    },
-    nextButton: {
-        marginLeft: '10px',
-    },
-    loadingOverlay: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-};
 
 export default VetSignUp;

@@ -10,35 +10,44 @@ class VetSignUpPage extends Component {
                     sx={{
                         minHeight: '100vh',
                         display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        flexDirection: { xs: 'column', md: 'row' }, // Responsive layout
                         bgcolor: '#f0f2f5',
-                        padding: 4, // Increased padding for better spacing
                     }}
                 >
-                    <Typography
-                        variant="h2"
+                    <Box
                         sx={{
-                            fontWeight: 'bold',
-                            color: '#1877f2',
-                            mb: 1, // Reduced margin for a closer look to subtitle
+                            flex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'flex-start', // Left-align text
+                            padding: 3,
+                            backgroundImage: 'url("/assets/img/hero-bg.jpg")', // Background image path
+                            backgroundSize: 'cover', // Cover the entire Box
+                            backgroundPosition: 'center', // Center the background image
                         }}
                     >
-                        Vet Konnect
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            mb: 4, // Reduced margin for tighter spacing
-                            color: '#606770',
-                            textAlign: 'center',
-                            maxWidth: '600px', // Added max width for better layout
-                        }}
-                    >
-                        Create an Account to Connect with Certified Veterinarians.
-                    </Typography>
-                    <main className="main" style={{ width: '100%', maxWidth: '600px' }}> {/* Center the form */}
+                        <Typography
+                            variant="h2"
+                            sx={{
+                                fontWeight: 'bold',
+                                color: 'white', // Text color
+                                mb: 2,
+                            }}
+                        >
+                            Vetkonnect
+                        </Typography>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                mb: 5,
+                                color: 'white', // Text color
+                            }}
+                        >
+                            Connecting You with Certified Veterinarians...
+                        </Typography>
+                    </Box>
+                    <main className="main">
                         <VetSignUp />
                     </main>
                 </Box>
