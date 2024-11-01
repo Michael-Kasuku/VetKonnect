@@ -10,35 +10,45 @@ class VetLoginPage extends Component {
                     sx={{
                         minHeight: '100vh',
                         display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        flexDirection: { xs: 'column', md: 'row' }, // Responsive layout
                         bgcolor: '#f0f2f5',
-                        padding: 3,
                     }}
                 >
-                    <Typography
-                        variant="h2"
+                    <Box
                         sx={{
-                            fontWeight: 'bold',
-                            color: '#1877f2',
-                            mb: 2,
+                            flex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'flex-start', // Left-align text
+                            padding: 3,
+                            backgroundImage: 'url("/assets/img/hero-bg.jpg")', // Background image path
+                            backgroundSize: 'cover', // Cover the entire Box
+                            backgroundPosition: 'center', // Center the background image
                         }}
                     >
-                        Vet Konnect
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            mb: 5,
-                            color: '#606770',
-                            textAlign: 'center',
-                        }}
-                    >
-                        Connecting you with Certified Veterinarians.
-                    </Typography>
+                        <Typography
+                            variant="h2"
+                            sx={{
+                                fontWeight: 'bold',
+                                color: 'white', // Text color
+                                mb: 2,
+                            }}
+                        >
+                            Vetkonnect
+                        </Typography>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                mb: 5,
+                                color: 'white', // Text color
+                            }}
+                        >
+                            Connecting You with Certified Veterinarians...
+                        </Typography>
+                    </Box>
                     <main className="main">
-                        <Login />
+                        <VetLogin />
                     </main>
                 </Box>
             </Slide>

@@ -39,7 +39,7 @@ class VetSignUpPage extends Component {
                         Create an Account to Connect with Certified Veterinarians.
                     </Typography>
                     <main className="main" style={{ width: '100%', maxWidth: '600px' }}> {/* Center the form */}
-                        <SignUp />
+                        <VetSignUp />
                     </main>
                 </Box>
             </Slide>

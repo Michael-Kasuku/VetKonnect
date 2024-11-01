@@ -115,7 +115,7 @@ class VetLogin extends React.Component {
                         variant="h4"
                         sx={{ mb: 3, fontWeight: 'bold', color: '#1877f2', fontSize: '2rem' }}
                     >
-                        Log in to Vet Konnect
+                        Welcome Back!
                     </Typography>
 
                     <Collapse in={!!submissionError}>
@@ -193,7 +193,7 @@ class VetLogin extends React.Component {
 
                     <Box sx={{ mt: 2 }}>
                         <Typography variant="body2">
-                            <Link to="/forgot" style={{ color: '#1877f2' }}>
+                            <Link to="/vet/forgot" style={{ color: '#1877f2' }}>
                                 Forgotten password?
                             </Link>
                         </Typography>
@@ -213,7 +213,7 @@ class VetLogin extends React.Component {
                             <Typography variant="body1">or</Typography>
                             <Button
                                 component={Link}
-                                to="/signup"
+                                to="/vet/signup"
                                 variant="outlined"
                                 sx={{
                                     borderColor: '#42b72a',

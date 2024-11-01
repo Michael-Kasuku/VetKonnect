@@ -48,7 +48,7 @@ class Services extends React.Component {
                                 </div>
                                 <div className="content">
                                     <h4 className="fw-bold text-dark mb-2">Educational Resources</h4>
-                                    <p className="text-muted">Explore in-depth blogs, webinars, and research articles to stay updated on the latest veterinary practices.</p>
+                                    <p className="text-muted">Explore in-depth blogs and webinars to stay updated on the latest veterinary practices.</p>
                                 </div>
                             </div>
                         </div>

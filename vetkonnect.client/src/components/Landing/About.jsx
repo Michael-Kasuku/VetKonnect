@@ -16,7 +16,9 @@ class About extends Component {
                 <Container data-aos="fade-up" data-aos-delay="100">
                     <div className="row align-items-center gy-5">
                         <div className="col-xl-5 content">
-                            <Typography variant="h3" className="text-primary mb-4">About Us</Typography>
+                            <Typography variant="h3" className="text-primary mb-4">
+                                About Us
+                            </Typography>
                             <Typography
                                 variant="body1"
                                 className="lead mb-4"
@@ -26,10 +28,9 @@ class About extends Component {
                                     color: '#fff'
                                 }}
                             >
-                                <strong>Vet Konnect</strong> is a platform designed to connect livestock farmers and pet owners with certified veterinarians, ensuring access to high-quality veterinary services throughout Kenya.
-                                Our mobile app, web platform, and USSD code allow users to easily find and book veterinarians, access essential veterinary products via our agrovet hub, and participate in a community forum for expert advice.
-                                We are also committed to reintroducing vital animal welfare programs aimed at enhancing farm productivity and improving animal health.
-                                By enhancing access to veterinary care and reviving key welfare initiatives, we strive to create sustainable livelihoods and strengthen communities.
+                                <strong>Vetkonnect</strong> is an innovative platform dedicated to connecting livestock farmers and pet owners with certified veterinarians across Kenya. Through our mobile application, web platform, and USSD code, users can easily locate and book veterinary services tailored to their needs.
+                                <br /><br />
+                                In addition to providing veterinary services, we offer essential veterinary products via our agrovet hub and facilitate community engagement through a dedicated forum for expert advice. Our commitment extends beyond access; we are actively reintroducing vital animal welfare programs that enhance farm productivity and improve animal health.
                             </Typography>
                         </div>
 
@@ -37,21 +38,25 @@ class About extends Component {
                             <div className="row gy-4 icon-boxes">
                                 <div className="col-md-6" data-aos="fade-up" data-aos-delay="200">
                                     <div className="icon-box text-center p-4 border rounded shadow-sm">
-                                        <Typography variant="h4" style={{ color: 'blue' }}>Mission</Typography>
+                                        <Typography variant="h4" style={{ color: 'blue' }}>
+                                            Mission
+                                        </Typography>
                                         <Typography className="font-weight-bold">
-                                            To enhance animal health, support sustainable agriculture, empower communities, and reduce inequalities in accessing care, particularly in rural areas.
+                                            Our mission is to enhance animal health, support sustainable agriculture, empower communities, and reduce inequalities in access to veterinary care, particularly in rural areas.
                                         </Typography>
                                     </div>
-                                </div> {/* End Icon Box */}
+                                </div>
 
                                 <div className="col-md-6" data-aos="fade-up" data-aos-delay="300">
                                     <div className="icon-box text-center p-4 border rounded shadow-sm">
-                                        <Typography variant="h4" style={{ color: 'blue' }}>Vision</Typography>
+                                        <Typography variant="h4" style={{ color: 'blue' }}>
+                                            Vision
+                                        </Typography>
                                         <Typography className="font-weight-bold">
-                                            To reduce animal disease and mortality rates by providing reliable veterinary care and empowering farmers and pet owners with essential resources.
+                                            Our vision is to significantly reduce animal disease and mortality rates by providing reliable veterinary care while empowering farmers and pet owners with the essential resources they need.
                                         </Typography>
                                     </div>
-                                </div> {/* End Icon Box */}
+                                </div>
                             </div>
                         </div>
                     </div>

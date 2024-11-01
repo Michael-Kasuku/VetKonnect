@@ -24,7 +24,7 @@ class VetForgotPasswordPage extends Component {
                         alignItems: 'center',
                     }}
                 >
-                    <ForgotPassword />
+                    <VetForgotPassword />
                 </Container>
             </Box>
         );

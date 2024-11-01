@@ -11,36 +11,36 @@ class PrivacyPolicy extends React.Component {
                             Privacy Policy
                         </Typography>
                         <Typography variant="body1" sx={{ fontSize: '1.25rem', lineHeight: 1.8, textAlign: 'justify', mb: 4 }}>
-                            At Vet Konnect, we recognize the importance of safeguarding the personal information of our users. This Privacy Policy outlines how we collect, use, protect, and share your information in compliance with applicable data protection laws, including the Data Protection Act, 2019 (Kenya). By using our services, you consent to the terms outlined in this Privacy Policy.
+                            At Vet Konnect, we recognize the importance of safeguarding the personal information of our users. This Privacy Policy outlines how we collect, use, protect, and share your information in compliance with applicable data protection laws, including the Data Protection Act, 2019 (Kenya), and relevant provisions of the Constitution of Kenya, 2010. By using our services, you consent to the terms outlined in this Privacy Policy.
                         </Typography>
 
                         {/* Section 1 */}
                         <Typography variant="h4" color="primary" gutterBottom>
                             1. Information We Collect
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             We may collect the following categories of personal information to facilitate the use of our platform:
                         </Typography>
                         <ul>
-                            <li><strong>Personal Identification Information</strong>: Your full name, email address, phone number, and other contact details provided during registration.</li>
-                            <li><strong>Veterinary and Animal Information</strong>: Information related to your animals, appointment history, and veterinary services requested.</li>
-                            <li><strong>Financial Information</strong>: Payment details for transactions processed via the platform.</li>
-                            <li><strong>Usage Information</strong>: Data on how you interact with the platform, including access times, device information, IP addresses, and browser types.</li>
-                            <li><strong>Location Data</strong>: Geographic location data to enhance service delivery for location-based requests (such as nearby veterinarians).</li>
+                            <li><strong>Personal Identification Information:</strong> Your full name, email address, phone number, and other contact details provided during registration.</li>
+                            <li><strong>Veterinary and Animal Information:</strong> Information related to your animals, appointment history, and veterinary services requested.</li>
+                            <li><strong>Financial Information:</strong> Payment details for transactions processed via the platform.</li>
+                            <li><strong>Usage Information:</strong> Data on how you interact with the platform, including access times, device information, IP addresses, and browser types.</li>
+                            <li><strong>Location Data:</strong> Geographic location data to enhance service delivery for location-based requests (such as nearby veterinarians).</li>
                         </ul>
 
                         {/* Section 2 */}
                         <Typography variant="h4" color="primary" gutterBottom>
                             2. Use of Your Information
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             We use your personal information to provide, maintain, and improve our services. This includes:
                         </Typography>
                         <ul>
                             <li>Facilitating communication and appointments between users and certified veterinarians.</li>
                             <li>Processing payments securely and maintaining accurate transaction records.</li>
                             <li>Enhancing the platform's performance and user experience by analyzing usage patterns and preferences.</li>
-                            <li>Complying with legal obligations and responding to lawful requests from public authorities.</li>
+                            <li>Complying with legal obligations, including upholding your rights under the Constitution of Kenya, 2010, and responding to lawful requests from public authorities.</li>
                             <li>Protecting the security and integrity of our platform, including fraud detection and prevention.</li>
                         </ul>
 
@@ -48,7 +48,7 @@ class PrivacyPolicy extends React.Component {
                         <Typography variant="h4" color="primary" gutterBottom>
                             3. Disclosure of Information
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             We do not sell or rent your personal information to third parties. However, we may share your information in the following circumstances:
                         </Typography>
                         <ul>
@@ -61,7 +61,7 @@ class PrivacyPolicy extends React.Component {
                         <Typography variant="h4" color="primary" gutterBottom>
                             4. Data Security
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             We implement robust administrative, technical, and physical security measures designed to protect your personal information from unauthorized access, loss, misuse, or alteration. These measures include encryption protocols, secure servers, and regular security audits. While we strive to use commercially acceptable means to protect your data, we cannot guarantee absolute security given the nature of internet technologies.
                         </Typography>
 
@@ -69,7 +69,7 @@ class PrivacyPolicy extends React.Component {
                         <Typography variant="h4" color="primary" gutterBottom>
                             5. Cookies and Tracking Technologies
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             Vet Konnect uses cookies and similar tracking technologies to personalize your experience and gather data on website traffic and usage trends. Cookies are small data files stored on your device. You may modify your browser settings to reject cookies, but doing so may limit your ability to fully use some features of our platform.
                         </Typography>
 
@@ -77,7 +77,7 @@ class PrivacyPolicy extends React.Component {
                         <Typography variant="h4" color="primary" gutterBottom>
                             6. Retention of Personal Information
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             We retain personal information for as long as is necessary to fulfill the purposes for which it was collected, comply with legal obligations, resolve disputes, and enforce our agreements. When your information is no longer required, we will take appropriate steps to securely delete or anonymize it.
                         </Typography>
 
@@ -85,7 +85,7 @@ class PrivacyPolicy extends React.Component {
                         <Typography variant="h4" color="primary" gutterBottom>
                             7. Your Data Protection Rights
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             You have rights regarding your personal data under applicable data protection laws. These include:
                         </Typography>
                         <ul>
@@ -95,7 +95,7 @@ class PrivacyPolicy extends React.Component {
                             <li>The right to restrict or object to the processing of your personal data in certain circumstances.</li>
                             <li>The right to data portability, allowing you to request a copy of your data in a structured, commonly used format.</li>
                         </ul>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 4 }}>
                             To exercise these rights, or if you have any concerns regarding how we handle your data, please contact us at <Link href="mailto:vetkonnect@gmail.com">vetkonnect@gmail.com</Link>.
                         </Typography>
 
@@ -103,7 +103,7 @@ class PrivacyPolicy extends React.Component {
                         <Typography variant="h4" color="primary" gutterBottom>
                             8. Third-Party Links
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             Our platform may contain links to third-party websites or services that are not controlled by Vet Konnect. We are not responsible for the privacy practices or content of such websites. We encourage users to read the privacy policies of any third-party websites they visit.
                         </Typography>
 
@@ -111,7 +111,7 @@ class PrivacyPolicy extends React.Component {
                         <Typography variant="h4" color="primary" gutterBottom>
                             9. Changes to this Privacy Policy
                         </Typography>
-                        <Typography variant="body1" sx={{ textAlign: 'justify' }}>
+                        <Typography variant="body1" sx={{ textAlign: 'justify', mb: 2 }}>
                             We reserve the right to modify or update this Privacy Policy at any time. Any changes will be posted on this page, and we will notify you of significant updates via email or platform notifications. Your continued use of our services after any changes to this policy constitutes your acceptance of the revised terms.
                         </Typography>
 

@@ -85,7 +85,7 @@ class Contact extends Component {
                                     <div className="info-item" data-aos="fade" data-aos-delay="300">
                                         <i className="fa fa-phone"></i>
                                         <Typography variant="h4" className="mt-2">Phone</Typography>
-                                        <Typography variant="body2">+254 712 345 678</Typography>
+                                        <Typography variant="body2">+254 742 644 460</Typography>
                                     </div>
                                 </div>
 
