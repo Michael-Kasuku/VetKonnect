@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Grid } from '@mui/material';
 
 class About extends Component {
     render() {
@@ -15,7 +15,7 @@ class About extends Component {
             >
                 <Container data-aos="fade-up" data-aos-delay="100">
                     <div className="row align-items-center gy-5">
-                        <div className="col-xl-5 content">
+                        <div className="col-xl-5 content mb-5"> {/* Increased margin-bottom */}
                             <Typography variant="h3" className="text-primary mb-4">
                                 About Us
                             </Typography>
@@ -28,36 +28,36 @@ class About extends Component {
                                     color: '#fff'
                                 }}
                             >
-                                <strong>Vetkonnect</strong> is an innovative platform dedicated to connecting livestock farmers and pet owners with certified veterinarians across Kenya. Through our mobile application, web platform, and USSD code, users can easily locate and book veterinary services tailored to their needs.
+                                <strong>Vetkonnect</strong> is your trusted partner in veterinary care. We are revolutionizing the way livestock farmers and pet owners in Kenya connect with certified veterinarians. Our platform, available via a user-friendly mobile app, web interface, and accessible USSD code, ensures that high-quality veterinary services are just a click or a call away.
                                 <br /><br />
-                                In addition to providing veterinary services, we offer essential veterinary products via our agrovet hub and facilitate community engagement through a dedicated forum for expert advice. Our commitment extends beyond access; we are actively reintroducing vital animal welfare programs that enhance farm productivity and improve animal health.
+                                But we don't stop there! Vetkonnect goes beyond just connecting you with veterinary services. We proudly offer a comprehensive agrovet hub for essential veterinary products and foster a vibrant community forum where you can seek expert advice and share experiences. Together, we are not just enhancing animal health; we are committed to elevating farm productivity and implementing crucial animal welfare initiatives that positively impact your livelihood.
                             </Typography>
                         </div>
 
-                        <div className="col-xl-7">
-                            <div className="row gy-4 icon-boxes">
-                                <div className="col-md-6" data-aos="fade-up" data-aos-delay="200">
-                                    <div className="icon-box text-center p-4 border rounded shadow-sm">
+                        <div className="col-xl-7 pt-5"> {/* Increased padding-top */}
+                            <Grid container spacing={3}> {/* Adjusted spacing for the grid */}
+                                <Grid item md={6} data-aos="fade-up" data-aos-delay="200">
+                                    <div className="icon-box text-center p-4 border rounded shadow-sm" style={{ padding: '2rem', margin: '1rem' }}>
                                         <Typography variant="h4" style={{ color: 'blue' }}>
-                                            Mission
+                                            Our Mission
                                         </Typography>
-                                        <Typography className="font-weight-bold">
-                                            Our mission is to enhance animal health, support sustainable agriculture, empower communities, and reduce inequalities in access to veterinary care, particularly in rural areas.
+                                        <Typography className="font-weight-bold" style={{ marginTop: '1rem' }}>
+                                            To bridge the gap between farmers and certified veterinarians.
                                         </Typography>
                                     </div>
-                                </div>
+                                </Grid>
 
-                                <div className="col-md-6" data-aos="fade-up" data-aos-delay="300">
-                                    <div className="icon-box text-center p-4 border rounded shadow-sm">
+                                <Grid item md={6} data-aos="fade-up" data-aos-delay="300">
+                                    <div className="icon-box text-center p-4 border rounded shadow-sm" style={{ padding: '2rem', margin: '1rem' }}>
                                         <Typography variant="h4" style={{ color: 'blue' }}>
-                                            Vision
+                                            Our Vision
                                         </Typography>
-                                        <Typography className="font-weight-bold">
-                                            Our vision is to significantly reduce animal disease and mortality rates by providing reliable veterinary care while empowering farmers and pet owners with the essential resources they need.
+                                        <Typography className="font-weight-bold" style={{ marginTop: '1rem' }}>
+                                            To create a thriving community for farmers and veterinarians.
                                         </Typography>
                                     </div>
-                                </div>
-                            </div>
+                                </Grid>
+                            </Grid>
                         </div>
                     </div>
                 </Container>

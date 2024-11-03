@@ -134,7 +134,7 @@ class VetForgotPassword extends React.Component {
                     <Box sx={{ mt: 2 }}>
                         <Typography variant="body2" sx={{ color: '#4b4f56' }}>
                             Remember your password?{' '}
-                            <Link to="/vet/login" style={{ color: '#1877f2', textDecoration: 'none' }}>
+                            <Link to="/vetlogin" style={{ color: '#1877f2', textDecoration: 'none' }}>
                                 Back to Login
                             </Link>
                         </Typography>

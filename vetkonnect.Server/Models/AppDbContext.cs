@@ -21,6 +21,8 @@ namespace vetkonnect.Server.Models
         public DbSet<CommunityPost> CommunityPosts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<KvbMember> KvbMembers { get; set; }
+        public DbSet<KvbNumber> KvbNumbers { get; set; }
 
         // Overriding the OnModelCreating method to configure entity relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -115,6 +117,13 @@ namespace vetkonnect.Server.Models
                 .WithMany()                                        // Receiver does not have a collection of Notifications
                 .HasForeignKey(notification => notification.ReceiverId) // ReceiverId as foreign key
                 .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of Receiver if Notification exists
+            
+            // Configures KvbNumber relationship with KvbMember
+            modelBuilder.Entity<KvbNumber>()
+                .HasOne(kvbno => kvbno.Member)     // Each KvbNumber has a KvbMember
+                .WithMany()                                        // KvbMember does not have a collection of KvbNumber
+                .HasForeignKey(kvbno => kvbno.MemberId) // MemberId as foreign key
+                .OnDelete(DeleteBehavior.Restrict);               // Restrict deletion of KvbMember if KvbNumber exists
         }
     }
 }

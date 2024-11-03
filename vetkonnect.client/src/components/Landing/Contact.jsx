@@ -32,7 +32,7 @@ class Contact extends Component {
 
         try {
             // Define your API endpoint URL
-            const apiUrl = `https://kasuku-001-site1.dtempurl.com/api/messages`;
+            const apiUrl = `https://localhost:7164/api/messages`;
 
             const response = await axios.post(apiUrl, {
                 Name: name,

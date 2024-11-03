@@ -44,7 +44,7 @@ class VetLoginPage extends Component {
                                 color: 'white', // Text color
                             }}
                         >
-                            Connecting You with Certified Veterinarians...
+                            Your trusted partner in veterinary care
                         </Typography>
                     </Box>
                     <main className="main">

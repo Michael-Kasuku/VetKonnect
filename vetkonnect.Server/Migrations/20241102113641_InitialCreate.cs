@@ -12,6 +12,24 @@ namespace vetkonnect.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "KvbMembers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NationalIdNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KvbMembers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
@@ -26,6 +44,28 @@ namespace vetkonnect.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.MessageId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "KvbNumbers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MemberId = table.Column<int>(type: "int", nullable: false),
+                    KvbNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateofIssue = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateofExpiry = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KvbNumbers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_KvbNumbers_KvbMembers_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "KvbMembers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,7 +228,8 @@ namespace vetkonnect.Server.Migrations
                     KvbNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Specialty = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactInformation = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ContactInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NationalIdNo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -336,6 +377,11 @@ namespace vetkonnect.Server.Migrations
                 filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_KvbNumbers_MemberId",
+                table: "KvbNumbers",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notifications_ReceiverId",
                 table: "Notifications",
                 column: "ReceiverId");
@@ -403,6 +449,9 @@ namespace vetkonnect.Server.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "KvbNumbers");
+
+            migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
@@ -416,6 +465,9 @@ namespace vetkonnect.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "CommunityPosts");
+
+            migrationBuilder.DropTable(
+                name: "KvbMembers");
 
             migrationBuilder.DropTable(
                 name: "Farmers");

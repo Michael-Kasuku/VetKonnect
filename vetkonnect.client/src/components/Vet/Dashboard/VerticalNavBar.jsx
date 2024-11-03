@@ -65,7 +65,7 @@ class VerticalNavBar extends Component {
             {
                 text: "Dashboard",
                 icon: <Home fontSize="large" style={{ color: '#1976d2' }} />, // Updated color and size
-                link: "home",
+                link: "",
                 subItems: null,
             },
             {

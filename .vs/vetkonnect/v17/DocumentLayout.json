@@ -1,12 +1,88 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\landing\\team.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\landing\\team.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\public\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\public\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\landing\\hero.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\landing\\hero.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|c:\\users\\michael kasuku\\documents\\computer science\\fourth year\\web development\\project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\landing\\navbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{59DEA793-B824-44D0-9F34-29F00858472E}|vetkonnect.client\\vetkonnect.client.esproj|solutionrelative:vetkonnect.client\\src\\components\\landing\\navbar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Hero.jsx",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Landing\\Hero.jsx",
+              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\Landing\\Hero.jsx",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Landing\\Hero.jsx",
+              "RelativeToolTip": "vetkonnect.client\\src\\components\\Landing\\Hero.jsx",
+              "ViewState": "AgIAACUAAAAAAAAAAAAAADMAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-11-03T16:20:00.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Navbar.jsx",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Landing\\Navbar.jsx",
+              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\Landing\\Navbar.jsx",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Landing\\Navbar.jsx",
+              "RelativeToolTip": "vetkonnect.client\\src\\components\\Landing\\Navbar.jsx",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-11-03T16:19:12.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "main.css",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\public\\css\\main.css",
+              "RelativeDocumentMoniker": "vetkonnect.client\\public\\css\\main.css",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\public\\css\\main.css",
+              "RelativeToolTip": "vetkonnect.client\\public\\css\\main.css",
+              "ViewState": "AgIAAIEDAAAAAAAAAAAQwJUDAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-03T16:18:01.545Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Team.jsx",
+              "DocumentMoniker": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Landing\\Team.jsx",
+              "RelativeDocumentMoniker": "vetkonnect.client\\src\\components\\Landing\\Team.jsx",
+              "ToolTip": "C:\\Users\\Michael Kasuku\\Documents\\Computer Science\\fourth year\\Web Development\\Project\\version_3\\vetkonnect\\vetkonnect.client\\src\\components\\Landing\\Team.jsx",
+              "RelativeToolTip": "vetkonnect.client\\src\\components\\Landing\\Team.jsx",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAAAHEAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2024-11-03T16:17:53.249Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

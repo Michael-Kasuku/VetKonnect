@@ -12,7 +12,7 @@ using vetkonnect.Server.Models;
 namespace vetkonnect.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241101150224_InitialCreate")]
+    [Migration("20241102113641_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -243,6 +243,64 @@ namespace vetkonnect.Server.Migrations
                     b.ToTable("Farmers");
                 });
 
+            modelBuilder.Entity("vetkonnect.Server.Models.KvbMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NationalIdNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KvbMembers");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.KvbNumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateofExpiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateofIssue")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("KvbNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("KvbNumbers");
+                });
+
             modelBuilder.Entity("vetkonnect.Server.Models.Message", b =>
                 {
                     b.Property<int>("MessageId")
@@ -388,6 +446,9 @@ namespace vetkonnect.Server.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NationalIdNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Specialty")
                         .HasColumnType("nvarchar(max)");
 
@@ -483,6 +544,17 @@ namespace vetkonnect.Server.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("vetkonnect.Server.Models.KvbNumber", b =>
+                {
+                    b.HasOne("vetkonnect.Server.Models.KvbMember", "Member")
+                        .WithMany()
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("vetkonnect.Server.Models.Notification", b =>

@@ -8,6 +8,7 @@
         public string? Specialty { get; set; } // Areas of expertise
         public string? Location { get; set; }
         public string? ContactInformation { get; set; }
+        public string? NationalIdNo { get; set; }
 
         public ApplicationUser? User { get; set; } // Navigation property
     }

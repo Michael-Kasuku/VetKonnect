@@ -6,44 +6,39 @@ import {
     TextField,
     Button,
     Typography,
-    Checkbox,
-    FormControlLabel,
     CircularProgress,
-    InputAdornment,
-    IconButton,
     Alert,
-    Collapse
+    Collapse,
+    IconButton,
+    InputAdornment
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import axios from 'axios';
 
 class VetLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showPassword: false,
             isLoading: false,
             username: '',
             password: '',
+            showPassword: false,
             formErrors: { username: '', password: '' },
             submissionError: '',
         };
     }
-
-    togglePasswordVisibility = () => {
-        this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
-    };
 
     validateForm = () => {
         const { username, password } = this.state;
         let usernameError = '';
         let passwordError = '';
 
-        if (!username || username.length < 3) {
-            usernameError = 'Please enter a valid username.';
+        if (!username) {
+            usernameError = 'Username is required.';
         }
 
-        if (!password || password.length < 6) {
-            passwordError = 'Password must be at least 6 characters long.';
+        if (!password) {
+            passwordError = 'Password is required.';
         }
 
         this.setState({
@@ -58,27 +53,39 @@ class VetLogin extends React.Component {
         e.preventDefault();
         if (!this.validateForm()) return;
 
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, submissionError: '' });
+        const { username, password } = this.state;
 
-        // Simulate an API call for demonstration purposes
-        setTimeout(() => {
-            this.setState({ isLoading: false });
-
-            if (this.state.username !== 'testuser' || this.state.password !== 'password123') {
-                this.setState({ submissionError: 'Invalid username or password. Please try again.' });
-            } else {
+        axios.post('https://localhost:7164/api/Vet/VetLogin', { username, password })
+            .then(response => {
+                this.setState({ isLoading: false });
                 alert('Login successful');
-            }
-        }, 2000);
+                this.props.history.push('/vetdashboard'); // Redirect to dashboard
+            })
+            .catch(error => {
+                this.setState({ isLoading: false });
+
+                if (error.response && error.response.data) {
+                    this.setState({ submissionError: 'Invalid username or password.' });
+                } else {
+                    this.setState({ submissionError: 'Login failed. Please try again.' });
+                }
+
+                console.error('There was an error logging in!', error);
+            });
     };
 
     handleInputChange = (e) => {
         const { name, value } = e.target;
-        this.setState({ [name]: value, submissionError: '' });
+        this.setState({ [name]: value, submissionError: '' }, this.validateForm);
+    };
+
+    togglePasswordVisibility = () => {
+        this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
     };
 
     render() {
-        const { showPassword, isLoading, formErrors, username, password, submissionError } = this.state;
+        const { isLoading, formErrors, username, password, showPassword, submissionError } = this.state;
 
         return (
             <Container
@@ -111,7 +118,7 @@ class VetLogin extends React.Component {
                         variant="h4"
                         sx={{ mb: 3, fontWeight: 'bold', color: '#1877f2', fontSize: '2rem' }}
                     >
-                        Welcome Back!
+                        Login
                     </Typography>
 
                     <Collapse in={!!submissionError}>
@@ -137,7 +144,7 @@ class VetLogin extends React.Component {
                         <TextField
                             label="Password"
                             name="password"
-                            type={showPassword ? 'text' : 'password'}
+                            type={showPassword ? 'text' : 'password'} // Toggle between text and password
                             variant="outlined"
                             fullWidth
                             margin="normal"
@@ -146,6 +153,7 @@ class VetLogin extends React.Component {
                             onChange={this.handleInputChange}
                             error={!!formErrors.password}
                             helperText={formErrors.password}
+                            sx={{ mb: 2 }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -155,76 +163,24 @@ class VetLogin extends React.Component {
                                     </InputAdornment>
                                 ),
                             }}
-                            sx={{ mb: 2 }}
-                        />
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={showPassword}
-                                    onChange={this.togglePasswordVisibility}
-                                    color="primary"
-                                />
-                            }
-                            label="Show Password"
-                            sx={{
-                                mb: 2,
-                                justifyContent: 'flex-start',
-                                width: '100%', // Ensures alignment with the full width of the container
-                                pl: '0px'      // Aligns with the left edge of the container
-                            }}
                         />
                         <Button
                             type="submit"
                             variant="contained"
+                            color="primary"
                             fullWidth
-                            sx={{
-                                mt: 2,
-                                bgcolor: '#1877f2',
-                                '&:hover': { bgcolor: '#145dbf' },
-                                '&:active': { transform: 'scale(0.98)' },
-                                transition: 'transform 0.1s ease-in-out',
-                            }}
                             disabled={isLoading}
+                            sx={{ mt: 2 }}
                         >
-                            {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Log In'}
+                            {isLoading ? <CircularProgress size={24} /> : 'Login'}
                         </Button>
                     </form>
-
-                    <Box sx={{ mt: 2 }}>
-                        <Typography variant="body2">
-                            <Link to="/vet/forgot" style={{ color: '#1877f2' }}>
-                                Forgotten password?
-                            </Link>
-                        </Typography>
-                    </Box>
-
-                    <Box
-                        sx={{
-                            mt: 4,
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'column',
-                            gap: 1,
-                        }}
-                    >
-                        <Typography variant="body1">or</Typography>
-                        <Button
-                            component={Link}
-                            to="/vet/signup"
-                            variant="outlined"
-                            sx={{
-                                borderColor: '#42b72a',
-                                color: '#42b72a',
-                                '&:hover': {
-                                    borderColor: '#36a420',
-                                    bgcolor: '#e6f2e6',
-                                },
-                            }}
-                        >
-                            Create New Account
-                        </Button>
-                    </Box>
+                    <Typography variant="body2" sx={{ mt: 3 }}>
+                        Don't have an account? <Link to="/vetsignup">Sign Up</Link>
+                    </Typography>
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                        <Link to="/vetforgot">Forgot Password?</Link>
+                    </Typography>
                 </Box>
             </Container>
         );

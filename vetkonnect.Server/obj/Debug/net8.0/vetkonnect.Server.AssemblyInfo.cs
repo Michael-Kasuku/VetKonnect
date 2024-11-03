@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("vetkonnect.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64b84c399000ffe8f3e3f9139b4b911438c73cb4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d6596e031bb69efa819d0e46258c978f3bbd56d")]
 [assembly: System.Reflection.AssemblyProductAttribute("vetkonnect.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("vetkonnect.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

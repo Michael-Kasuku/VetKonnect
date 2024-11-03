@@ -1,130 +1,146 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import MenuIcon from '@mui/icons-material/Menu';
+import { styled } from '@mui/material/styles';
+
+// Styled components
+const StyledLink = styled('a')(({ theme, hovered }) => ({
+    color: hovered ? theme.palette.primary.main : theme.palette.text.primary,
+    textDecoration: 'none',
+    padding: theme.spacing(1, 2),
+    transition: 'color 0.3s ease, transform 0.2s ease',
+    '&:hover': {
+        color: theme.palette.secondary.main,
+        transform: 'scale(1.1)', // Slightly enlarge on hover
+    },
+}));
+
+const LogoImage = styled('img')({
+    maxHeight: '50px',
+    marginRight: '8px',
+});
+
+const LogoText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.success.main,
+    display: 'flex',
+    alignItems: 'center',
+    fontWeight: 'bold',
+    fontSize: '1.5rem',
+}));
+
+// Navigation link component
+const NavLink = ({ name, path, hovered, onMouseEnter, onMouseLeave }) => (
+    <StyledLink
+        href={path}
+        hovered={hovered}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+    >
+        <Button sx={{ color: 'inherit', display: { xs: 'none', md: 'block' } }}>
+            {name}
+        </Button>
+    </StyledLink>
+);
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isMobileMenuOpen: false, // State to manage the mobile menu's visibility
-            hoveredLink: null, // State to track which navigation link is currently being hovered
+            hoveredLink: null,
+            drawerOpen: false,
         };
     }
 
-    // Toggles the visibility of the mobile menu
-    toggleMobileMenu = () => {
-        this.setState((prevState) => ({ isMobileMenuOpen: !prevState.isMobileMenuOpen }));
-    };
-
-    // Closes the mobile menu
-    closeMobileMenu = () => {
-        this.setState({ isMobileMenuOpen: false });
-    };
-
-    // Updates the state when a link is hovered
     handleMouseEnter = (link) => {
         this.setState({ hoveredLink: link });
     };
 
-    // Resets the hovered link state when the mouse leaves
     handleMouseLeave = () => {
         this.setState({ hoveredLink: null });
     };
 
+    toggleDrawer = (open) => () => {
+        this.setState({ drawerOpen: open });
+    };
+
     render() {
-        const { isMobileMenuOpen, hoveredLink } = this.state;
-        const linkNames = ['Home', 'About Us', 'Our Team', 'Services', 'FAQs', 'Contact Us'];
+        const { hoveredLink, drawerOpen } = this.state;
+        const links = [
+            { name: 'Home', path: '/' },
+            { name: 'Services', path: '#services' },
+            { name: 'About Us', path: '#about' },
+            { name: 'Our Team', path: '#team' },
+            { name: 'FAQs', path: '#faq' },
+            { name: 'Contact Us', path: '#contact' },
+        ];
 
         return (
-            <header className="header fixed-top shadow-sm bg-white">
-                <div className="container-fluid d-flex align-items-center justify-content-between py-2">
-                    <div className="d-flex align-items-center">
-                        <Link to="/" className="logo d-flex align-items-center me-3">
-                            <img
-                                src="assets/img/vetkonnect.jpg"
-                                alt="VetKonnect Logo"
-                                className="img-fluid"
-                                style={{ height: '40px' }}
-                            />
-                        </Link>
-                        <div className="brand-name d-flex align-items-center">
-                            <span style={{ fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '10px', color: '#FFBF00' }}>
-                                Vetkonnect
-                            </span>
-                        </div>
-                    </div>
+            <>
+                <AppBar position="fixed" sx={{ backgroundColor: 'white', boxShadow: 2 }}>
+                    <Toolbar sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                        {/* Logo Section */}
+                        <a href="/" style={{ display: 'flex', alignItems: 'center' }}>
+                            <LogoImage src="assets/img/vetkonnect.jpg" alt="VetKonnect Logo" />
+                            <LogoText variant="h6">
+                                Vet<span style={{ color: 'green' }}>konnect</span>
+                            </LogoText>
+                        </a>
 
-                    <nav className="navmenu d-none d-xl-flex align-items-center">
-                        <ul className="d-flex list-unstyled mb-0">
-                            {/* Array of navigation links */}
-                            {['/', '#about', '#team', '#services', '#faq', '#contact'].map((link, index) => (
-                                <li className="nav-item" key={index}>
-                                    <Link
-                                        to={link}
-                                        className="nav-link px-3"
-                                        onMouseEnter={() => this.handleMouseEnter(linkNames[index])}
-                                        onMouseLeave={this.handleMouseLeave}
-                                        style={{
-                                            color: hoveredLink === linkNames[index] ? '#FFBF00' : '#000', // Change link color on hover
-                                            fontSize: '1rem', // Adjust font size
-                                            fontWeight: '500', // Adjust font weight
-                                            transition: 'color 0.3s', // Smooth transition for color change
-                                        }}
-                                    >
-                                        {linkNames[index]} {/* Display the link name */}
-                                    </Link>
-                                </li>
+                        {/* Drawer Toggle Button for mobile view */}
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={this.toggleDrawer(true)}
+                            sx={{ display: { xs: 'block', md: 'none' } }} // Show on small screens
+                        >
+                            <MenuIcon />
+                        </IconButton>
+
+                        {/* Navigation Links for larger screens */}
+                        <div style={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+                            {links.map(({ name, path }, index) => (
+                                <NavLink
+                                    key={index}
+                                    name={name}
+                                    path={path}
+                                    hovered={hoveredLink === name}
+                                    onMouseEnter={() => this.handleMouseEnter(name)}
+                                    onMouseLeave={this.handleMouseLeave}
+                                />
                             ))}
-                        </ul>
-                    </nav>
-
-                    {/* Button for toggling mobile navigation menu */}
-                    <button
-                        className="mobile-nav-toggle d-xl-none btn btn-light border-0"
-                        onClick={this.toggleMobileMenu}
-                        aria-label="Toggle mobile menu"
-                    >
-                        <i className="bi bi-list fs-3"></i>
-                    </button>
-                </div>
-
-                {/* Render mobile navigation menu if it is open */}
-                {isMobileMenuOpen && (
-                    <nav className="mobile-nav position-fixed top-0 start-0 w-100 h-100 bg-white d-xl-none">
-                        <div className="container-fluid d-flex flex-column p-4">
-                            {/* Button to close mobile navigation menu */}
-                            <button
-                                className="mobile-nav-close btn btn-light border-0 align-self-end mb-3"
-                                onClick={this.toggleMobileMenu}
-                                aria-label="Close mobile menu"
-                            >
-                                <i className="bi bi-x-lg fs-3"></i>
-                            </button>
-                            <ul className="list-unstyled w-100">
-                                {/* Mobile navigation links */}
-                                {['/', '#about', '#team', '#services', '#faq', '#contact'].map((link, index) => (
-                                    <li className="nav-item" key={index}>
-                                        <Link
-                                            to={link}
-                                            className="nav-link py-2"
-                                            onClick={this.closeMobileMenu} // Close mobile menu on link click
-                                            onMouseEnter={() => this.handleMouseEnter(linkNames[index])}
-                                            onMouseLeave={this.handleMouseLeave}
-                                            style={{
-                                                color: hoveredLink === linkNames[index] ? '#FFBF00' : '#000', // Change link color on hover
-                                                fontSize: '1rem', // Adjust font size
-                                                fontWeight: '500', // Adjust font weight
-                                                transition: 'color 0.3s', // Smooth transition for color change
-                                            }}
-                                        >
-                                            {linkNames[index]} {/* Display the link name */}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
                         </div>
-                    </nav>
-                )}
-            </header>
+                    </Toolbar>
+                </AppBar>
+
+                {/* Drawer for mobile navigation */}
+                <Drawer anchor="right" open={drawerOpen} onClose={this.toggleDrawer(false)}>
+                    <List>
+                        {links.map(({ name, path }, index) => (
+                            <ListItem button key={index} onClick={this.toggleDrawer(false)}>
+                                <ListItemText>
+                                    <StyledLink
+                                        href={path}
+                                        hovered={hoveredLink === name}
+                                        onMouseEnter={() => this.handleMouseEnter(name)}
+                                        onMouseLeave={this.handleMouseLeave}
+                                    >
+                                        {name}
+                                    </StyledLink>
+                                </ListItemText>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Drawer>
+            </>
         );
     }
 }

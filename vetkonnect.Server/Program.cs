@@ -19,36 +19,36 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     // Configure password requirements
-    options.Password.RequireDigit = true; // Require at least one digit
-    options.Password.RequireLowercase = true; // Require at least one lowercase letter
-    options.Password.RequireNonAlphanumeric = true; // Require at least one special character
-    options.Password.RequireUppercase = true; // Require at least one uppercase letter
-    options.Password.RequiredLength = 8; // Minimum password length
-    options.Password.RequiredUniqueChars = 1; // Minimum number of unique characters
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 1;
 })
-.AddEntityFrameworkStores<AppDbContext>() // Use AppDbContext for user data storage
-.AddDefaultTokenProviders(); // Add token providers for password resets and email confirmations
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
 
 // Configure JWT authentication
-var jwtSection = builder.Configuration.GetSection("JwtSettings"); // Get JWT settings from configuration
-builder.Services.Configure<JwtSettings>(jwtSection); // Bind settings to JwtSettings class
-var jwtSettings = jwtSection.Get<JwtSettings>(); // Retrieve JWT settings
+var jwtSection = builder.Configuration.GetSection("JwtSettings");
+builder.Services.Configure<JwtSettings>(jwtSection);
+var jwtSettings = jwtSection.Get<JwtSettings>();
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // Set default authentication scheme
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; // Set default challenge scheme
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true, // Validate the issuer
-        ValidateAudience = true, // Validate the audience
-        ValidateLifetime = true, // Validate the token's lifetime
-        ValidateIssuerSigningKey = true, // Validate the signing key
-        ValidIssuer = jwtSettings.Issuer, // Set valid issuer
-        ValidAudience = jwtSettings.Audience, // Set valid audience
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)) // Set signing key
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings.Issuer,
+        ValidAudience = jwtSettings.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
     };
 });
 
@@ -67,8 +67,8 @@ builder.Services.AddCors(options =>
 });
 
 // Optional: Add Swagger for API documentation
-builder.Services.AddEndpointsApiExplorer(); // Adds support for endpoint exploration
-builder.Services.AddSwaggerGen(); // Registers Swagger generator
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Build the application
 var app = builder.Build();
@@ -78,16 +78,14 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AppDbContext>();
-
-    // Apply any pending migrations
     context.Database.Migrate();
 }
 
 // Optional: Enable Swagger UI in development mode
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(); // Enable Swagger
-    app.UseSwaggerUI(); // Enable Swagger UI
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 // Serve default files (like index.html) in wwwroot
@@ -106,8 +104,8 @@ app.UseRouting();
 app.UseCors("AllowAll");
 
 // Enable authentication and authorization middleware
-app.UseAuthentication(); // Ensure this comes before UseAuthorization
-app.UseAuthorization(); // Enable authorization
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Map API controllers to routes
 app.MapControllers();

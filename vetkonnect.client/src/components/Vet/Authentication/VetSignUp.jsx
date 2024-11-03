@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Import withRouter
 import {
     Container,
     Box,
@@ -13,6 +13,7 @@ import {
     Collapse
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import axios from 'axios';
 
 class VetSignUp extends React.Component {
     constructor(props) {
@@ -82,20 +83,43 @@ class VetSignUp extends React.Component {
         e.preventDefault();
         if (!this.validateForm()) return;
 
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, submissionError: '' });
 
-        // Simulate an API call for demonstration purposes
-        setTimeout(() => {
-            this.setState({ isLoading: false });
+        const { username, password, emailAddress, phoneNumber, kvbNumber } = this.state;
 
-            // Replace this with actual API response handling
-            const apiCallSuccess = true; // Change this based on your API logic
-            if (apiCallSuccess) {
+        axios.post('https://localhost:7164/api/Vet/VetSignup', {
+            username,
+            password,
+            emailAddress,
+            phoneNumber,
+            kvbNumber,
+        })
+            .then(response => {
+                this.setState({ isLoading: false });
+                // Redirect to /vetlogin with success message
                 alert('Registration successful');
-            } else {
-                this.setState({ submissionError: 'Registration failed. Please try again.' });
-            }
-        }, 2000);
+                this.props.history.push('/vetlogin'); // Use history to redirect
+            })
+            .catch(error => {
+                this.setState({ isLoading: false });
+
+                // Check if error response is available and structured
+                if (error.response && error.response.data) {
+                    const errorMessages = error.response.data.errors || {}; // Assuming errors is the key
+                    const formErrors = { username: '', password: '', emailAddress: '', phoneNumber: '', kvbNumber: '' };
+
+                    // Populate formErrors with the received error messages
+                    Object.entries(errorMessages).forEach(([field, messages]) => {
+                        formErrors[field] = messages.join(' '); // Join all error messages for that field
+                    });
+
+                    this.setState({ formErrors, submissionError: 'Please fix the errors above.' });
+                } else {
+                    this.setState({ submissionError: 'Registration failed. Please try again.' });
+                }
+
+                console.error('There was an error registering the vet!', error);
+            });
     };
 
     handleInputChange = (e) => {
@@ -251,22 +275,16 @@ class VetSignUp extends React.Component {
                         <Button
                             type="submit"
                             variant="contained"
+                            color="primary"
                             fullWidth
-                            sx={{
-                                mt: 2,
-                                bgcolor: '#1877f2',
-                                '&:hover': { bgcolor: '#145dbf' },
-                                '&:active': { transform: 'scale(0.98)' },
-                                transition: 'transform 0.1s ease-in-out',
-                            }}
                             disabled={isLoading}
+                            sx={{ mt: 2 }}
                         >
-                            {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign Up'}
+                            {isLoading ? <CircularProgress size={24} /> : 'Sign Up'}
                         </Button>
                     </form>
-
-                    <Typography variant="body2" sx={{ mt: 2 }}>
-                        Already have an account? <Link to="/vet/login">Log In</Link>
+                    <Typography variant="body2" sx={{ mt: 3 }}>
+                        Already have an account? <Link to="/vetlogin">Log in</Link>
                     </Typography>
                 </Box>
             </Container>
@@ -274,4 +292,4 @@ class VetSignUp extends React.Component {
     }
 }
 
-export default VetSignUp;
+export default VetSignUp; // Wrap with withRouter
