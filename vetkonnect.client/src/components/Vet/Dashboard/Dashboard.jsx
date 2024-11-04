@@ -33,12 +33,12 @@ class Dashboard extends Component {
                 { id: 3, dateTime: '2024-10-22 09:30 AM', client: 'Josphine Otieno', venue: 'Veterinary Clinic C' },
             ],
             searchQuery: '',
-            sortField: 'dateTime', // Default sort field
-            sortDirection: 'asc', // Default sort direction
+            sortField: 'dateTime',
+            sortDirection: 'asc',
             reminderDialogOpen: false,
             selectedAppointment: null,
             reminderTime: '',
-            reminders: [], // State to hold reminders
+            reminders: [],
         };
     }
 
@@ -53,15 +53,13 @@ class Dashboard extends Component {
         const sortedAppointments = [...upcomingAppointments].sort((a, b) => {
             const compareA = typeof a[field] === 'string' ? a[field].toLowerCase() : a[field];
             const compareB = typeof b[field] === 'string' ? b[field].toLowerCase() : b[field];
-            if (compareA < compareB) return newDirection === 'asc' ? -1 : 1;
-            if (compareA > compareB) return newDirection === 'asc' ? 1 : -1;
-            return 0;
+            return newDirection === 'asc' ? compareA.localeCompare(compareB) : compareB.localeCompare(compareA);
         });
 
         this.setState({
             upcomingAppointments: sortedAppointments,
             sortField: field,
-            sortDirection: newDirection
+            sortDirection: newDirection,
         });
     };
 
@@ -79,8 +77,6 @@ class Dashboard extends Component {
 
     setReminder = () => {
         const { selectedAppointment, reminderTime } = this.state;
-
-        // Add the reminder to the reminders state
         const reminder = {
             appointmentId: selectedAppointment.id,
             client: selectedAppointment.client,
@@ -95,8 +91,18 @@ class Dashboard extends Component {
             reminderTime: '',
         }));
 
-        // Logic for sending notification or alert could be implemented here
-        console.log(`Reminder set for ${reminder.client} on ${reminder.dateTime} at ${reminder.reminderTime}`);
+        alert(`Reminder set for ${reminder.client} on ${reminder.dateTime} at ${reminder.reminderTime}`);
+    };
+
+    cancelAppointment = (id) => {
+        const { upcomingAppointments } = this.state;
+        const updatedAppointments = upcomingAppointments.filter(appointment => appointment.id !== id);
+        this.setState({ upcomingAppointments: updatedAppointments });
+        alert(`Appointment with ID ${id} has been canceled.`);
+    };
+
+    viewAppointmentsHistory = () => {
+        this.props.navigate('/vetdashboard/appointments'); // Navigate to the appointments history
     };
 
     render() {
@@ -108,11 +114,12 @@ class Dashboard extends Component {
         return (
             <Container
                 maxWidth="lg"
-                sx={{ padding: 2, height: '100vh', overflowY: 'auto' }} // Enable vertical scrolling
+                sx={{ padding: 2, height: '100vh', overflowY: 'auto' }}
+                role="main" // Accessibility: main content
             >
                 <Grid container spacing={2} sx={{ marginTop: '20px' }}>
                     {/* Search Bar */}
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             label="Search by Client Name"
                             variant="outlined"
@@ -120,13 +127,25 @@ class Dashboard extends Component {
                             value={searchQuery}
                             onChange={this.handleSearchChange}
                             sx={{ marginBottom: 2 }}
+                            aria-label="Search by Client Name" // Accessibility
                         />
+                    </Grid>
+                    {/* Button to View Appointments History */}
+                    <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.viewAppointmentsHistory}
+                            aria-label="View Appointments History" // Accessibility
+                        >
+                            View Appointments History
+                        </Button>
                     </Grid>
                     {/* Upcoming Appointments Table */}
                     <Grid item xs={12}>
                         <Card variant="outlined" sx={{ marginBottom: 2 }}>
                             <CardContent>
-                                <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
                                     <Pets fontSize="large" sx={{ marginRight: 1 }} /> Upcoming Appointments
                                 </Typography>
                                 <TableContainer component={Paper}>
@@ -160,8 +179,18 @@ class Dashboard extends Component {
                                                             <Button
                                                                 variant="outlined"
                                                                 onClick={() => this.openReminderDialog(appointment)}
+                                                                sx={{ marginRight: 1 }}
+                                                                aria-label={`Set Reminder for ${appointment.client}`} // Accessibility
                                                             >
                                                                 Set Reminder
+                                                            </Button>
+                                                            <Button
+                                                                variant="outlined"
+                                                                color="error"
+                                                                onClick={() => this.cancelAppointment(appointment.id)}
+                                                                aria-label={`Cancel Appointment for ${appointment.client}`} // Accessibility
+                                                            >
+                                                                Cancel Appointment
                                                             </Button>
                                                         </TableCell>
                                                     </TableRow>
@@ -189,6 +218,7 @@ class Dashboard extends Component {
                             fullWidth
                             value={this.state.reminderTime}
                             onChange={this.handleReminderTimeChange}
+                            aria-label="Reminder Time Input" // Accessibility
                         />
                     </DialogContent>
                     <DialogActions>

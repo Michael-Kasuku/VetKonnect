@@ -45,29 +45,36 @@ class Team extends Component {
         ];
 
         const sectionStyle = {
-            backgroundColor: '#f9f9f9',
-            padding: '50px 0',
+            backgroundColor: '#f4f4f4',
+            padding: '60px 0',
             textAlign: 'center'
+        };
+
+        const cardContainerStyle = {
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
         };
 
         const cardStyle = {
             border: 'none',
-            borderRadius: '12px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+            borderRadius: '10px',
+            boxShadow: '0 6px 15px rgba(0, 0, 0, 0.1)',
             transition: 'transform 0.3s',
-            cursor: 'pointer',
-            margin: '20px', // Margin adjusted to create space between cards
+            margin: '15px',
             overflow: 'hidden',
-            backgroundColor: '#fff',
-            flex: '1 0 30%', // Allow cards to take up space proportionally
+            backgroundColor: '#ffffff',
+            width: '100%',
+            maxWidth: '300px', // Ensures it looks good on mobile
+            textAlign: 'center',
         };
 
         const memberImgStyle = {
             borderRadius: '50%',
-            overflow: 'hidden',
-            width: '150px',
-            height: '150px',
-            margin: '0 auto'
+            width: '100px',
+            height: '100px',
+            margin: '0 auto',
+            overflow: 'hidden'
         };
 
         const imgStyle = {
@@ -79,67 +86,64 @@ class Team extends Component {
         const socialStyle = {
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '10px'
+            marginTop: '15px'
         };
 
         const sectionTitleStyle = {
-            fontSize: '2rem',
-            marginBottom: '10px',
-            color: '#007BFF',
+            fontSize: '2.5rem',
+            fontWeight: '700',
+            marginBottom: '20px',
+            color: '#0056b3',
             textTransform: 'uppercase'
         };
 
         const jobDescriptionStyle = {
-            fontSize: '0.9rem',
-            color: '#666',
-            margin: '10px 0'
+            fontSize: '1rem',
+            color: '#555',
+            margin: '15px 0'
         };
 
         const positionStyle = {
             margin: '5px 0',
-            color: '#777',
-            fontSize: '1rem'
+            color: '#6c757d',
+            fontSize: '1.1rem',
+            fontStyle: 'italic'
         };
 
         return (
             <section id="team" className="team" style={sectionStyle}>
-                {/* Section Title */}
                 <div className="container section-title mb-5" data-aos="fade-up">
                     <h2 style={sectionTitleStyle}>Meet Our Team</h2>
-                    <p style={{ fontSize: '1rem', color: '#888' }}>Dedicated professionals driving our success.</p>
+                    <p style={{ fontSize: '1.2rem', color: '#777' }}>A dedicated team of professionals driving our success.</p>
                 </div>
-                {/* End Section Title */}
 
-                <div className="container">
-                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-                        {teamMembers.map((member, index) => (
-                            <div key={index} style={cardStyle}>
-                                <div className="member-img" style={memberImgStyle}>
-                                    <img src={member.image} style={imgStyle} alt={member.name} />
-                                </div>
-                                <div className="card-body" style={{ padding: '20px' }}>
-                                    <h4 className="section-title" style={{ margin: '10px 0', fontSize: '1.25rem', fontWeight: 'bold' }}>{member.name}</h4>
-                                    <span className="text-muted d-block" style={positionStyle}>{member.position}</span>
-                                    <p className="qualification" style={{ fontWeight: 'bold' }}>{member.qualification}</p>
-                                    <p className="job-description" style={jobDescriptionStyle}>{member.description}</p>
-                                    <div className="social" style={socialStyle}>
-                                        {member.socialLinks.map(link => (
-                                            <a
-                                                href={link.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="social-icon"
-                                                key={link.platform}
-                                                style={{ margin: '0 5px' }}
-                                            >
-                                                <i className={`fab fa-${link.platform}`} style={{ fontSize: '1.5rem', color: '#007BFF' }}></i>
-                                            </a>
-                                        ))}
-                                    </div>
+                <div className="container" style={cardContainerStyle}>
+                    {teamMembers.map((member, index) => (
+                        <div key={index} style={cardStyle} className="team-card">
+                            <div style={memberImgStyle}>
+                                <img src={member.image} style={imgStyle} alt={member.name} />
+                            </div>
+                            <div style={{ padding: '20px' }}>
+                                <h4 style={{ margin: '10px 0', fontSize: '1.4rem', fontWeight: 'bold', color: '#333' }}>{member.name}</h4>
+                                <span style={positionStyle}>{member.position}</span>
+                                <p style={{ fontWeight: '500', color: '#007BFF', margin: '10px 0' }}>{member.qualification}</p>
+                                <p style={jobDescriptionStyle}>{member.description}</p>
+                                <div style={socialStyle}>
+                                    {member.socialLinks.map(link => (
+                                        <a
+                                            href={link.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            key={link.platform}
+                                            style={{ margin: '0 10px' }}
+                                        >
+                                            <i className={`fab fa-${link.platform}`} style={{ fontSize: '1.3rem', color: '#0056b3' }}></i>
+                                        </a>
+                                    ))}
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </section>
         );

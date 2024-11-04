@@ -83,6 +83,73 @@ class OrderManagement extends Component {
                     { id: 6, name: 'Emergency Vet Care', price: 7000 },
                 ],
             },
+            // Additional dummy data
+            {
+                id: 5,
+                datetime: '2024-10-25T09:00:00',
+                clientName: 'Mary Wanjiru',
+                amount: 6000,
+                products: [
+                    { id: 7, name: 'Cat Vaccination Package', price: 3000 },
+                    { id: 8, name: 'Dog Dental Cleaning', price: 3000 },
+                ],
+            },
+            {
+                id: 6,
+                datetime: '2024-10-26T15:30:00',
+                clientName: 'James Kamau',
+                amount: 2500,
+                products: [
+                    { id: 9, name: 'Pet Nutritional Consultation', price: 2500 },
+                ],
+            },
+            {
+                id: 7,
+                datetime: '2024-10-27T11:45:00',
+                clientName: 'Anita Njeri',
+                amount: 8000,
+                products: [
+                    { id: 10, name: 'Emergency Surgery', price: 8000 },
+                ],
+            },
+            {
+                id: 8,
+                datetime: '2024-10-28T14:15:00',
+                clientName: 'Samuel Mwangi',
+                amount: 1500,
+                products: [
+                    { id: 11, name: 'Dog Training Session', price: 1500 },
+                ],
+            },
+            // New records added
+            {
+                id: 9,
+                datetime: '2024-10-29T09:30:00',
+                clientName: 'Kevin Njuguna',
+                amount: 4000,
+                products: [
+                    { id: 12, name: 'Cat Grooming Service', price: 2000 },
+                    { id: 13, name: 'Dog Health Checkup', price: 2000 },
+                ],
+            },
+            {
+                id: 10,
+                datetime: '2024-10-30T16:00:00',
+                clientName: 'Flora Abuga',
+                amount: 7500,
+                products: [
+                    { id: 14, name: 'Dog Spaying Service', price: 7500 },
+                ],
+            },
+            {
+                id: 11,
+                datetime: '2024-10-31T12:30:00',
+                clientName: 'Peter Maina',
+                amount: 5200,
+                products: [
+                    { id: 15, name: 'Cat Neutering Service', price: 5200 },
+                ],
+            },
         ];
         this.setState({ orders: mockOrders });
     };
@@ -211,14 +278,16 @@ class OrderManagement extends Component {
                                     <TableCell>Ksh {order.amount}</TableCell>
                                     <TableCell>
                                         {order.products.map(product => (
-                                            <Typography key={product.id} variant="body2">
-                                                {product.name} (Ksh {product.price})
-                                            </Typography>
+                                            <Typography key={product.id}>{product.name} (Ksh {product.price})</Typography>
                                         ))}
                                     </TableCell>
                                     <TableCell>
-                                        <Button variant="contained" color="secondary" onClick={() => this.handleDialogOpen(order)}>
-                                            Cancel Order
+                                        <Button
+                                            variant="contained"
+                                            sx={{ backgroundColor: 'red', '&:hover': { backgroundColor: 'darkred' } }}
+                                            onClick={() => this.handleDialogOpen(order)}
+                                        >
+                                            Cancel
                                         </Button>
                                     </TableCell>
                                 </TableRow>
@@ -226,7 +295,6 @@ class OrderManagement extends Component {
                         </TableBody>
                     </Table>
                 </TableContainer>
-
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
@@ -236,29 +304,18 @@ class OrderManagement extends Component {
                     onPageChange={this.handleChangePage}
                     onRowsPerPageChange={this.handleChangeRowsPerPage}
                 />
-
                 <Dialog open={openDialog} onClose={this.handleDialogClose}>
                     <DialogTitle>Cancel Order</DialogTitle>
                     <DialogContent>
-                        <Typography>Are you sure you want to cancel this order?</Typography>
-                        {selectedOrder && (
-                            <Typography variant="body2">
-                                Order ID: {selectedOrder.id} - Client: {selectedOrder.clientName}
-                            </Typography>
-                        )}
+                        <Typography>Are you sure you want to cancel this order for {selectedOrder?.clientName}?</Typography>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleDialogClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.handleOrderCancel} color="secondary">
-                            Confirm
-                        </Button>
+                        <Button onClick={this.handleDialogClose} color="primary">No</Button>
+                        <Button onClick={this.handleOrderCancel} color="secondary">Yes, Cancel</Button>
                     </DialogActions>
                 </Dialog>
-
                 <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={this.handleSnackbarClose}>
-                    <Alert onClose={this.handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    <Alert onClose={this.handleSnackbarClose} severity="success">
                         {snackbarMessage}
                     </Alert>
                 </Snackbar>

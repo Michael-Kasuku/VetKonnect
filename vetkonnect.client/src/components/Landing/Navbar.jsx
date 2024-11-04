@@ -10,6 +10,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
 
 // Styled components
 const StyledLink = styled('a')(({ theme, hovered }) => ({
@@ -106,18 +107,19 @@ class Navbar extends Component {
                         </IconButton>
 
                         {/* Navigation Links for larger screens */}
-                        <div style={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+                        <Grid container spacing={2} justifyContent="center" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                             {links.map(({ name, path }, index) => (
-                                <NavLink
-                                    key={index}
-                                    name={name}
-                                    path={path}
-                                    hovered={hoveredLink === name}
-                                    onMouseEnter={() => this.handleMouseEnter(name)}
-                                    onMouseLeave={this.handleMouseLeave}
-                                />
+                                <Grid item key={index}>
+                                    <NavLink
+                                        name={name}
+                                        path={path}
+                                        hovered={hoveredLink === name}
+                                        onMouseEnter={() => this.handleMouseEnter(name)}
+                                        onMouseLeave={this.handleMouseLeave}
+                                    />
+                                </Grid>
                             ))}
-                        </div>
+                        </Grid>
                     </Toolbar>
                 </AppBar>
 

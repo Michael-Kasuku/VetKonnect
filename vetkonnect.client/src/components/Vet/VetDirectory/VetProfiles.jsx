@@ -20,8 +20,9 @@ import {
     List,
     ListItem,
     ListItemText,
+    Rating,
 } from '@mui/material';
-import { Favorite, Chat, PersonAdd, FavoriteBorder, Send } from '@mui/icons-material';
+import { Favorite, FavoriteBorder, Schedule } from '@mui/icons-material';
 
 const vetProfiles = [
     { id: 1, name: 'Dr. Josphine Otieno', jobTitle: 'Veterinary Surgeon', profilePic: '/assets/img/team/josphine.jpg' },
@@ -31,14 +32,15 @@ const vetProfiles = [
 
 const VetProfiles = () => {
     const [favoriteVets, setFavoriteVets] = useState([]);
-    const [connections, setConnections] = useState([]);
     const [selectedTab, setSelectedTab] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
-    const [chatOpen, setChatOpen] = useState(false);
+    const [appointmentDialogOpen, setAppointmentDialogOpen] = useState(false);
     const [currentVet, setCurrentVet] = useState(null);
-    const [messages, setMessages] = useState({});
-    const [messageInput, setMessageInput] = useState('');
+    const [appointmentDetails, setAppointmentDetails] = useState({ date: '', time: '', notes: '' });
+    const [reviews, setReviews] = useState({});
+    const [newRating, setNewRating] = useState(0);
+    const [newReview, setNewReview] = useState('');
 
     const toggleFavorite = (vetId) => {
         setFavoriteVets((prev) =>
@@ -46,46 +48,49 @@ const VetProfiles = () => {
         );
     };
 
-    const addConnection = (vet) => {
-        setConnections((prev) =>
-            prev.some((connection) => connection.id === vet.id)
-                ? prev
-                : [...prev, vet]
-        );
-    };
-
     const handleSearchChange = (event) => setSearchQuery(event.target.value);
-
     const handleSortChange = (event) => setSortOrder(event.target.value);
 
-    const openChat = (vet) => {
+    const openAppointmentDialog = (vet) => {
         setCurrentVet(vet);
-        setChatOpen(true);
+        setAppointmentDialogOpen(true);
     };
 
-    const closeChat = () => {
-        setChatOpen(false);
+    const closeAppointmentDialog = () => {
+        setAppointmentDialogOpen(false);
         setCurrentVet(null);
-        setMessageInput('');
+        setAppointmentDetails({ date: '', time: '', notes: '' });
     };
 
-    const sendMessage = () => {
-        if (!messageInput.trim()) return;
-        setMessages((prev) => ({
-            ...prev,
-            [currentVet.id]: [...(prev[currentVet.id] || []), messageInput],
-        }));
-        setMessageInput('');
+    const handleAppointmentChange = (event) => {
+        const { name, value } = event.target;
+        setAppointmentDetails((prev) => ({ ...prev, [name]: value }));
     };
 
-    const filterAndSortVets = (vets) =>
-        vets
-            .filter((vet) =>
-                vet.name.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .sort((a, b) =>
-                sortOrder === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
-            );
+    const bookAppointment = () => {
+        if (!appointmentDetails.date || !appointmentDetails.time) return;
+        console.log('Appointment booked:', { vet: currentVet.name, ...appointmentDetails });
+        closeAppointmentDialog();
+    };
+
+    const handleReviewSubmit = () => {
+        if (!currentVet) return;
+        const vetId = currentVet.id;
+        const updatedReviews = {
+            ...reviews,
+            [vetId]: [...(reviews[vetId] || []), { rating: newRating, review: newReview }],
+        };
+        setReviews(updatedReviews);
+        setNewRating(0);
+        setNewReview('');
+    };
+
+    const filterAndSortVets = (vets) => {
+        const filteredVets = vets.filter((vet) => vet.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        return filteredVets.sort((a, b) =>
+            sortOrder === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+        );
+    };
 
     const displayedVets = filterAndSortVets(vetProfiles);
 
@@ -118,41 +123,61 @@ const VetProfiles = () => {
             >
                 <Tab label="All Vets" />
                 <Tab label={`Favorites (${favoriteVets.length})`} />
-                <Tab label={`Connections (${connections.length})`} />
             </Tabs>
 
-            <TabPanel value={selectedTab} index={0}>
-                <VetGrid vets={displayedVets} toggleFavorite={toggleFavorite} openChat={openChat} addConnection={addConnection} favoriteVets={favoriteVets} />
-            </TabPanel>
+            {selectedTab === 0 && (
+                <VetGrid
+                    vets={displayedVets}
+                    toggleFavorite={toggleFavorite}
+                    openAppointmentDialog={openAppointmentDialog}
+                    favoriteVets={favoriteVets}
+                    setCurrentVet={setCurrentVet}
+                    reviews={reviews}
+                    setReviews={setReviews}
+                    setNewRating={setNewRating}
+                    setNewReview={setNewReview}
+                />
+            )}
 
-            <TabPanel value={selectedTab} index={1}>
+            {selectedTab === 1 && (
                 <VetGrid
                     vets={displayedVets.filter((vet) => favoriteVets.includes(vet.id))}
                     toggleFavorite={toggleFavorite}
-                    openChat={openChat}
-                    addConnection={addConnection}
+                    openAppointmentDialog={openAppointmentDialog}
                     favoriteVets={favoriteVets}
+                    setCurrentVet={setCurrentVet}
+                    reviews={reviews}
+                    setReviews={setReviews}
+                    setNewRating={setNewRating}
+                    setNewReview={setNewReview}
                 />
-            </TabPanel>
+            )}
 
-            <TabPanel value={selectedTab} index={2}>
-                <VetGrid vets={connections} toggleFavorite={toggleFavorite} openChat={openChat} addConnection={addConnection} favoriteVets={favoriteVets} />
-            </TabPanel>
-
-            <ChatDialog
-                open={chatOpen}
+            <AppointmentDialog
+                open={appointmentDialogOpen}
                 vet={currentVet}
-                messageInput={messageInput}
-                messages={messages[currentVet?.id] || []}
-                onClose={closeChat}
-                onInputChange={(e) => setMessageInput(e.target.value)}
-                onSend={sendMessage}
+                appointmentDetails={appointmentDetails}
+                onClose={closeAppointmentDialog}
+                onInputChange={handleAppointmentChange}
+                onBook={bookAppointment}
+            />
+
+            <ReviewDialog
+                open={Boolean(currentVet)}
+                vet={currentVet}
+                reviews={reviews}
+                newRating={newRating}
+                newReview={newReview}
+                setNewRating={setNewRating}
+                setNewReview={setNewReview}
+                onSubmit={handleReviewSubmit}
+                onClose={() => setCurrentVet(null)}
             />
         </Container>
     );
 };
 
-const VetGrid = ({ vets, toggleFavorite, openChat, addConnection, favoriteVets }) => (
+const VetGrid = ({ vets, toggleFavorite, openAppointmentDialog, favoriteVets, setCurrentVet, reviews, setReviews, setNewRating, setNewReview }) => (
     <Grid container spacing={3}>
         {vets.map((vet) => (
             <Grid item xs={12} sm={6} md={4} key={vet.id}>
@@ -160,15 +185,15 @@ const VetGrid = ({ vets, toggleFavorite, openChat, addConnection, favoriteVets }
                     vet={vet}
                     isFavorite={favoriteVets.includes(vet.id)}
                     toggleFavorite={toggleFavorite}
-                    openChat={openChat}
-                    addConnection={addConnection}
+                    openAppointmentDialog={openAppointmentDialog}
+                    setCurrentVet={setCurrentVet}
                 />
             </Grid>
         ))}
     </Grid>
 );
 
-const VetCard = ({ vet, isFavorite, toggleFavorite, openChat, addConnection }) => (
+const VetCard = ({ vet, isFavorite, toggleFavorite, openAppointmentDialog, setCurrentVet }) => (
     <Card
         sx={{
             boxShadow: 3,
@@ -176,63 +201,115 @@ const VetCard = ({ vet, isFavorite, toggleFavorite, openChat, addConnection }) =
             padding: 2,
             textAlign: 'center',
             '&:hover': { boxShadow: '0 8px 16px rgba(0,0,0,0.2)' },
-            display: 'flex', // Add this line
-            flexDirection: 'column', // Ensure vertical stacking
-            alignItems: 'center', // Center items horizontally
-            justifyContent: 'center', // Center items vertically
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
         }}
     >
-        <Avatar src={vet.profilePic} alt={vet.name} sx={{ width: 120, height: 120, marginBottom: 2 }} />
-        <Typography variant="h5">{vet.name}</Typography>
-        <Typography variant="body2" color="textSecondary">
-            {vet.jobTitle}
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Grid container spacing={1} justifyContent="center">
-            <Grid item>
-                <IconButton onClick={() => toggleFavorite(vet.id)} color={isFavorite ? 'error' : 'default'}>
-                    {isFavorite ? <Favorite /> : <FavoriteBorder />}
-                </IconButton>
-            </Grid>
-            <Grid item>
-                <Button variant="outlined" startIcon={<Chat />} onClick={() => openChat(vet)}>
-                    Message
-                </Button>
-            </Grid>
-            <Grid item>
-                <IconButton color="primary" onClick={() => addConnection(vet)}>
-                    <PersonAdd />
-                </IconButton>
-            </Grid>
-        </Grid>
+        <Avatar src={vet.profilePic} sx={{ width: 56, height: 56, marginBottom: 2 }} />
+        <Typography variant="h6" gutterBottom>{vet.name}</Typography>
+        <Typography variant="body2" color="text.secondary" gutterBottom>{vet.jobTitle}</Typography>
+        <Divider sx={{ width: '100%', marginBottom: 2 }} />
+        <Box sx={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+            <IconButton color={isFavorite ? 'secondary' : 'default'} onClick={() => toggleFavorite(vet.id)}>
+                {isFavorite ? <Favorite /> : <FavoriteBorder />}
+            </IconButton>
+            <IconButton onClick={() => { setCurrentVet(vet); openAppointmentDialog(vet); }}>
+                <Schedule />
+            </IconButton>
+        </Box>
     </Card>
 );
 
-const ChatDialog = ({ open, vet, messages, messageInput, onClose, onInputChange, onSend }) => (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-        <DialogTitle>Chat with {vet?.name}</DialogTitle>
-        <DialogContent dividers>
-            <List>
-                {messages.map((msg, index) => (
-                    <ListItem key={index}>
-                        <ListItemText primary={msg} />
-                    </ListItem>
-                ))}
-            </List>
+const AppointmentDialog = ({ open, vet, appointmentDetails, onClose, onInputChange, onBook }) => (
+    <Dialog open={open} onClose={onClose}>
+        <DialogTitle>{vet ? `Book Appointment with ${vet.name}` : 'Appointment'}</DialogTitle>
+        <DialogContent>
+            <TextField
+                autoFocus
+                margin="dense"
+                label="Date"
+                type="date"
+                fullWidth
+                variant="standard"
+                name="date"
+                value={appointmentDetails.date}
+                onChange={onInputChange}
+            />
+            <TextField
+                margin="dense"
+                label="Time"
+                type="time"
+                fullWidth
+                variant="standard"
+                name="time"
+                value={appointmentDetails.time}
+                onChange={onInputChange}
+            />
+            <TextField
+                margin="dense"
+                label="Notes"
+                fullWidth
+                variant="standard"
+                name="notes"
+                value={appointmentDetails.notes}
+                onChange={onInputChange}
+            />
         </DialogContent>
         <DialogActions>
-            <TextField value={messageInput} onChange={onInputChange} placeholder="Type a message..." fullWidth />
-            <IconButton onClick={onSend} color="primary">
-                <Send />
-            </IconButton>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onBook}>Book</Button>
         </DialogActions>
     </Dialog>
 );
 
-const TabPanel = ({ children, value, index }) => (
-    <div role="tabpanel" hidden={value !== index}>
-        {value === index && <Box sx={{ padding: 2 }}>{children}</Box>}
-    </div>
-);
+const ReviewDialog = ({ open, vet, reviews, newRating, newReview, setNewRating, setNewReview, onSubmit, onClose }) => {
+    if (!vet) return null;
+    const vetReviews = reviews[vet.id] || [];
+    return (
+        <Dialog open={open} onClose={onClose}>
+            <DialogTitle>{`Reviews for ${vet.name}`}</DialogTitle>
+            <DialogContent>
+                <List>
+                    {vetReviews.map((review, index) => (
+                        <ListItem key={index}>
+                            <ListItemText
+                                primary={
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Rating value={review.rating} readOnly />
+                                        <Typography variant="body2" sx={{ marginLeft: 1 }}>
+                                            {review.review}
+                                        </Typography>
+                                    </Box>
+                                }
+                            />
+                        </ListItem>
+                    ))}
+                </List>
+                <Box sx={{ marginTop: 2 }}>
+                    <Rating
+                        value={newRating}
+                        onChange={(event, newValue) => setNewRating(newValue)}
+                    />
+                    <TextField
+                        margin="dense"
+                        label="New Review"
+                        fullWidth
+                        variant="standard"
+                        value={newReview}
+                        onChange={(e) => setNewReview(e.target.value)}
+                    />
+                    <Button onClick={onSubmit} sx={{ marginTop: 1 }}>
+                        Submit Review
+                    </Button>
+                </Box>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose}>Close</Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
 
 export default VetProfiles;

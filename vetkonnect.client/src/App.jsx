@@ -22,7 +22,7 @@ root.render(
                     <Route path="/vetlogin" element={<VetLoginPage />} />
                     <Route path="/vetsignup" element={<VetSignUpPage />} />
                     <Route path="/vetforgot" element={<VetForgotPasswordPage />} />
-                    <Route path="/vetdashboard/*" element={<VetDashboard />} /> {/* Protect this route */}
+                    <Route path="/vetdashboard/*" element={<VetDashboard />} />
                 </Routes>
             </BrowserRouter> 
     </React.StrictMode>

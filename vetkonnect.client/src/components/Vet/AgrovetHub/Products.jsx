@@ -20,9 +20,11 @@ import {
     ListItemText,
     Box,
     IconButton,
+    Snackbar,
 } from '@mui/material';
 import { styled } from '@mui/system';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CloseIcon from '@mui/icons-material/Close';
 import $ from 'jquery';
 
 const products = [
@@ -81,6 +83,8 @@ class Products extends Component {
             categoryFilter: '',
             sortOrder: 'asc',
             isCartOpen: false,
+            snackbarOpen: false,
+            snackbarMessage: '',
         };
     }
 
@@ -102,8 +106,9 @@ class Products extends Component {
     handleAddToCart = (product) => {
         this.setState((prevState) => ({
             cart: [...prevState.cart, product],
+            snackbarOpen: true,
+            snackbarMessage: `${product.name} has been added to your cart!`
         }));
-        alert(`${product.name} has been added to your cart!`);
     }
 
     handleRemoveFromCart = (index) => {
@@ -146,8 +151,12 @@ class Products extends Component {
         );
     }
 
+    handleSnackbarClose = () => {
+        this.setState({ snackbarOpen: false });
+    };
+
     render() {
-        const { searchTerm, categoryFilter, sortOrder, cart, isCartOpen } = this.state;
+        const { searchTerm, categoryFilter, sortOrder, cart, isCartOpen, snackbarOpen, snackbarMessage } = this.state;
         const filteredProducts = this.filterAndSortProducts();
         const totalPrice = this.calculateTotalPrice();
 
@@ -165,6 +174,7 @@ class Products extends Component {
                             variant="outlined"
                             value={searchTerm}
                             onChange={this.handleSearchChange}
+                            placeholder="Search for fertilizers, supplements, etc."
                             sx={{ width: '300px' }}
                         />
 
@@ -255,8 +265,6 @@ class Products extends Component {
                         ))}
                     </Grid>
 
-                    <Divider sx={{ margin: '20px 0' }} />
-
                     {/* Cart Drawer */}
                     <Drawer anchor="right" open={isCartOpen} onClose={this.toggleCart}>
                         <Box
@@ -265,26 +273,46 @@ class Products extends Component {
                             onClick={this.toggleCart}
                             onKeyDown={this.toggleCart}
                         >
-                            <Typography variant="h5">Shopping Cart</Typography>
+                            <Typography variant="h6">Shopping Cart</Typography>
+                            <Divider sx={{ marginBottom: 2 }} />
                             {cart.length === 0 ? (
-                                <Typography variant="body2" sx={{ padding: 2 }}>Your cart is empty.</Typography>
+                                <Typography>No items in the cart.</Typography>
                             ) : (
                                 <List>
                                     {cart.map((product, index) => (
                                         <ListItem key={index}>
-                                            <ListItemText primary={product.name} secondary={`Ksh ${product.price}`} />
-                                            <Button color="secondary" onClick={() => this.handleRemoveFromCart(index)}>Remove</Button>
+                                            <ListItemText
+                                                primary={product.name}
+                                                secondary={`Ksh ${product.price}`}
+                                            />
+                                            <Button
+                                                variant="outlined"
+                                                color="secondary"
+                                                onClick={() => this.handleRemoveFromCart(index)}
+                                            >
+                                                Remove
+                                            </Button>
                                         </ListItem>
                                     ))}
-                                    <Divider />
-                                    <ListItem>
-                                        <ListItemText primary="Total" />
-                                        <ListItemText primary={`Ksh ${totalPrice}`} />
-                                    </ListItem>
+                                    <Divider sx={{ margin: '10px 0' }} />
+                                    <Typography variant="h6">Total: Ksh {totalPrice}</Typography>
                                 </List>
                             )}
                         </Box>
                     </Drawer>
+
+                    {/* Snackbar Notification */}
+                    <Snackbar
+                        open={snackbarOpen}
+                        autoHideDuration={3000}
+                        onClose={this.handleSnackbarClose}
+                        message={snackbarMessage}
+                        action={
+                            <IconButton size="small" color="inherit" onClick={this.handleSnackbarClose}>
+                                <CloseIcon fontSize="small" />
+                            </IconButton>
+                        }
+                    />
                 </div>
             </BackgroundContainer>
         );
