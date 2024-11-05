@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/icons-material": "^6.1.2",
+    "@mui/lab": "^6.0.0-beta.14",
     "@mui/material": "^6.1.2",
     "@mui/x-date-pickers": "^7.19.0",
     "@popperjs/core": "^2.11.8",

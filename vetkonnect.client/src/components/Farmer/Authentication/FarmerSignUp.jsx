@@ -15,7 +15,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 
-class VetSignUp extends React.Component {
+class FarmerSignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,9 +26,7 @@ class VetSignUp extends React.Component {
             confirmPassword: '',
             emailAddress: '',
             phoneNumber: '',
-            kvbNumber: '',
-            nationalId: '',  // New state for National ID
-            formErrors: { username: '', password: '', confirmPassword: '', emailAddress: '', phoneNumber: '', kvbNumber: '', nationalId: '' },
+            formErrors: { username: '', password: '', confirmPassword: '', emailAddress: '', phoneNumber: '' },
             submissionError: '',
         };
     }
@@ -38,14 +36,12 @@ class VetSignUp extends React.Component {
     };
 
     validateForm = () => {
-        const { username, password, confirmPassword, emailAddress, phoneNumber, kvbNumber, nationalId } = this.state;
+        const { username, password, confirmPassword, emailAddress, phoneNumber } = this.state;
         let usernameError = '';
         let passwordError = '';
         let confirmPasswordError = '';
         let emailError = '';
         let phoneError = '';
-        let kvbError = '';
-        let nationalIdError = ''; // Error for National ID
 
         if (!username || username.length < 3) {
             usernameError = 'Please enter a valid username.';
@@ -69,20 +65,12 @@ class VetSignUp extends React.Component {
             phoneError = 'Please enter a valid phone number (formats: 01XXXXXXXX, 07XXXXXXXX, +2547XXXXXXXX, +2541XXXXXXXX).';
         }
 
-        if (!kvbNumber) {
-            kvbError = 'KVB Number is required.';
-        }
-
-        if (!nationalId || nationalId.length < 7) {
-            nationalIdError = 'Please enter a valid National ID number.';
-        }
-
         this.setState({
-            formErrors: { username: usernameError, password: passwordError, confirmPassword: confirmPasswordError, emailAddress: emailError, phoneNumber: phoneError, kvbNumber: kvbError, nationalId: nationalIdError },
+            formErrors: { username: usernameError, password: passwordError, confirmPassword: confirmPasswordError, emailAddress: emailError, phoneNumber: phoneError },
             submissionError: '',
         });
 
-        return !usernameError && !passwordError && !confirmPasswordError && !emailError && !phoneError && !kvbError && !nationalIdError;
+        return !usernameError && !passwordError && !confirmPasswordError && !emailError && !phoneError;
     };
 
     handleSubmit = (e) => {
@@ -91,15 +79,13 @@ class VetSignUp extends React.Component {
 
         this.setState({ isLoading: true, submissionError: '' });
 
-        const { username, password, emailAddress, phoneNumber, kvbNumber, nationalId } = this.state;
+        const { username, password, emailAddress, phoneNumber } = this.state;
 
-        axios.post('https://localhost:7164/api/Vet/VetSignup', {
+        axios.post('https://localhost:7164/api/Farmer/FarmerSignup', {
             username,
             password,
             emailAddress,
             phoneNumber,
-            kvbNumber,
-            nationalId,  // Include National ID in the request payload
         })
             .then(response => {
                 this.setState({ isLoading: false });
@@ -108,9 +94,10 @@ class VetSignUp extends React.Component {
             })
             .catch(error => {
                 this.setState({ isLoading: false });
+
                 if (error.response && error.response.data) {
                     const errorMessages = error.response.data.errors || {};
-                    const formErrors = { username: '', password: '', emailAddress: '', phoneNumber: '', kvbNumber: '', nationalId: '' };
+                    const formErrors = { username: '', password: '', emailAddress: '', phoneNumber: '' };
 
                     Object.entries(errorMessages).forEach(([field, messages]) => {
                         formErrors[field] = messages.join(' ');
@@ -133,7 +120,7 @@ class VetSignUp extends React.Component {
     };
 
     render() {
-        const { showPassword, isLoading, formErrors, username, password, confirmPassword, emailAddress, phoneNumber, kvbNumber, nationalId, submissionError } = this.state;
+        const { showPassword, isLoading, formErrors, username, password, confirmPassword, emailAddress, phoneNumber, submissionError } = this.state;
 
         return (
             <Container
@@ -261,50 +248,19 @@ class VetSignUp extends React.Component {
                             helperText={formErrors.phoneNumber}
                             sx={{ mb: 2 }}
                         />
-                        <TextField
-                            label="KVB Number"
-                            name="kvbNumber"
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            required
-                            value={kvbNumber}
-                            onChange={this.handleInputChange}
-                            error={!!formErrors.kvbNumber}
-                            helperText={formErrors.kvbNumber}
-                            sx={{ mb: 2 }}
-                        />
-                        <TextField
-                            label="National ID Number"  // New National ID field
-                            name="nationalId"
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            required
-                            value={nationalId}
-                            onChange={this.handleInputChange}
-                            error={!!formErrors.nationalId}
-                            helperText={formErrors.nationalId}
-                            sx={{ mb: 2 }}
-                        />
-
                         <Button
                             type="submit"
                             variant="contained"
+                            color="primary"
                             fullWidth
-                            sx={{
-                                mt: 2,
-                                bgcolor: '#1877f2',
-                                '&:hover': { bgcolor: '#1565c0' },
-                            }}
                             disabled={isLoading}
+                            sx={{ mt: 2 }}
                         >
-                            {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign Up'}
+                            {isLoading ? <CircularProgress size={24} /> : 'Sign Up'}
                         </Button>
                     </form>
-
-                    <Typography variant="body2" sx={{ mt: 2, color: '#333' }}>
-                        Already have an account? <Link to="/vetlogin">Log in</Link>
+                    <Typography variant="body2" sx={{ mt: 3 }}>
+                        Already have an account? <Link to="/farmerlogin">Log in</Link>
                     </Typography>
                 </Box>
             </Container>
@@ -312,4 +268,4 @@ class VetSignUp extends React.Component {
     }
 }
 
-export default VetSignUp;
+export default FarmerSignUp;

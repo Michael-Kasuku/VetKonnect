@@ -1,4 +1,4 @@
-﻿// VetDashboard.js
+﻿// FarmerDashboard.js
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HorizontalNavBar from './HorizontalNavBar';
@@ -11,7 +11,7 @@ import Blogs from '../EduContent/Blogs';
 import Webinars from '../EduContent/Webinars';
 import Discussions from '../CommunityForum/Discussions';
 
-class VetDashboard extends Component {
+class FarmerDashboard extends Component {
     render() {
         const styles = {
             container: {
@@ -70,4 +70,4 @@ class VetDashboard extends Component {
     }
 }
 
-export default VetDashboard;
+export default FarmerDashboard;

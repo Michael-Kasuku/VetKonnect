@@ -24,7 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\js\" />
-    <Folder Include="src\components\Farmer\" />
     <Folder Include="src\components\Vet\Dashboard\" />
     <Folder Include="src\components\Vet\AgrovetHub\" />
     <Folder Include="src\components\Vet\EduContent\" />

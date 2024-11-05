@@ -21,7 +21,7 @@ import {
     DialogActions,
     TextField as MuiTextField,
 } from '@mui/material';
-import { Pets } from '@mui/icons-material';
+import { Pets, Group, BarChart } from '@mui/icons-material';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -32,6 +32,9 @@ class Dashboard extends Component {
                 { id: 2, dateTime: '2024-10-21 11:00 AM', client: 'Daisy Lopez', venue: 'Veterinary Clinic B' },
                 { id: 3, dateTime: '2024-10-22 09:30 AM', client: 'Josphine Otieno', venue: 'Veterinary Clinic C' },
             ],
+            totalVets: 12,
+            totalFarmers: 50,
+            totalAppointments: 75,
             searchQuery: '',
             sortField: 'dateTime',
             sortDirection: 'asc',
@@ -106,7 +109,7 @@ class Dashboard extends Component {
     };
 
     render() {
-        const { upcomingAppointments, searchQuery, reminderDialogOpen, selectedAppointment } = this.state;
+        const { upcomingAppointments, searchQuery, reminderDialogOpen, selectedAppointment, totalVets, totalFarmers, totalAppointments } = this.state;
         const filteredAppointments = upcomingAppointments.filter(appointment =>
             appointment.client.toLowerCase().includes(searchQuery.toLowerCase())
         );
@@ -114,10 +117,36 @@ class Dashboard extends Component {
         return (
             <Container
                 maxWidth="lg"
-                sx={{ padding: 2, height: '100vh', overflowY: 'auto' }}
-                role="main" // Accessibility: main content
+                sx={{ padding: 2 }}
+                role="main"
             >
                 <Grid container spacing={2} sx={{ marginTop: '20px' }}>
+                    {/* Statistics Cards */}
+                    <Grid item xs={12} sm={4}>
+                        <Card variant="outlined">
+                            <CardContent>
+                                <Typography variant="h6">Total Vets</Typography>
+                                <Typography variant="h4">{totalVets}</Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Card variant="outlined">
+                            <CardContent>
+                                <Typography variant="h6">Total Farmers</Typography>
+                                <Typography variant="h4">{totalFarmers}</Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Card variant="outlined">
+                            <CardContent>
+                                <Typography variant="h6">Total Appointments</Typography>
+                                <Typography variant="h4">{totalAppointments}</Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
                     {/* Search Bar */}
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -127,7 +156,6 @@ class Dashboard extends Component {
                             value={searchQuery}
                             onChange={this.handleSearchChange}
                             sx={{ marginBottom: 2 }}
-                            aria-label="Search by Client Name" // Accessibility
                         />
                     </Grid>
                     {/* Button to View Appointments History */}
@@ -136,11 +164,19 @@ class Dashboard extends Component {
                             variant="contained"
                             color="primary"
                             onClick={this.viewAppointmentsHistory}
-                            aria-label="View Appointments History" // Accessibility
                         >
                             View Appointments History
                         </Button>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => this.props.navigate('/admindashboard/reports')}
+                            sx={{ marginLeft: 1 }}
+                        >
+                            View Reports
+                        </Button>
                     </Grid>
+
                     {/* Upcoming Appointments Table */}
                     <Grid item xs={12}>
                         <Card variant="outlined" sx={{ marginBottom: 2 }}>
@@ -148,7 +184,7 @@ class Dashboard extends Component {
                                 <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
                                     <Pets fontSize="large" sx={{ marginRight: 1 }} /> Upcoming Appointments
                                 </Typography>
-                                <TableContainer component={Paper} sx={{ maxHeight: '400px', overflow: 'auto' }}>
+                                <TableContainer component={Paper}>
                                     <Table>
                                         <TableHead>
                                             <TableRow>
@@ -157,12 +193,8 @@ class Dashboard extends Component {
                                                         key={header}
                                                         onClick={() => this.handleSort(header)}
                                                         style={{ cursor: 'pointer', fontWeight: 'bold' }}
-                                                        aria-sort={this.state.sortField === header ? this.state.sortDirection : 'none'}
                                                     >
                                                         {header.charAt(0).toUpperCase() + header.slice(1).replace('Time', ' Time')}
-                                                        {this.state.sortField === header && (
-                                                            this.state.sortDirection === 'asc' ? ' 🔼' : ' 🔽'
-                                                        )}
                                                     </TableCell>
                                                 ))}
                                                 <TableCell style={{ fontWeight: 'bold' }}>Actions</TableCell>
@@ -180,7 +212,6 @@ class Dashboard extends Component {
                                                                 variant="outlined"
                                                                 onClick={() => this.openReminderDialog(appointment)}
                                                                 sx={{ marginRight: 1 }}
-                                                                aria-label={`Set Reminder for ${appointment.client}`} // Accessibility
                                                             >
                                                                 Set Reminder
                                                             </Button>
@@ -188,7 +219,6 @@ class Dashboard extends Component {
                                                                 variant="outlined"
                                                                 color="error"
                                                                 onClick={() => this.cancelAppointment(appointment.id)}
-                                                                aria-label={`Cancel Appointment for ${appointment.client}`} // Accessibility
                                                             >
                                                                 Cancel Appointment
                                                             </Button>
@@ -218,7 +248,6 @@ class Dashboard extends Component {
                             fullWidth
                             value={this.state.reminderTime}
                             onChange={this.handleReminderTimeChange}
-                            aria-label="Reminder Time Input" // Accessibility
                         />
                     </DialogContent>
                     <DialogActions>
@@ -235,10 +264,4 @@ class Dashboard extends Component {
     }
 }
 
-// Use function component wrapper to allow hooks usage
-const DashboardWithRouter = () => {
-    const navigate = useNavigate();
-    return <Dashboard navigate={navigate} />;
-};
-
-export default DashboardWithRouter;
+export default (props) => <Dashboard {...props} navigate={useNavigate()} />;
