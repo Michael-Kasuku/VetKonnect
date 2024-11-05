@@ -81,7 +81,7 @@ class AdminSignUp extends React.Component {
 
         const { username, password, emailAddress, phoneNumber } = this.state;
 
-        axios.post('https://localhost:7164/api/Admin/AdminSignup', {
+        axios.post('https://kasuku-001-site1.dtempurl.com/api/Admin/AdminSignup', {
             username,
             password,
             emailAddress,

@@ -515,6 +515,9 @@ section,
     padding: 60px 0; /* Adds vertical padding (60px) to the top and bottom of each section */
     scroll-margin-top: 98px; /* Adds a top margin for smooth scrolling when links to sections are clicked */
     overflow: clip; /* Clips the content that overflows the element's box */
+    width: 100%; /* Ensure full width */
+    margin: 0; /* Remove default margins */
+    box-sizing: border-box; /* Ensure padding and border are included in the total width */
 }
 
 /* Responsive adjustments for smaller screens */
@@ -561,53 +564,54 @@ section,
         margin-bottom: 0; /* Removes bottom margin from paragraphs within section titles */
     }
 
+
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
 .hero {
-    width: 100%; /* The hero section takes up the full width of the viewport */
-    min-height: 100vh; /* Ensures the hero section covers the full height of the viewport */
-    position: relative; /* Positions the hero section relative to other elements */
-    padding: 80px 0; /* Adds vertical padding inside the hero section */
-    display: flex; /* Uses Flexbox to align content inside the hero section */
-    align-items: center; /* Vertically centers content */
-    justify-content: center; /* Horizontally centers content */
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    padding: 80px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-    .hero img {
-        position: absolute; /* Positions the image absolutely inside the hero */
-        inset: 0; /* Stretches the image to all four edges of the hero */
-        display: block; /* Ensures the image is displayed as a block-level element */
-        width: 100%; /* Sets the image to take up the full width of its container */
-        height: 100%; /* Sets the image to take up the full height */
-        object-fit: cover; /* Ensures the image covers the hero section without distortion */
-        z-index: 1; /* Sets the image layer behind the other elements in the hero */
-    }
+.hero img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
 
-    .hero:before {
-        content: ""; /* Empty content for the pseudo-element */
-        background: color-mix(in srgb, var(--background-color), transparent 50%); /* Creates a semi-transparent overlay */
-        position: absolute; /* Positions it to cover the whole hero section */
-        inset: 0; /* Stretches it to all four edges of the hero */
-        z-index: 2; /* Places the overlay between the image and the text */
-    }
+.hero:before {
+    content: ""; /* Keeps the pseudo-element but removes background color */
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
 
-    .hero .container {
-        position: relative; /* Positions the content container inside the hero */
-        z-index: 3; /* Ensures the container appears above the background and overlay */
-    }
+.hero .container {
+    position: relative;
+    z-index: 3;
+}
 
-    .hero h2 {
-        margin: 0; /* Removes default margin */
-        font-size: 44px; /* Large, bold text size for headings */
-        font-weight: 700; /* Bold text for strong emphasis */
-    }
+.hero h2 {
+    margin: 0;
+    font-size: 44px;
+    font-weight: 700;
+}
 
-    .hero p {
-        color: color-mix(in srgb, var(--default-color), transparent 20%); /* Subtle text color to contrast the hero background */
-        margin: 5px 0 0 0; /* Adds a small margin to separate the paragraph from the heading */
-        font-size: 20px; /* Medium-sized font for the hero paragraph */
-    }
+.hero p {
+    color: color-mix(in srgb, var(--default-color), transparent 20%);
+    margin: 5px 0 0 0;
+    font-size: 20px;
+}
+
 
 /*--------------------------------------------------------------
 # About Section
@@ -663,83 +667,38 @@ section,
         padding: 30px; /* Reduces padding for smaller screen sizes */
     }
 }
-
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
-.services .service-item {
-    position: relative; /* Sets the positioning context for absolute elements inside */
-    padding-top: 40px; /* Adds space above each service item */
+.services {
+    padding: 5rem 0; /* Overall padding for the section */
 }
 
-    .services .service-item:before {
-        content: ""; /* Empty content for the pseudo-element */
-        position: absolute; /* Positions the line absolutely within the service item */
-        top: 0; /* Aligns the line to the top of the service item */
-        left: 0; /* Aligns the line to the left */
-        right: 0; /* Aligns the line to the right */
-        height: 2px; /* Sets the height of the line */
-        background: #000000; /* Color of the top line */
+    .services .service-item {
+        position: relative; /* Sets the positioning context for absolute elements inside */
+        padding-top: 40px; /* Adds space above each service item */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        border-radius: 0.5rem; /* Rounded corners for a modern look */
+        transition: transform 0.3s; /* Smooth scale transition */
     }
 
-    .services .service-item::after {
-        content: ""; /* Empty content for the pseudo-element */
-        position: absolute; /* Positions this line absolutely */
-        top: 0; /* Aligns the line to the top */
-        left: 0; /* Aligns the line to the left */
-        width: 30px; /* Width of the accent line */
-        height: 2px; /* Height of the accent line */
-        background: var(--accent-color); /* Uses the accent color for the line */
-        border-right: 5px solid var(--background-color); /* Adds a border to the right with the background color */
-    }
-
-    .services .service-item .icon {
-        width: 48px; /* Sets a fixed width for the icon container */
-        height: 48px; /* Sets a fixed height for the icon container */
-        position: relative; /* Positions the icon container relative to its parent */
-        margin-right: 50px; /* Adds space to the right of the icon */
-        line-height: 0; /* Resets line height to eliminate extra spacing */
-    }
-
-        .services .service-item .icon i {
-            color: color-mix(in srgb, var(--default-color), transparent 20%); /* Slightly transparent icon color */
-            font-size: 56px; /* Large font size for the icon */
-            transition: ease-in-out 0.3s; /* Smooth transition for hover effects */
-            z-index: 2; /* Ensures the icon appears above the pseudo-elements */
-            position: relative; /* Positions the icon relative to the icon container */
+        .services .service-item:hover {
+            transform: translateY(-5px); /* Slight lift effect on hover */
         }
 
-        .services .service-item .icon:before {
-            position: absolute; /* Positions the circle behind the icon */
-            content: ""; /* Empty content for the pseudo-element */
-            height: 30px; /* Height of the circle */
-            width: 30px; /* Width of the circle */
-            background: white; /* White background for the circle */
-            border-radius: 50px; /* Rounds the corners to create a circle */
-            z-index: 1; /* Places the circle behind the icon */
-            bottom: -15px; /* Positions the circle below the icon */
-            right: -15px; /* Positions the circle to the right of the icon */
-            transition: 0.3s; /* Smooth transition for hover effects */
+        .services .service-item .title {
+            font-weight: 700; /* Bold text for service titles */
+            margin-bottom: 15px; /* Adds space below the title */
+            font-size: 1.125rem; /* Sets a slightly larger font size for the title */
         }
 
-    .services .service-item .title {
-        font-weight: 700; /* Bold text for service titles */
-        margin-bottom: 15px; /* Adds space below the title */
-        font-size: 18px; /* Sets the font size for the title */
-    }
-
-        .services .service-item .title a {
-            color: var(--heading-color); /* Sets the link color to the heading color */
+        .services .service-item .description {
+            line-height: 1.5; /* Improved line height for readability */
+            font-size: 0.875rem; /* Slightly larger font size for descriptions */
+            color: #6c757d; /* Muted text color for descriptions */
+            text-align: left; /* Left-align the description text */
         }
 
-            .services .service-item .title a:hover {
-                color: var(--accent-color); /* Changes the link color on hover to the accent color */
-            }
-
-    .services .service-item .description {
-        line-height: 24px; /* Sets line height for improved readability */
-        font-size: 14px; /* Sets a smaller font size for descriptions */
-    }
 
 /*--------------------------------------------------------------
 # Faq Section
@@ -844,7 +803,7 @@ section,
         color: var(--accent-color); /* Changes link color on hover */
     }
 
-/* Team.css */
+/* Team section */
 .team {
     background-color: #f9f9f9; /* Light background for contrast */
     padding: 5rem 0;

@@ -81,7 +81,7 @@ class FarmerSignUp extends React.Component {
 
         const { username, password, emailAddress, phoneNumber } = this.state;
 
-        axios.post('https://localhost:7164/api/Farmer/FarmerSignup', {
+        axios.post('https://kasuku-001-site1.dtempurl.com/api/Farmer/FarmerSignup', {
             username,
             password,
             emailAddress,

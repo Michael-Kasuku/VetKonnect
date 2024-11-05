@@ -56,7 +56,7 @@ class AdminLogin extends React.Component {
         this.setState({ isLoading: true, submissionError: '' });
         const { username, password } = this.state;
 
-        axios.post('https://localhost:7164/api/Admin/AdminLogin', { username, password })
+        axios.post('https://kasuku-001-site1.dtempurl.com/api/Admin/AdminLogin', { username, password })
             .then(response => {
                 this.setState({ isLoading: false });
                 alert('Login successful');

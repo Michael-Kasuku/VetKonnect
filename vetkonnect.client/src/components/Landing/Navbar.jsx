@@ -8,7 +8,6 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 
@@ -36,6 +35,23 @@ const LogoText = styled(Typography)(({ theme }) => ({
     fontWeight: 'bold',
     fontSize: '1.5rem',
 }));
+
+// Custom Menu Icon for small screens (three blue dashes)
+const CustomMenuIcon = styled('div')({
+    width: '24px',
+    height: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    cursor: 'pointer',
+    '& div': {
+        width: '100%',
+        height: '3px',
+        backgroundColor: 'blue',
+        borderRadius: '2px',
+    },
+});
 
 // Navigation link component
 const NavLink = ({ name, path, hovered, onMouseEnter, onMouseLeave }) => (
@@ -103,7 +119,11 @@ class Navbar extends Component {
                             onClick={this.toggleDrawer(true)}
                             sx={{ display: { xs: 'block', md: 'none' } }} // Show on small screens
                         >
-                            <MenuIcon />
+                            <CustomMenuIcon>
+                                <div />
+                                <div />
+                                <div />
+                            </CustomMenuIcon>
                         </IconButton>
 
                         {/* Navigation Links for larger screens */}

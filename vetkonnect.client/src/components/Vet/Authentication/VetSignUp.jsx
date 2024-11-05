@@ -93,7 +93,7 @@ class VetSignUp extends React.Component {
 
         const { username, password, emailAddress, phoneNumber, kvbNumber, nationalId } = this.state;
 
-        axios.post('https://localhost:7164/api/Vet/VetSignup', {
+        axios.post('https://kasuku-001-site1.dtempurl.com/api/Vet/VetSignup', {
             username,
             password,
             emailAddress,
