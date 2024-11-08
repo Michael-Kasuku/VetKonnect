@@ -31,7 +31,7 @@ const farmerProfiles = [
     { id: 3, name: 'Samuel Kibet', farmType: 'Poultry Farm', profilePic: '/assets/img/team/lopez.jpg', suspended: false, experience: '3 years', contact: 'samuelkibet@gmail.com' },
 ];
 
-const VetProfiles = () => {
+const FarmerProfiles = () => {
     const [favoriteFarmers, setFavoriteFarmers] = useState([]);
     const [selectedTab, setSelectedTab] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
@@ -414,4 +414,4 @@ const EditFarmerDialog = ({ open, farmer, onClose, onSubmit }) => (
     </Dialog>
 );
 
-export default VetProfiles;
+export default FarmerProfiles;

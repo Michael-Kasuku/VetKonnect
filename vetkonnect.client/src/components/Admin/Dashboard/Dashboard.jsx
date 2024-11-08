@@ -1,235 +1,259 @@
 ﻿import React, { Component } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-    Container,
-    Grid,
-    Typography,
-    Card,
-    CardContent,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    TextField,
-    Button,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    TextField as MuiTextField,
-} from '@mui/material';
-import { Pets, Group, BarChart } from '@mui/icons-material';
+import { Box, Container, Grid, Typography, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField as MuiTextField } from '@mui/material';
+import { Group } from '@mui/icons-material';
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            upcomingAppointments: [
-                { id: 1, dateTime: '2024-10-20 10:00 AM', client: 'Michael Kasuku', venue: 'Veterinary Clinic A' },
-                { id: 2, dateTime: '2024-10-21 11:00 AM', client: 'Daisy Lopez', venue: 'Veterinary Clinic B' },
-                { id: 3, dateTime: '2024-10-22 09:30 AM', client: 'Josphine Otieno', venue: 'Veterinary Clinic C' },
-            ],
             totalVets: 12,
             totalFarmers: 50,
-            totalAppointments: 75,
+            totalAppointments: 35,
+            kvbDatabase: [
+                { id: 1, name: 'Dr. John Doe', registrationNumber: 'KVB123', status: 'Active' },
+                { id: 2, name: 'Dr. Jane Smith', registrationNumber: 'KVB456', status: 'Inactive' },
+            ],
             searchQuery: '',
-            sortField: 'dateTime',
+            sortField: '',
             sortDirection: 'asc',
-            reminderDialogOpen: false,
-            selectedAppointment: null,
-            reminderTime: '',
-            reminders: [],
+            editDialogOpen: false,
+            addDialogOpen: false,
+            selectedVet: null,
+            name: '',
+            registrationNumber: '',
+            status: '',
         };
     }
+
+    openAddDialog = () => {
+        this.setState({ addDialogOpen: true, name: '', registrationNumber: '', status: '' });
+    };
+
+    closeAddDialog = () => {
+        this.setState({ addDialogOpen: false });
+    };
+
+    openEditDialog = (vet) => {
+        this.setState({
+            editDialogOpen: true,
+            selectedVet: vet,
+            name: vet.name,
+            registrationNumber: vet.registrationNumber,
+            status: vet.status,
+        });
+    };
+
+    closeEditDialog = () => {
+        this.setState({ editDialogOpen: false, selectedVet: null, name: '', registrationNumber: '', status: '' });
+    };
+
+    handleInputChange = (event) => {
+        const { name, value } = event.target;
+        this.setState({ [name]: value });
+    };
+
+    addVet = () => {
+        const { kvbDatabase, name, registrationNumber, status } = this.state;
+        const newVet = { id: kvbDatabase.length + 1, name, registrationNumber, status };
+        this.setState({ kvbDatabase: [...kvbDatabase, newVet], addDialogOpen: false });
+        alert(`New veterinarian added: ${name}`);
+    };
+
+    saveChanges = () => {
+        const { selectedVet, name, registrationNumber, status, kvbDatabase } = this.state;
+        const updatedDatabase = kvbDatabase.map((vet) =>
+            vet.id === selectedVet.id ? { ...vet, name, registrationNumber, status } : vet
+        );
+
+        this.setState({ kvbDatabase: updatedDatabase, editDialogOpen: false });
+        alert(`Changes saved for ${name}`);
+    };
+
+    deleteVet = (id) => {
+        const updatedDatabase = this.state.kvbDatabase.filter((vet) => vet.id !== id);
+        this.setState({ kvbDatabase: updatedDatabase });
+        alert(`Veterinarian with ID ${id} deleted`);
+    };
 
     handleSearchChange = (event) => {
         this.setState({ searchQuery: event.target.value });
     };
 
     handleSort = (field) => {
-        const { sortField, sortDirection, upcomingAppointments } = this.state;
+        const { sortField, sortDirection } = this.state;
         const newDirection = sortField === field && sortDirection === 'asc' ? 'desc' : 'asc';
-
-        const sortedAppointments = [...upcomingAppointments].sort((a, b) => {
-            const compareA = typeof a[field] === 'string' ? a[field].toLowerCase() : a[field];
-            const compareB = typeof b[field] === 'string' ? b[field].toLowerCase() : b[field];
-            return newDirection === 'asc' ? compareA.localeCompare(compareB) : compareB.localeCompare(compareA);
-        });
-
-        this.setState({
-            upcomingAppointments: sortedAppointments,
-            sortField: field,
-            sortDirection: newDirection,
-        });
+        this.setState({ sortField: field, sortDirection: newDirection });
     };
 
-    openReminderDialog = (appointment) => {
-        this.setState({ reminderDialogOpen: true, selectedAppointment: appointment });
-    };
+    getFilteredAndSortedVets = () => {
+        const { kvbDatabase, searchQuery, sortField, sortDirection } = this.state;
 
-    closeReminderDialog = () => {
-        this.setState({ reminderDialogOpen: false, selectedAppointment: null, reminderTime: '' });
-    };
+        const filteredVets = kvbDatabase.filter(
+            (vet) =>
+                vet.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                vet.registrationNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                vet.status.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
-    handleReminderTimeChange = (event) => {
-        this.setState({ reminderTime: event.target.value });
-    };
+        if (sortField) {
+            filteredVets.sort((a, b) => {
+                const valueA = a[sortField].toLowerCase();
+                const valueB = b[sortField].toLowerCase();
+                if (valueA < valueB) return sortDirection === 'asc' ? -1 : 1;
+                if (valueA > valueB) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
 
-    setReminder = () => {
-        const { selectedAppointment, reminderTime } = this.state;
-        const reminder = {
-            appointmentId: selectedAppointment.id,
-            client: selectedAppointment.client,
-            dateTime: selectedAppointment.dateTime,
-            reminderTime: reminderTime,
-        };
-
-        this.setState(prevState => ({
-            reminders: [...prevState.reminders, reminder],
-            reminderDialogOpen: false,
-            selectedAppointment: null,
-            reminderTime: '',
-        }));
-
-        alert(`Reminder set for ${reminder.client} on ${reminder.dateTime} at ${reminder.reminderTime}`);
-    };
-
-    cancelAppointment = (id) => {
-        const { upcomingAppointments } = this.state;
-        const updatedAppointments = upcomingAppointments.filter(appointment => appointment.id !== id);
-        this.setState({ upcomingAppointments: updatedAppointments });
-        alert(`Appointment with ID ${id} has been canceled.`);
-    };
-
-    viewAppointmentsHistory = () => {
-        this.props.navigate('/vetdashboard/appointments'); // Navigate to the appointments history
+        return filteredVets;
     };
 
     render() {
-        const { upcomingAppointments, searchQuery, reminderDialogOpen, selectedAppointment, totalVets, totalFarmers, totalAppointments } = this.state;
-        const filteredAppointments = upcomingAppointments.filter(appointment =>
-            appointment.client.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        const { totalVets, totalFarmers, totalAppointments, editDialogOpen, addDialogOpen, name, registrationNumber, status, searchQuery, sortField, sortDirection } = this.state;
+        const vetsToDisplay = this.getFilteredAndSortedVets();
 
         return (
-            <Container
-                maxWidth="lg"
-                sx={{ padding: 2 }}
-                role="main"
-            >
-                <Grid container spacing={2} sx={{ marginTop: '20px' }}>
-                    {/* Statistics Cards */}
+            <Container maxWidth="lg" sx={{ padding: 2 }} role="main">
+                <Grid container spacing={3} sx={{ marginTop: '20px' }}>
                     <Grid item xs={12} sm={4}>
-                        <Card variant="outlined">
-                            <CardContent>
-                                <Typography variant="h6">Total Vets</Typography>
-                                <Typography variant="h4">{totalVets}</Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <Card variant="outlined">
-                            <CardContent>
-                                <Typography variant="h6">Total Farmers</Typography>
-                                <Typography variant="h4">{totalFarmers}</Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <Card variant="outlined">
-                            <CardContent>
-                                <Typography variant="h6">Total Appointments</Typography>
-                                <Typography variant="h4">{totalAppointments}</Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-
-                    {/* Search Bar */}
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Search by Client Name"
+                        <Card
                             variant="outlined"
-                            fullWidth
-                            value={searchQuery}
-                            onChange={this.handleSearchChange}
-                            sx={{ marginBottom: 2 }}
-                        />
-                    </Grid>
-                    {/* Button to View Appointments History */}
-                    <Grid item xs={12} sm={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={this.viewAppointmentsHistory}
+                            sx={{
+                                padding: 3,
+                                backgroundColor: '#4CAF50', // Light green
+                                boxShadow: 3, // Subtle shadow for depth
+                                borderRadius: 2, // Rounded corners
+                                transition: 'transform 0.2s ease-in-out',
+                                '&:hover': {
+                                    transform: 'scale(1.05)', // Hover effect
+                                },
+                            }}
                         >
-                            View Appointments History
-                        </Button>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => this.props.navigate('/admindashboard/reports')}
-                            sx={{ marginLeft: 1 }}
-                        >
-                            View Reports
-                        </Button>
+                            <CardContent>
+                                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                                    Total Veterinarians
+                                </Typography>
+                                <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                                    {totalVets}
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </Grid>
 
-                    {/* Upcoming Appointments Table */}
-                    <Grid item xs={12}>
-                        <Card variant="outlined" sx={{ marginBottom: 2 }}>
+                    <Grid item xs={12} sm={4}>
+                        <Card
+                            variant="outlined"
+                            sx={{
+                                padding: 3,
+                                backgroundColor: '#FFC107', // Amber
+                                boxShadow: 3,
+                                borderRadius: 2,
+                                transition: 'transform 0.2s ease-in-out',
+                                '&:hover': {
+                                    transform: 'scale(1.05)',
+                                },
+                            }}
+                        >
                             <CardContent>
-                                <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
-                                    <Pets fontSize="large" sx={{ marginRight: 1 }} /> Upcoming Appointments
+                                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                                    Total Farmers
                                 </Typography>
+                                <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                                    {totalFarmers}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    <Grid item xs={12} sm={4}>
+                        <Card
+                            variant="outlined"
+                            sx={{
+                                padding: 3,
+                                backgroundColor: '#2196F3', // Blue
+                                boxShadow: 3,
+                                borderRadius: 2,
+                                transition: 'transform 0.2s ease-in-out',
+                                '&:hover': {
+                                    transform: 'scale(1.05)',
+                                },
+                            }}
+                        >
+                            <CardContent>
+                                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                                    Total Appointments
+                                </Typography>
+                                <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#fff' }}>
+                                    {totalAppointments}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Card variant="outlined" sx={{ marginBottom: 2, padding: 2 }}>
+                            <CardContent>
+                                <Typography variant="h5" sx={{ marginBottom: 2, display: 'flex', alignItems: 'center' }}>
+                                    <Group fontSize="large" sx={{ marginRight: 1 }} /> Kenya Veterinary Board (KVB) Database
+                                </Typography>
+
+                                {/* Box to align the search and button */}
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+                                    <TextField
+                                        label="Search"
+                                        variant="outlined"
+                                        value={searchQuery}
+                                        onChange={this.handleSearchChange}
+                                        sx={{ width: '100%' }}
+                                    />
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.openAddDialog}
+                                        sx={{ marginLeft: 2 }}
+                                    >
+                                        Add Veterinarian
+                                    </Button>
+                                </Box>
+
                                 <TableContainer component={Paper}>
                                     <Table>
                                         <TableHead>
                                             <TableRow>
-                                                {['dateTime', 'client', 'venue'].map((header) => (
+                                                {['name', 'registrationNumber', 'status'].map((field) => (
                                                     <TableCell
-                                                        key={header}
-                                                        onClick={() => this.handleSort(header)}
+                                                        key={field}
+                                                        onClick={() => this.handleSort(field)}
                                                         style={{ cursor: 'pointer', fontWeight: 'bold' }}
                                                     >
-                                                        {header.charAt(0).toUpperCase() + header.slice(1).replace('Time', ' Time')}
+                                                        {field.charAt(0).toUpperCase() + field.slice(1)}
+                                                        {sortField === field ? (sortDirection === 'asc' ? ' ↑' : ' ↓') : ''}
                                                     </TableCell>
                                                 ))}
                                                 <TableCell style={{ fontWeight: 'bold' }}>Actions</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {filteredAppointments.length > 0 ? (
-                                                filteredAppointments.map((appointment) => (
-                                                    <TableRow key={appointment.id}>
-                                                        <TableCell>{appointment.dateTime}</TableCell>
-                                                        <TableCell>{appointment.client}</TableCell>
-                                                        <TableCell>{appointment.venue}</TableCell>
-                                                        <TableCell>
-                                                            <Button
-                                                                variant="outlined"
-                                                                onClick={() => this.openReminderDialog(appointment)}
-                                                                sx={{ marginRight: 1 }}
-                                                            >
-                                                                Set Reminder
-                                                            </Button>
-                                                            <Button
-                                                                variant="outlined"
-                                                                color="error"
-                                                                onClick={() => this.cancelAppointment(appointment.id)}
-                                                            >
-                                                                Cancel Appointment
-                                                            </Button>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                ))
-                                            ) : (
-                                                <TableRow>
-                                                    <TableCell colSpan={4} align="center">No appointments found</TableCell>
+                                            {vetsToDisplay.map((vet) => (
+                                                <TableRow key={vet.id}>
+                                                    <TableCell>{vet.name}</TableCell>
+                                                    <TableCell>{vet.registrationNumber}</TableCell>
+                                                    <TableCell>{vet.status}</TableCell>
+                                                    <TableCell>
+                                                        <Button variant="outlined" onClick={() => this.openEditDialog(vet)}>
+                                                            Edit
+                                                        </Button>
+                                                        <Button
+                                                            variant="outlined"
+                                                            color="error"
+                                                            onClick={() => this.deleteVet(vet.id)}
+                                                            sx={{ marginLeft: 1 }}
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                    </TableCell>
                                                 </TableRow>
-                                            )}
+                                            ))}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
@@ -238,30 +262,37 @@ class Dashboard extends Component {
                     </Grid>
                 </Grid>
 
-                {/* Reminder Dialog */}
-                <Dialog open={reminderDialogOpen} onClose={this.closeReminderDialog}>
-                    <DialogTitle>Set Reminder</DialogTitle>
+                {/* Edit Dialog */}
+                <Dialog open={editDialogOpen} onClose={this.closeEditDialog}>
+                    <DialogTitle>Edit Veterinarian</DialogTitle>
                     <DialogContent>
-                        <MuiTextField
-                            label="Reminder Time (e.g., 1 hour before)"
-                            variant="outlined"
-                            fullWidth
-                            value={this.state.reminderTime}
-                            onChange={this.handleReminderTimeChange}
-                        />
+                        <MuiTextField label="Name" variant="outlined" fullWidth name="name" value={name} onChange={this.handleInputChange} sx={{ marginBottom: 2 }} />
+                        <MuiTextField label="Registration Number" variant="outlined" fullWidth name="registrationNumber" value={registrationNumber} onChange={this.handleInputChange} sx={{ marginBottom: 2 }} />
+                        <MuiTextField label="Status" variant="outlined" fullWidth name="status" value={status} onChange={this.handleInputChange} />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.closeReminderDialog} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.setReminder} color="primary">
-                            Set Reminder
-                        </Button>
+                        <Button onClick={this.closeEditDialog} color="primary">Cancel</Button>
+                        <Button onClick={this.saveChanges} color="primary">Save Changes</Button>
+                    </DialogActions>
+                </Dialog>
+
+                {/* Add Dialog */}
+                <Dialog open={addDialogOpen} onClose={this.closeAddDialog}>
+                    <DialogTitle>Add Veterinarian</DialogTitle>
+                    <DialogContent>
+                        <MuiTextField label="Name" variant="outlined" fullWidth name="name" value={name} onChange={this.handleInputChange} sx={{ marginBottom: 2 }} />
+                        <MuiTextField label="Registration Number" variant="outlined" fullWidth name="registrationNumber" value={registrationNumber} onChange={this.handleInputChange} sx={{ marginBottom: 2 }} />
+                        <MuiTextField label="Status" variant="outlined" fullWidth name="status" value={status} onChange={this.handleInputChange} />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.closeAddDialog} color="primary">Cancel</Button>
+                        <Button onClick={this.addVet} color="primary">Add Veterinarian</Button>
                     </DialogActions>
                 </Dialog>
             </Container>
         );
+
     }
 }
 
-export default (props) => <Dashboard {...props} navigate={useNavigate()} />;
+export default Dashboard;

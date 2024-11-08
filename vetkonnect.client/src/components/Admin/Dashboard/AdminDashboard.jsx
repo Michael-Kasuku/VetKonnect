@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import HorizontalNavBar from './HorizontalNavBar';
 import Dashboard from './Dashboard';
 import VetProfiles from '../VetDirectory/VetProfiles';
+import FarmerProfiles from '../VetDirectory/FarmerProfiles';
 import AppointmentHistory from '../VetDirectory/AppointmentHistory';
 import Products from '../AgrovetHub/Products';
 import OrderManagement from '../AgrovetHub/OrderManagement';
@@ -57,6 +58,7 @@ class AdminDashboard extends Component {
                     <Routes>
                         <Route path="home" element={<Dashboard />} />
                         <Route path="vet-profiles" element={<VetProfiles />} />
+                        <Route path="farmer-profiles" element={<FarmerProfiles />} />
                         <Route path="appointments" element={<AppointmentHistory />} />
                         <Route path="products" element={<Products />} />
                         <Route path="order-management" element={<OrderManagement />} />

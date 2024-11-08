@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import {
     Container,
     Grid,
@@ -30,152 +30,186 @@ const vetProfiles = [
     { id: 3, name: 'Dr. Daisy Lopez', jobTitle: 'Wildlife Specialist', profilePic: '/assets/img/team/lopez.jpg' },
 ];
 
-const VetProfiles = () => {
-    const [favoriteVets, setFavoriteVets] = useState([]);
-    const [selectedTab, setSelectedTab] = useState(0);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [sortOrder, setSortOrder] = useState('asc');
-    const [appointmentDialogOpen, setAppointmentDialogOpen] = useState(false);
-    const [currentVet, setCurrentVet] = useState(null);
-    const [appointmentDetails, setAppointmentDetails] = useState({ date: '', time: '', notes: '' });
-    const [reviews, setReviews] = useState({});
-    const [newRating, setNewRating] = useState(0);
-    const [newReview, setNewReview] = useState('');
+class VetProfiles extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            favoriteVets: [],
+            selectedTab: 0,
+            searchQuery: '',
+            sortOrder: 'asc',
+            appointmentDialogOpen: false,
+            currentVet: null,
+            appointmentDetails: { date: '', time: '', notes: '' },
+            reviews: {},
+            newRating: 0,
+            newReview: '',
+        };
+    }
 
-    const toggleFavorite = (vetId) => {
-        setFavoriteVets((prev) =>
-            prev.includes(vetId) ? prev.filter((id) => id !== vetId) : [...prev, vetId]
-        );
+    toggleFavorite = (vetId) => {
+        this.setState((prevState) => {
+            const { favoriteVets } = prevState;
+            return {
+                favoriteVets: favoriteVets.includes(vetId)
+                    ? favoriteVets.filter((id) => id !== vetId)
+                    : [...favoriteVets, vetId],
+            };
+        });
     };
 
-    const handleSearchChange = (event) => setSearchQuery(event.target.value);
-    const handleSortChange = (event) => setSortOrder(event.target.value);
+    handleSearchChange = (event) => this.setState({ searchQuery: event.target.value });
 
-    const openAppointmentDialog = (vet) => {
-        setCurrentVet(vet);
-        setAppointmentDialogOpen(true);
+    handleSortChange = (event) => this.setState({ sortOrder: event.target.value });
+
+    openAppointmentDialog = (vet) => {
+        this.setState({ currentVet: vet, appointmentDialogOpen: true });
     };
 
-    const closeAppointmentDialog = () => {
-        setAppointmentDialogOpen(false);
-        setCurrentVet(null);
-        setAppointmentDetails({ date: '', time: '', notes: '' });
+    closeAppointmentDialog = () => {
+        this.setState({
+            appointmentDialogOpen: false,
+            currentVet: null,
+            appointmentDetails: { date: '', time: '', notes: '' },
+        });
     };
 
-    const handleAppointmentChange = (event) => {
+    handleAppointmentChange = (event) => {
         const { name, value } = event.target;
-        setAppointmentDetails((prev) => ({ ...prev, [name]: value }));
+        this.setState((prevState) => ({
+            appointmentDetails: { ...prevState.appointmentDetails, [name]: value },
+        }));
     };
 
-    const bookAppointment = () => {
+    bookAppointment = () => {
+        const { appointmentDetails, currentVet } = this.state;
         if (!appointmentDetails.date || !appointmentDetails.time) return;
         console.log('Appointment booked:', { vet: currentVet.name, ...appointmentDetails });
-        closeAppointmentDialog();
+        this.closeAppointmentDialog();
     };
 
-    const handleReviewSubmit = () => {
+    handleReviewSubmit = () => {
+        const { currentVet, reviews, newRating, newReview } = this.state;
         if (!currentVet) return;
         const vetId = currentVet.id;
         const updatedReviews = {
             ...reviews,
             [vetId]: [...(reviews[vetId] || []), { rating: newRating, review: newReview }],
         };
-        setReviews(updatedReviews);
-        setNewRating(0);
-        setNewReview('');
+        this.setState({
+            reviews: updatedReviews,
+            newRating: 0,
+            newReview: '',
+        });
     };
 
-    const filterAndSortVets = (vets) => {
-        const filteredVets = vets.filter((vet) => vet.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    filterAndSortVets = (vets) => {
+        const { searchQuery, sortOrder } = this.state;
+        const filteredVets = vets.filter((vet) =>
+            vet.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
         return filteredVets.sort((a, b) =>
             sortOrder === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
         );
     };
 
-    const displayedVets = filterAndSortVets(vetProfiles);
+    render() {
+        const {
+            favoriteVets,
+            selectedTab,
+            appointmentDialogOpen,
+            currentVet,
+            appointmentDetails,
+            newRating,
+            newReview,
+            reviews,
+        } = this.state;
 
-    return (
-        <Container maxWidth="lg" sx={{ padding: 2, marginTop: '20px' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
-                <TextField
-                    label="Search"
-                    variant="outlined"
-                    size="small"
-                    onChange={handleSearchChange}
-                />
-                <TextField
-                    select
-                    label="Sort"
-                    value={sortOrder}
-                    onChange={handleSortChange}
-                    size="small"
+        const displayedVets = this.filterAndSortVets(vetProfiles);
+
+        return (
+            <Container maxWidth="lg" sx={{ padding: 2, marginTop: '20px' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                    <TextField
+                        label="Search"
+                        variant="outlined"
+                        size="small"
+                        onChange={this.handleSearchChange}
+                    />
+                    <TextField
+                        select
+                        label="Sort"
+                        value={this.state.sortOrder}
+                        onChange={this.handleSortChange}
+                        size="small"
+                    >
+                        <MenuItem value="asc">Ascending</MenuItem>
+                        <MenuItem value="desc">Descending</MenuItem>
+                    </TextField>
+                </Box>
+
+                <Tabs
+                    value={selectedTab}
+                    onChange={(event, newValue) => this.setState({ selectedTab: newValue })}
+                    centered
+                    sx={{ marginBottom: 2 }}
                 >
-                    <MenuItem value="asc">Ascending</MenuItem>
-                    <MenuItem value="desc">Descending</MenuItem>
-                </TextField>
-            </Box>
+                    <Tab label="All Vets" />
+                    <Tab label={`Favorites (${favoriteVets.length})`} />
+                </Tabs>
 
-            <Tabs
-                value={selectedTab}
-                onChange={(event, newValue) => setSelectedTab(newValue)}
-                centered
-                sx={{ marginBottom: 2 }}
-            >
-                <Tab label="All Vets" />
-                <Tab label={`Favorites (${favoriteVets.length})`} />
-            </Tabs>
+                {selectedTab === 0 && (
+                    <VetGrid
+                        vets={displayedVets}
+                        toggleFavorite={this.toggleFavorite}
+                        openAppointmentDialog={this.openAppointmentDialog}
+                        favoriteVets={favoriteVets}
+                        setCurrentVet={(vet) => this.setState({ currentVet: vet })}
+                        reviews={reviews}
+                        setReviews={(reviews) => this.setState({ reviews })}
+                        setNewRating={(rating) => this.setState({ newRating: rating })}
+                        setNewReview={(review) => this.setState({ newReview: review })}
+                    />
+                )}
 
-            {selectedTab === 0 && (
-                <VetGrid
-                    vets={displayedVets}
-                    toggleFavorite={toggleFavorite}
-                    openAppointmentDialog={openAppointmentDialog}
-                    favoriteVets={favoriteVets}
-                    setCurrentVet={setCurrentVet}
-                    reviews={reviews}
-                    setReviews={setReviews}
-                    setNewRating={setNewRating}
-                    setNewReview={setNewReview}
+                {selectedTab === 1 && (
+                    <VetGrid
+                        vets={displayedVets.filter((vet) => favoriteVets.includes(vet.id))}
+                        toggleFavorite={this.toggleFavorite}
+                        openAppointmentDialog={this.openAppointmentDialog}
+                        favoriteVets={favoriteVets}
+                        setCurrentVet={(vet) => this.setState({ currentVet: vet })}
+                        reviews={reviews}
+                        setReviews={(reviews) => this.setState({ reviews })}
+                        setNewRating={(rating) => this.setState({ newRating: rating })}
+                        setNewReview={(review) => this.setState({ newReview: review })}
+                    />
+                )}
+
+                <AppointmentDialog
+                    open={appointmentDialogOpen}
+                    vet={currentVet}
+                    appointmentDetails={appointmentDetails}
+                    onClose={this.closeAppointmentDialog}
+                    onInputChange={this.handleAppointmentChange}
+                    onBook={this.bookAppointment}
                 />
-            )}
 
-            {selectedTab === 1 && (
-                <VetGrid
-                    vets={displayedVets.filter((vet) => favoriteVets.includes(vet.id))}
-                    toggleFavorite={toggleFavorite}
-                    openAppointmentDialog={openAppointmentDialog}
-                    favoriteVets={favoriteVets}
-                    setCurrentVet={setCurrentVet}
+                <ReviewDialog
+                    open={Boolean(currentVet)}
+                    vet={currentVet}
                     reviews={reviews}
-                    setReviews={setReviews}
-                    setNewRating={setNewRating}
-                    setNewReview={setNewReview}
+                    newRating={newRating}
+                    newReview={newReview}
+                    setNewRating={(rating) => this.setState({ newRating: rating })}
+                    setNewReview={(review) => this.setState({ newReview: review })}
+                    onSubmit={this.handleReviewSubmit}
+                    onClose={() => this.setState({ currentVet: null })}
                 />
-            )}
-
-            <AppointmentDialog
-                open={appointmentDialogOpen}
-                vet={currentVet}
-                appointmentDetails={appointmentDetails}
-                onClose={closeAppointmentDialog}
-                onInputChange={handleAppointmentChange}
-                onBook={bookAppointment}
-            />
-
-            <ReviewDialog
-                open={Boolean(currentVet)}
-                vet={currentVet}
-                reviews={reviews}
-                newRating={newRating}
-                newReview={newReview}
-                setNewRating={setNewRating}
-                setNewReview={setNewReview}
-                onSubmit={handleReviewSubmit}
-                onClose={() => setCurrentVet(null)}
-            />
-        </Container>
-    );
-};
+            </Container>
+        );
+    }
+}
 
 const VetGrid = ({ vets, toggleFavorite, openAppointmentDialog, favoriteVets, setCurrentVet, reviews, setReviews, setNewRating, setNewReview }) => (
     <Grid container spacing={3}>
@@ -224,92 +258,71 @@ const VetCard = ({ vet, isFavorite, toggleFavorite, openAppointmentDialog, setCu
 
 const AppointmentDialog = ({ open, vet, appointmentDetails, onClose, onInputChange, onBook }) => (
     <Dialog open={open} onClose={onClose}>
-        <DialogTitle>{vet ? `Book Appointment with ${vet.name}` : 'Appointment'}</DialogTitle>
+        <DialogTitle>Book Appointment with {vet?.name}</DialogTitle>
         <DialogContent>
             <TextField
-                autoFocus
-                margin="dense"
                 label="Date"
                 type="date"
-                fullWidth
-                variant="standard"
-                name="date"
                 value={appointmentDetails.date}
+                name="date"
                 onChange={onInputChange}
+                fullWidth
+                margin="normal"
+                InputLabelProps={{ shrink: true }}
             />
             <TextField
-                margin="dense"
                 label="Time"
                 type="time"
-                fullWidth
-                variant="standard"
-                name="time"
                 value={appointmentDetails.time}
+                name="time"
                 onChange={onInputChange}
+                fullWidth
+                margin="normal"
+                InputLabelProps={{ shrink: true }}
             />
             <TextField
-                margin="dense"
                 label="Notes"
-                fullWidth
-                variant="standard"
-                name="notes"
                 value={appointmentDetails.notes}
+                name="notes"
                 onChange={onInputChange}
+                fullWidth
+                margin="normal"
+                multiline
+                rows={4}
             />
         </DialogContent>
         <DialogActions>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={onBook}>Book</Button>
+            <Button onClick={onClose} color="primary">Cancel</Button>
+            <Button onClick={onBook} color="primary">Book Appointment</Button>
         </DialogActions>
     </Dialog>
 );
 
-const ReviewDialog = ({ open, vet, reviews, newRating, newReview, setNewRating, setNewReview, onSubmit, onClose }) => {
-    if (!vet) return null;
-    const vetReviews = reviews[vet.id] || [];
-    return (
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>{`Reviews for ${vet.name}`}</DialogTitle>
-            <DialogContent>
-                <List>
-                    {vetReviews.map((review, index) => (
-                        <ListItem key={index}>
-                            <ListItemText
-                                primary={
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Rating value={review.rating} readOnly />
-                                        <Typography variant="body2" sx={{ marginLeft: 1 }}>
-                                            {review.review}
-                                        </Typography>
-                                    </Box>
-                                }
-                            />
-                        </ListItem>
-                    ))}
-                </List>
-                <Box sx={{ marginTop: 2 }}>
-                    <Rating
-                        value={newRating}
-                        onChange={(event, newValue) => setNewRating(newValue)}
-                    />
-                    <TextField
-                        margin="dense"
-                        label="New Review"
-                        fullWidth
-                        variant="standard"
-                        value={newReview}
-                        onChange={(e) => setNewReview(e.target.value)}
-                    />
-                    <Button onClick={onSubmit} sx={{ marginTop: 1 }}>
-                        Submit Review
-                    </Button>
-                </Box>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onClose}>Close</Button>
-            </DialogActions>
-        </Dialog>
-    );
-};
+const ReviewDialog = ({ open, vet, reviews, newRating, newReview, setNewRating, setNewReview, onSubmit, onClose }) => (
+    <Dialog open={open} onClose={onClose}>
+        <DialogTitle>Review {vet?.name}</DialogTitle>
+        <DialogContent>
+            <Rating
+                name="rating"
+                value={newRating}
+                onChange={(_, value) => setNewRating(value)}
+                sx={{ marginBottom: 2 }}
+            />
+            <TextField
+                label="Review"
+                value={newReview}
+                onChange={(e) => setNewReview(e.target.value)}
+                fullWidth
+                margin="normal"
+                multiline
+                rows={4}
+            />
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={onClose} color="primary">Cancel</Button>
+            <Button onClick={onSubmit} color="primary">Submit</Button>
+        </DialogActions>
+    </Dialog>
+);
 
 export default VetProfiles;

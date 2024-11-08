@@ -82,6 +82,7 @@ const HorizontalNavBar = () => {
             link: null,
             subItems: [
                 { text: "Vet Profiles", icon: <People fontSize="large" style={{ color: '#1976d2' }} />, link: "/admindashboard/vet-profiles" }, // Individual vet profile
+                { text: "Farmer Profiles", icon: <People fontSize="large" style={{ color: '#1976d2' }} />, link: "/admindashboard/farmer-profiles" },
                 { text: "Appointments History", icon: <EventNote fontSize="large" style={{ color: '#1976d2' }} />, link: "/admindashboard/appointments" }, // Updated icon for appointments
             ],
         },
